@@ -1050,6 +1050,9 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         },
       },
       searchbox: {
+        textWrapper: {
+          flex: 'grow',
+        },
         container: {
           height: {
             min: 'xxsmall',
@@ -1312,6 +1315,17 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       // disabled: { opacity: undefined },
     },
     textInput: {
+      error: {
+        icon: Info,
+        text: {},
+      },
+      focus: `
+        border-color: transparent;
+        border-bottom:2px solid #3367D6;
+        background: #F2F5FC;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+      `,
       // extend: undefined,
       // disabled: { opacity: undefined },
     },

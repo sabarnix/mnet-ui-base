@@ -4,10 +4,19 @@ import { Search } from 'grommet-icons/icons/Search';
 
 import { Text } from '../Text';
 import { TextInput } from '../TextInput';
+import { Button } from '../Button';
+import { Box } from '../Box';
+import { IconWrapper } from './StyledMultiSelect';
 
-import { SearchWrapper } from './StyledMultiSelect';
-
-const Searchbox = ({ placeholder, value, onValueChange, layout }) => {
+const Searchbox = ({
+  placeholder,
+  value,
+  onValueChange,
+  width,
+  layout,
+  selectIcon,
+  onCancel,
+}) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
   const handleChange = textValue => {
@@ -16,12 +25,33 @@ const Searchbox = ({ placeholder, value, onValueChange, layout }) => {
     return null;
   };
 
+  const CollapsibleIcon = selectIcon && selectIcon.up;
+
+  const icons = (
+    <IconWrapper {...theme.multiselect.searchbox.iconWrapper}>
+      <Search {...theme.multiselect.searchbox.icon} />
+      {selectIcon && (
+        <Button role="button" onClick={onCancel} plain>
+          <CollapsibleIcon
+            // margin={{ left: 'large', right: 'small' }}
+            color="dark-1"
+            size={selectIcon.size}
+          />
+        </Button>
+      )}
+    </IconWrapper>
+  );
+
   return (
-    <SearchWrapper layout={layout} {...theme.multiselect.searchbox.container}>
+    <Box layout={layout} {...theme.multiselect.searchbox.container}>
+      <Box {...theme.multiselect.searchbox.textWrapper}>
       <TextInput
         role="search"
         aria-label="multiselect searchbox"
         plain
+        icon={icons}
+        reverse
+        width={width}
         value={value}
         valueLabel={<Text>value</Text>}
         onChange={event => handleChange(event.target.value)}
@@ -31,9 +61,10 @@ const Searchbox = ({ placeholder, value, onValueChange, layout }) => {
           </Text>
         }
       />
-      <Search {...theme.multiselect.searchbox.icon} />
-    </SearchWrapper>
+      </Box>
+      
+    </Box>
   );
-}
+};
 
 export { Searchbox };

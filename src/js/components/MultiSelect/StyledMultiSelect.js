@@ -6,11 +6,20 @@ import { Box } from '../Box';
 import { Button } from '../Button';
 import { Text } from '../Text';
 
+const disabledStyle = `
+  opacity: 0.4;
+  cursor: not-allowed;
+`;
+
 const CheckBoxWrapper = styled(Box)`
   ${props => props.theme.multiselect.checkbox.extend};
 `;
 
-const OptionsBox = styled.div`
+const SelectedOption = styled(Box)`
+  ${props => props.selected && disabledStyle}
+`;
+
+const OptionsBox = styled(Box)`
   position: relative;
   scroll-behavior: smooth;
   overflow: auto;
@@ -19,8 +28,8 @@ const OptionsBox = styled.div`
 const SelectOption = styled(Button)`
   display: block;
   width: 100%;
-  background: ${props => props.active ?
-    props.theme.select.activeColor : 'transparent'};
+  background: ${props =>
+    props.active ? props.theme.select.activeColor : 'transparent'};
 `;
 
 const OptionBox = styled(Box)`
@@ -28,13 +37,13 @@ const OptionBox = styled(Box)`
 `;
 
 const CheckBox = styled(Box)`
-    ${props =>
-    props.theme.multiselect.checkbox.check &&
-    props.theme.multiselect.checkbox.check.extend
-  };
+  ${props => props.theme.multiselect.checkbox.check};
 `;
 
 const OptionWrapper = styled(Box)`
+  position: relative;
+  scroll-behavior: smooth;
+  overflow: auto;
   ${props => props.theme.multiselect.chips.wrapper.extend};
 `;
 
@@ -42,12 +51,21 @@ const OptionText = styled(Box)`
   ${props => props.theme.multiselect.chips.option.extend};
 `;
 
-const OptionLabel = styled(Text)`
-  ${props => props.theme.multiselect.chips.label.extend};
+const TextAreaWrapper = styled(Box)`
+  ${props => props.theme.multiselect.custom.textAreaWrap.extend};
 `;
 
-const SearchWrapper = styled(Box)`
-  ${props => props.theme.multiselect.searchbox.container.extend};
+const LabelText = styled(Text)`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+`;
+
+const IconWrapper = styled(Box)`
+    align-items: center;
+    flex-direction: row;
 `;
 
 export {
@@ -58,6 +76,8 @@ export {
   CheckBox,
   OptionWrapper,
   OptionText,
-  OptionLabel,
-  SearchWrapper,
+  SelectedOption,
+  TextAreaWrapper,
+  LabelText,
+  IconWrapper,
 };

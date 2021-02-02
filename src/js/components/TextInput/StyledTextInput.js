@@ -49,6 +49,13 @@ const StyledTextInput = styled.input`
       props.theme.textInput.disabled && props.theme.textInput.disabled.opacity,
     )}
   ${props => props.theme.textInput && props.theme.textInput.extend};
+  box-shadow: none;
+  ${props => !props.plain && `border: ${props.theme.textInput.border}`}
+  border-bottom-width: 2px;
+  ${props => props.focus && props.theme.textInput.focus}
+  ${props => props.error && props.theme.textInput.error.extend}
+  transition: width 0.2s ease 0s, background 0.2s ease 0s, border 0.2s ease 0s;
+  
 `;
 
 StyledTextInput.defaultProps = {};
@@ -93,11 +100,16 @@ const StyledIcon = styled.div`
   justify: center;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none;
+  // pointer-events: none;
   ${props =>
     props.reverse
       ? `right: ${getInputPadBySide(props, 'right')};`
       : `left: ${getInputPadBySide(props, 'left')};`}
+`;
+
+const StyledHelperTextWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
 
 const StyledSuggestions = styled.ol`
@@ -122,4 +134,5 @@ export {
   StyledPlaceholder,
   StyledIcon,
   StyledSuggestions,
+  StyledHelperTextWrapper,
 };

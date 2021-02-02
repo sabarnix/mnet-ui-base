@@ -69,7 +69,7 @@ const defaultStyle = css`
     &:after {
       left: 0;
       width: 100%;
-      background: ${normalizeColor('brand', props.theme)};
+      background: ${normalizeColor('#3367D6', props.theme)};
     }
   `};
 `;
