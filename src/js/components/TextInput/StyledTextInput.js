@@ -26,7 +26,7 @@ const plainStyle = css`
 
 const StyledTextInput = styled.input`
   ${inputStyle} width: 100%;
-
+  ${props => props.fill && `height: 100%;`}
   ${props => props.size && sizeStyle(props)}
   ${props => props.plain && plainStyle}
 
@@ -35,7 +35,7 @@ const StyledTextInput = styled.input`
     props.icon &&
     (props.reverse
       ? `padding-right: ${props.theme.global.edgeSize.large};`
-      : `padding-left: ${props.theme.global.edgeSize.large};`)}
+      : `padding-left: ${props.theme.global.edgeSize.xlarge};`)}
 
   &::-moz-focus-inner {
     border: none;
@@ -49,6 +49,13 @@ const StyledTextInput = styled.input`
       props.theme.textInput.disabled && props.theme.textInput.disabled.opacity,
     )}
   ${props => props.theme.textInput && props.theme.textInput.extend};
+  box-shadow: none;
+  ${props => !props.plain && `border: ${props.theme.textInput.border}`}
+  border-bottom-width: 2px;
+  ${props => props.focus && props.theme.textInput.focus}
+  ${props => props.error && props.theme.textInput.error.extend}
+  transition: width 0.2s ease 0s, background 0.2s ease 0s, border 0.2s ease 0s;
+  
 `;
 
 StyledTextInput.defaultProps = {};
@@ -57,6 +64,7 @@ Object.setPrototypeOf(StyledTextInput.defaultProps, defaultProps);
 const StyledTextInputContainer = styled.div`
   position: relative;
   width: 100%;
+  ${props => props.fill && `height: 100%;`}
 
   ${props =>
     props.theme.textInput &&
@@ -93,7 +101,7 @@ const StyledIcon = styled.div`
   justify: center;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none;
+  // pointer-events: none;
   ${props =>
     props.reverse
       ? `right: ${getInputPadBySide(props, 'right')};`

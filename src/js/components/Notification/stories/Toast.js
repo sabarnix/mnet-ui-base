@@ -9,7 +9,7 @@ import { addToast } from '..';
 
 const Toast = () => {
   const addToastDefault = () => {
-    addToast({ msg: 'I am default toast' });
+    addToast({ msg: 'I am default toast', autoClose: false });
   };
 
   const addToastCritical = () => {

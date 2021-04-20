@@ -26,7 +26,12 @@ export function Toast({ type, id, msg, onClose }) {
       {...theme.notification.toast.default}
       {...theme.notification.toast[type]}
     >
-      <Box align="center" direction="row" gap="xsmall">
+      <Box
+        align="center"
+        direction="row"
+        gap="xsmall"
+        margin={{ right: 'medium' }}
+      >
         {Icon && <Icon size={IconSize} color={IconColor} />}
         <Text
           {...(theme.notification.toast.text[type] ||
@@ -38,8 +43,8 @@ export function Toast({ type, id, msg, onClose }) {
       <Button
         icon={<CloseIcon />}
         onClick={handleClose}
-        plain
-        style={{ display: 'flex' }}
+        style={{ display: 'flex', padding: 0 }}
+        color={IconColor}
       />
     </Box>
   );

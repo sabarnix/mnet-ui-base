@@ -14,8 +14,35 @@ const Example = () => {
     'google.com',
     'media.net',
     'testing.com',
+    'google.com',
+    'media.net',
+    'testing.com',
+    'google.com',
+    'media.net',
+    'testing.com',
+    'google.com',
+    'media.net',
+    'testing.com',
+    'google.com',
+    'media.net',
+    'testing.com',
+    'google.com',
+    'media.net',
+    'testing.com',
+    'google.com',
+    'media.net',
+    'testing.com',
+    'google.com',
+    'media.net',
+    'testing.com',
+    'google.com',
+    'media.net',
+    'testing.com',
+    'google.com',
+    'media.net',
+    'testing.com',
   ]);
-  const [isExcluded, setIncExc] = useState(null);
+  const [isExcluded, setIncExc] = useState(false);
 
   const validateDomains = (values, list) => {
     const regx = /^([a-zA-Z0-9_][-_a-zA-Z0-9]{0,62}\.)+([a-zA-Z0-9]{1,10})$/;
@@ -41,8 +68,8 @@ const Example = () => {
         value={value}
         onValueChange={nextValue => setValue(nextValue)}
         layout="double-column"
-        width="medium"
-        height="large"
+        width="large"
+        height="medium"
         searchPlaceholder="Search"
         searchable
         custom={{ label: 'Enter one domain per line' }}
@@ -51,6 +78,9 @@ const Example = () => {
         onIncExcChange={nextIncExc => setIncExc(nextIncExc)}
         renderEmptySelected={<Text>No domains selected</Text>}
         validate={validateDomains}
+        isEnableOutSideClick={false}
+        shouldRenderInDrop={false}
+        isOpenState
       />
     </Box>
   );

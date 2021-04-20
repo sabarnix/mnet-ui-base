@@ -19,7 +19,7 @@ import { TextInput } from '../TextInput';
 import { FormContext } from '../Form/FormContext';
 // import { Drop } from '../Drop';
 // import { Button } from '../Button';
-// import { Tooltip } from '../Tooltip';
+import { Tooltip } from '../Tooltip';
 
 const mnetInputNames = ['TextInput', 'Select', 'MaskedInput', 'TextArea'];
 const mnetInputPadNames = [
@@ -41,6 +41,7 @@ const FormFieldBox = styled(Box)`
 
 const FormFieldContentBox = styled(Box)`
   ${props => props.focus && focusStyle({ justBorder: true })}
+  ${props => props.focus && props.plainOnFocus && `border-color: white;`}
 `;
 
 const Message = ({ message, ...rest }) => {
@@ -69,6 +70,7 @@ const FormField = forwardRef(
       onFocus,
       pad,
       required, // pass through in renderInput()
+      tooltip, // pass through in renderInput()
       style,
       validate,
       direction = 'column',
@@ -77,6 +79,7 @@ const FormField = forwardRef(
       labelWidth = 0,
       width = 'auto',
       showBorder = true,
+      plainOnFocus,
       ...rest
     },
     ref,
@@ -282,7 +285,7 @@ const FormField = forwardRef(
       borderColor = (themeBorder && themeBorder.color) || 'border';
     }
 
-    const labelStyle = { ...formFieldTheme.label };
+    const labelStyle = { ...formFieldTheme.labelWrap };
 
     if (disabled) {
       labelStyle.color =
@@ -299,17 +302,28 @@ const FormField = forwardRef(
       const innerProps =
         themeBorder.position === 'inner'
           ? {
-              border: {
-                ...themeBorder,
-                side: themeBorder.side || 'bottom',
-                color: borderColor,
-              },
-              round: formFieldTheme.round,
-              focus,
-            }
-          : {};
+            border: [{
+              ...themeBorder,
+              side: themeBorder.side || 'bottom',
+              color: borderColor,
+            }],
+            round: formFieldTheme.round,
+            focus,
+          } : {};
+      if(!error && innerProps.border) {
+        innerProps.border.push({
+          ...themeBorder,
+          side: 'bottom',
+          color: borderColor,
+          size: 'small',
+        });
+      }
       contents = (
-        <FormFieldContentBox overflow="hidden" {...(showBorder && innerProps)}>
+        <FormFieldContentBox
+          overflow="hidden"
+          {...(showBorder && innerProps)}
+          plainOnFocus={plainOnFocus}
+        >
           {contents}
         </FormFieldContentBox>
       );
@@ -391,6 +405,8 @@ const FormField = forwardRef(
           }
         : {};
 
+    const ToolTipIcon = formFieldTheme.tooltip.icon;
+
     return (
       <FormFieldBox
         ref={ref}
@@ -414,9 +430,18 @@ const FormField = forwardRef(
           {(label && component !== CheckBox) || labelWidth ? (
             <Box {...labelStyle} width={labelWidth}>
               {label && component !== CheckBox && (
-                <Text as="label" htmlFor={htmlFor}>
-                  {label} {required && <Text color="status-critical">*</Text>}
+                <Text as="label" htmlFor={htmlFor} {...formFieldTheme.label}>
+                  {label} 
                 </Text>
+              )}
+              {required && <Text color="status-critical">*</Text>}
+              {typeof tooltip === 'object' && tooltip!= null && (
+                <Tooltip
+                  {...tooltip}
+                  {...formFieldTheme.tooltip.extend}
+                >
+                  <ToolTipIcon {...formFieldTheme.tooltip.iconProps} />
+                </Tooltip>
               )}
             </Box>
           ) : null}

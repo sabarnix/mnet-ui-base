@@ -1,5 +1,7 @@
 import React, { useContext, useCallback } from 'react';
 import { ThemeContext } from 'styled-components';
+import { Add } from 'grommet-icons/icons/Add';
+import { FormSubtract } from 'grommet-icons/icons/FormSubtract';
 import { TextArea } from '../TextArea';
 
 import { Box } from '../Box';
@@ -7,6 +9,7 @@ import { Button } from '../Button';
 import { Text } from '../Text';
 import { FormField } from '../FormField';
 import CustomSelectedList from './CustomSelectedList';
+import { TextAreaWrapper } from './StyledMultiSelect';
 
 const CustomMultiSelect = ({
   value,
@@ -22,15 +25,16 @@ const CustomMultiSelect = ({
   setIncExcVal,
   inclusionExclusion,
   validate,
+  onCancel,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
   const [textAreaValue, setTextAreaValue] = React.useState('');
   const [isValid, setIsValid] = React.useState(true);
   const [errorMsg, setErrorMsg] = React.useState('');
 
-  const setTextAreaValueFn = value => {
+  const setTextAreaValueFn = val => {
     setIsValid(true);
-    setTextAreaValue(value);
+    setTextAreaValue(val);
   };
 
   const setItems = isIncExc => {
@@ -67,47 +71,70 @@ const CustomMultiSelect = ({
   };
 
   return (
-    <Box {...theme.multiselect.custom.wrapper} height={height}>
-      <Box {...theme.multiselect.custom.textAreaWrap} width={width}>
-        <Text {...theme.multiselect.custom.label}>
-          {(custom && custom.label) || 'Label'}
-        </Text>
-        <Box
-          {...theme.multiselect.custom.textAreaContainer}
-          width={width}
-          style={{ height: '100%' }}
-        >
+    <Box {...theme.multiselect.custom.wrapper} height={height} width={width}>
+      <Box
+        width="50%"
+        border={{
+          side: 'right',
+          color: 'light-3',
+        }}
+      >
+        <TextAreaWrapper {...theme.multiselect.custom.textAreaWrap}>
           <FormField error={!isValid ? errorMsg : null}>
-            <Box
-              width="full"
-              style={{
-                minHeight: theme.multiselect.custom.textAreaContainer.minHeight,
-                overflow: 'auto',
-              }}
-            >
+            <Box width="full" pad="medium">
               <TextArea
+                placeholder={(custom && custom.label) || 'Label'}
                 value={textAreaValue}
                 onChange={event => setTextAreaValueFn(event.target.value)}
                 resize={false}
+                focusIndicator={false}
                 fill
+                plain
               />
             </Box>
           </FormField>
-        </Box>
+        </TextAreaWrapper>
         <Box {...theme.multiselect.custom.actions.wrapper}>
           {(isExcluded === false || isExcluded === null) && (
-            <Button primary onClick={() => setItems(false)}>
-              <Text weight={600}>INCLUDE</Text>
+            <Button
+              {...theme.multiselect.includeBtn}
+              onClick={() => setItems(false)}
+            >
+              <Box align="center" justify="center" direction="row">
+                <Add
+                  {...theme.multiselect.checkbox.checkmark}
+                  color={theme.multiselect.includeBtn.color}
+                  size="small"
+                />
+                <Text weight={600} margin={{ left: 'small' }}>
+                  INCLUDE
+                </Text>
+              </Box>
             </Button>
           )}
+          {isExcluded === null && (
+            <Box background="light-3" width="1px" height="100%" />
+          )}
           {(isExcluded || isExcluded === null) && (
-            <Button secondary color="brand" onClick={() => setItems(true)}>
-              <Text weight={600}>EXCLUDE</Text>
+            <Button
+              {...theme.multiselect.excludeBtn}
+              onClick={() => setItems(true)}
+            >
+              <Box align="center" justify="center" direction="row">
+                <FormSubtract
+                  {...theme.multiselect.checkbox.checkmark}
+                  color={theme.multiselect.excludeBtn.color}
+                  size="small"
+                />
+                <Text weight={600} margin={{ left: 'small' }}>
+                  EXCLUDE
+                </Text>
+              </Box>
             </Button>
           )}
         </Box>
       </Box>
-      <Box width={width}>
+      <Box width="50%">
         <CustomSelectedList
           layout={layout}
           selectedItems={value}
@@ -120,6 +147,7 @@ const CustomMultiSelect = ({
           width={width}
           height={height}
           inclusionExclusion={inclusionExclusion}
+          onCancel={onCancel}
         />
       </Box>
     </Box>

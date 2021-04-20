@@ -608,6 +608,14 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         size: `${baseSpacing * 2}px`,
         // extend: undefined,
       },
+      label: {
+        color: 'dark-1',
+        size: 'medium',
+        weight: 400,
+      },
+    },
+    CheckBoxGroup: {
+      label: {},
     },
     clock: {
       analog: {
@@ -774,6 +782,13 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         button: {
           flex: 1,
           border: 'none',
+        },
+      },
+      tooltip: {
+        icon: Info,
+        iconProps: {
+          margin: { horizontal: 'small' },
+          size: 'large',
         },
       },
 
@@ -1078,6 +1093,9 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         },
       },
       searchbox: {
+        textWrapper: {
+          flex: 'grow',
+        },
         container: {
           height: {
             min: 'xxsmall',
@@ -1367,6 +1385,17 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       // disabled: { opacity: undefined },
     },
     textInput: {
+      error: {
+        icon: Info,
+        text: {},
+      },
+      focus: `
+        border-color: transparent;
+        border-bottom:2px solid #3367D6;
+        background: #F2F5FC;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+      `,
       // extend: undefined,
       // disabled: { opacity: undefined },
     },
@@ -1391,8 +1420,8 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       },
     },
     tooptip: {
-      background: 'dark-1',
-      color: 'white',
+      background: 'light-1',
+      color: 'dark-1',
       tipSize: '5px',
       round: 'small',
       maxWidth: '20%',

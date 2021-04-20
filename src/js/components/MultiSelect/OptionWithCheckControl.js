@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import { FormCheckmark } from 'grommet-icons/icons/FormCheckmark';
-import { FormClose } from 'grommet-icons/icons/FormClose';
+import { FormSubtract } from 'grommet-icons/icons/FormSubtract';
+import { Add } from 'grommet-icons/icons/Add';
 
 import { defaultProps } from '../../default-props';
 import { Box } from '../Box';
 import { Text } from '../Text';
 
-import { CheckBoxWrapper, CheckBox } from './StyledMultiSelect';
+import { CheckBoxWrapper, CheckBox, SelectedOption } from './StyledMultiSelect';
 
 const OptionWithCheckControl = ({
   selected,
@@ -15,7 +16,7 @@ const OptionWithCheckControl = ({
   inclusionExclusion,
   isExcluded,
   onSelect,
-  active,
+  // active,
   index,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
@@ -31,26 +32,44 @@ const OptionWithCheckControl = ({
         <CheckBox
           role="checkbox"
           aria-label={`${exc ? check : 'select'} checkbox for ${label}`}
-          className={
-            `option-checkbox-${
-              selected || (inclusionExclusion && isExcluded === null)
-              ? 'active' : 'inactive'
-            }`}
+          className={`option-checkbox-${
+            selected || (inclusionExclusion && isExcluded === null)
+              ? 'active'
+              : 'inactive'
+          }`}
           {...theme.multiselect.checkbox.check}
           active={selected || (inclusionExclusion && isExcluded === null)}
           isExcluded={exc}
           onClick={
-            (inclusionExclusion && isExcluded === null) ?
-              event => onSelect(event, exc, index) : undefined
+            inclusionExclusion && isExcluded === null
+              ? event => onSelect(event, exc, index)
+              : undefined
           }
         >
-          {(selected || (inclusionExclusion && isExcluded === null)) && (
+          {(selected ||
+            !selected ||
+            (inclusionExclusion && isExcluded === null)) && (
             <>
               {check === 'check' && (
                 <FormCheckmark {...theme.multiselect.checkbox.checkmark} />
               )}
-              {check === 'cross' && (
-                <FormClose {...theme.multiselect.checkbox.checkmark} />
+              {check === 'add' && (
+                <Add
+                  {...theme.multiselect.checkbox.checkmark}
+                  color={
+                    inclusionExclusion
+                      ? theme.multiselect.includeBtn.color
+                      : 'brand'
+                  }
+                  size="small"
+                />
+              )}
+              {check === 'subtract' && (
+                <FormSubtract
+                  {...theme.multiselect.checkbox.checkmark}
+                  color={theme.multiselect.excludeBtn.color}
+                  size="small"
+                />
               )}
             </>
           )}
@@ -60,10 +79,9 @@ const OptionWithCheckControl = ({
   };
 
   return (
-    <Box {...selectOptionsStyle} selected={selected}>
+    <SelectedOption {...selectOptionsStyle} selected={selected}>
       <Box {...theme.multiselect.option}>
-        <Box direction="row">
-          {!inclusionExclusion && renderCheckbox('check', null)}
+        <Box>
           <Text
             role="option"
             aria-label="multiselect option value"
@@ -72,22 +90,17 @@ const OptionWithCheckControl = ({
             {label}
           </Text>
         </Box>
-        {inclusionExclusion &&
-          ((isExcluded === null && active) || isExcluded !== null) && (
-            <Box direction="row">
-              {
-                [null, false].includes(isExcluded)
-                && renderCheckbox('check', false)
-              }
-              {
-                [null, true].includes(isExcluded)
-                && renderCheckbox('cross', true)
-              }
-            </Box>
-          )}
+        {!inclusionExclusion && <Box>{renderCheckbox('add', null)}</Box>}
+        {inclusionExclusion && (isExcluded === null || isExcluded !== null) && (
+          <Box direction="row">
+            {[null, false].includes(isExcluded) && renderCheckbox('add', false)}
+            {[null, true].includes(isExcluded) &&
+              renderCheckbox('subtract', true)}
+          </Box>
+        )}
       </Box>
-    </Box>
+    </SelectedOption>
   );
-}
+};
 
 export { OptionWithCheckControl };

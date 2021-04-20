@@ -5,12 +5,7 @@ import { Box } from '../Box';
 import { Button } from '../Button';
 import { Text } from '../Text';
 import { Searchbox } from './Searchbox';
-import {
-  OptionsBox,
-  OptionWrapper,
-  OptionText,
-  OptionLabel,
-} from './StyledMultiSelect';
+import { OptionsBox, OptionWrapper, OptionText } from './StyledMultiSelect';
 
 const SelectedList = ({
   selectedItems,
@@ -21,8 +16,9 @@ const SelectedList = ({
   onRemove,
   clearAll,
   renderEmptySelected,
-  width,
+  // width,
   height,
+  onCancel,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
   const [search, setSearch] = React.useState('');
@@ -32,12 +28,16 @@ const SelectedList = ({
     filteredItems = selectedItems.filter(val => val.includes(search));
 
   const renderClearButton = () => (
-    <Button focusIndicator={false} onClick={() => clearAll()} plain>
+    <Button
+      role="button"
+      a11yTitle="Clear all selected options"
+      focusIndicator={false}
+      onClick={() => clearAll()}
+      plain
+    >
       <Box
-        border={{
-          side: 'bottom',
-          color: theme.multiselect.chips.clear.color,
-        }}
+        border={theme.multiselect.chips.clear.border}
+        height={theme.multiselect.chips.clear.height}
       >
         <Text {...theme.multiselect.chips.clear}>CLEAR ALL</Text>
       </Box>
@@ -50,18 +50,39 @@ const SelectedList = ({
     z-index: 1;
   `;
 
+  const CollapsibleIcon = theme.select.icons && theme.select.icons.up;
+
   return (
     <OptionsBox style={{ height: '100%' }}>
       {selectedItems && selectedItems.length > 0 && (
-        <>
+        <Box>
           <Sticky {...theme.multiselect.rightPanel.incExcHeader.box}>
-            <Text {...theme.multiselect.rightPanel.incExcHeader.text}>
-              {isExcluded ? 'Excluded List' : 'Included List'}
-            </Text>
-            {renderClearButton()}
+            <Box direction="row">
+              <Text {...theme.multiselect.rightPanel.incExcHeader.text}>
+                {isExcluded ? 'Excluded' : 'Included'}
+              </Text>
+              <Box {...theme.multiselect.rightPanel.incExcHeader.count}>
+                <Text weight="600">{selectedItems.length}</Text>
+              </Box>
+            </Box>
+            <Box flex="grow" />
+            {CollapsibleIcon && (
+              <Button
+                role="button"
+                onClick={onCancel}
+                plain
+                style={{ position: 'absolute', right: '15px' }}
+              >
+                <CollapsibleIcon
+                  color="dark-1"
+                  size={theme.select.icons.size}
+                />
+              </Button>
+            )}
           </Sticky>
           {renderSearch && (
             <Searchbox
+              reverse={false}
               layout={layout}
               placeholder={searchPlaceholder}
               value={search}
@@ -71,42 +92,56 @@ const SelectedList = ({
 
           <OptionWrapper
             twoColumnLayout={layout === 'double-column'}
-            width={width}
+            height={height}
             {...theme.multiselect.chips.wrapper}
             wrap
           >
-            {filteredItems.length ? (
-              filteredItems.map((item, id) => (
-                <OptionText
-                  key={`${id}-${item}`}
-                  twoColumnLayout={layout === 'double-column'}
-                  {...theme.multiselect.chips.option}
-                >
-                  <OptionLabel
-                    isExcluded={isExcluded}
-                    {...theme.multiselect.chips.label}
+            <Box width="100%">
+              {filteredItems.length ? (
+                filteredItems.map((item, id) => (
+                  <OptionText
+                    key={`${id}-${item}`}
+                    twoColumnLayout={layout === 'double-column'}
+                    {...theme.multiselect.chips.option}
                   >
-                    <Text>{item}</Text>
-                  </OptionLabel>
-                  <Close
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => onRemove(item)}
-                    style={{ cursor: 'pointer' }}
-                    {...theme.multiselect.chips.icon}
-                  />
-                </OptionText>
-              ))
-            ) : (
-              <Box align="center" margin="medium" fill>
-                <Text>No Result Found</Text>
-              </Box>
-            )}
+                    <Text
+                      isExcluded={isExcluded}
+                      {...theme.multiselect.chips.label}
+                    >
+                      <Text>{item}</Text>
+                    </Text>
+                    <Close
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => onRemove(item)}
+                      {...theme.multiselect.chips.icon}
+                    />
+                  </OptionText>
+                ))
+              ) : (
+                <Box align="center" margin="medium" fill>
+                  <Text>No Result Found</Text>
+                </Box>
+              )}
+            </Box>
           </OptionWrapper>
-        </>
+          {renderClearButton()}
+        </Box>
       )}
       {!selectedItems.length && (
-        <Box align="center" justify="center" fill>
-          {renderEmptySelected}
+        <Box align="end" pad="large" flex="grow">
+          {CollapsibleIcon && (
+            <Button
+              role="button"
+              style={{ position: 'absolute' }}
+              onClick={onCancel}
+              plain
+            >
+              <CollapsibleIcon color="dark-1" size={theme.select.icons.size} />
+            </Button>
+          )}
+          <Box align="center" justify="center" fill>
+            {renderEmptySelected}
+          </Box>
         </Box>
       )}
     </OptionsBox>
