@@ -20,7 +20,7 @@ const TooltipPreview = () => {
         <Tooltip message="Up Side" position="up" margin="large">
           <Button label="UP" />
         </Tooltip>
-        <Tooltip message="Down Side" position="down" margin="large" closeOnTooltipHover={false} >
+        <Tooltip message="Down Side" position="down" margin="large" closeOnTooltipHover={false}>
           <Button label="Down (Prevent tooltip on hover)" />
         </Tooltip>
         <Tooltip

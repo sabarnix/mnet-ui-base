@@ -36,6 +36,9 @@ const Tooltip = forwardRef(
     if (position === 'left') {
       alignDrop = { right: 'left' };
     }
+    if (position === 'right') {
+      alignDrop = { left: 'right' };
+    }
     let timeOut = null;
     const showToolTip = (show, timer) => {
       if (timeOut) {
