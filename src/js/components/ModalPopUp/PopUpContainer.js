@@ -16,6 +16,7 @@ const PopUpContainer = ({
   renderButton,
   isLoading,
   onClose,
+  width,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
   const closeIcon = theme.modalpopup.title.close;
@@ -25,6 +26,7 @@ const PopUpContainer = ({
       role="dialog"
       aria-label="modal-pop-up"
       {...theme.modalpopup.container}
+      width={width || theme.modalpopup.container.width}
     >
       {title && (
         <Box {...theme.modalpopup.title.wrapper}>
