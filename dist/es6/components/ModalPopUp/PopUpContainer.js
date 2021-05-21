@@ -16,14 +16,17 @@ var PopUpContainer = function PopUpContainer(_ref) {
       onPrimaryClick = _ref.onPrimaryClick,
       renderButton = _ref.renderButton,
       isLoading = _ref.isLoading,
-      onClose = _ref.onClose;
+      onClose = _ref.onClose,
+      width = _ref.width;
   var theme = useContext(ThemeContext) || defaultProps.theme;
   var closeIcon = theme.modalpopup.title.close;
   var CloseIcon = closeIcon && closeIcon.icon;
   return /*#__PURE__*/React.createElement(Box, _extends({
     role: "dialog",
     "aria-label": "modal-pop-up"
-  }, theme.modalpopup.container), title && /*#__PURE__*/React.createElement(Box, theme.modalpopup.title.wrapper, /*#__PURE__*/React.createElement(Heading, theme.modalpopup.title.text, title), CloseIcon && /*#__PURE__*/React.createElement(Button, {
+  }, theme.modalpopup.container, {
+    width: width || theme.modalpopup.container.width
+  }), title && /*#__PURE__*/React.createElement(Box, theme.modalpopup.title.wrapper, /*#__PURE__*/React.createElement(Heading, theme.modalpopup.title.text, title), CloseIcon && /*#__PURE__*/React.createElement(Button, {
     icon: /*#__PURE__*/React.createElement(CloseIcon, {
       color: closeIcon.color,
       size: closeIcon.size

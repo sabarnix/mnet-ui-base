@@ -18,7 +18,7 @@ var ModalPopUp = function ModalPopUp() {
       setIsLoading = _useState2[1];
 
   var _useState3 = useState({
-    position: "center"
+    position: 'center'
   }),
       position = _useState3[0],
       setPosition = _useState3[1];
@@ -30,7 +30,8 @@ var ModalPopUp = function ModalPopUp() {
     onPrimaryClick: undefined,
     renderButton: undefined,
     closeOnOutSideClick: false,
-    closeOnEscape: false
+    closeOnEscape: false,
+    width: undefined
   }),
       popUpConfig = _useState4[0],
       setPopUpConfig = _useState4[1];

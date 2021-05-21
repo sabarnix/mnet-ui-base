@@ -34,7 +34,8 @@ var PopUpContainer = function PopUpContainer(_ref) {
       onPrimaryClick = _ref.onPrimaryClick,
       renderButton = _ref.renderButton,
       isLoading = _ref.isLoading,
-      onClose = _ref.onClose;
+      onClose = _ref.onClose,
+      width = _ref.width;
 
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
@@ -43,7 +44,9 @@ var PopUpContainer = function PopUpContainer(_ref) {
   return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({
     role: "dialog",
     "aria-label": "modal-pop-up"
-  }, theme.modalpopup.container), title && /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.modalpopup.title.wrapper, /*#__PURE__*/_react["default"].createElement(_Heading.Heading, theme.modalpopup.title.text, title), CloseIcon && /*#__PURE__*/_react["default"].createElement(_Button.Button, {
+  }, theme.modalpopup.container, {
+    width: width || theme.modalpopup.container.width
+  }), title && /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.modalpopup.title.wrapper, /*#__PURE__*/_react["default"].createElement(_Heading.Heading, theme.modalpopup.title.text, title), CloseIcon && /*#__PURE__*/_react["default"].createElement(_Button.Button, {
     icon: /*#__PURE__*/_react["default"].createElement(CloseIcon, {
       color: closeIcon.color,
       size: closeIcon.size
