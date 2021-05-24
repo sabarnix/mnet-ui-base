@@ -21,7 +21,7 @@ const OptionChips = ({
   isExcluded,
   renderEmptySelected,
   layout,
-  showCount: showCountOnControl,
+  showCount,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
@@ -73,7 +73,7 @@ const OptionChips = ({
                 <Text {...theme.multiselect.rightPanel.incExcHeader.text}>
                   Selected
                 </Text>
-                {!showCountOnControl && 
+                {!showCount && 
                   <Box {...theme.multiselect.rightPanel.incExcHeader.count}>
                   <Text weight="600">{value.length}</Text>
                   </Box>

@@ -45,6 +45,33 @@ const OptionWithCheckControl = ({
     check: excCheck = 'subtract',
   } = exclude;
 
+  const getIcon = check => {
+    switch (check) {
+      case 'check':
+        return <FormCheckmark {...theme.multiselect.checkbox.checkmark} />;
+      case 'close':
+        return <FormClose {...theme.multiselect.checkbox.checkmark} />
+      case 'add':
+        return <Add
+          {...theme.multiselect.checkbox.checkmark}
+          color={
+            inclusionExclusion
+              ? theme.multiselect.includeBtn.color
+              : 'brand'
+          }
+          size="small"
+        />
+      case 'subtract':
+        return <FormSubtract
+          {...theme.multiselect.checkbox.checkmark}
+          color={theme.multiselect.excludeBtn.color}
+          size="small"
+        />
+      default:
+        return null;
+    }
+  }
+
   const renderCheckbox = (check, exc) => {
     
     return (
@@ -71,32 +98,7 @@ const OptionWithCheckControl = ({
           {(selected ||
             !selected ||
             (inclusionExclusion && isExcluded === null)) && (
-            <>
-              {check === 'check' && (
-                <FormCheckmark {...theme.multiselect.checkbox.checkmark} />
-              )}
-              {check === 'close' && (
-                <FormClose {...theme.multiselect.checkbox.checkmark} />
-              )}
-              {check === 'add' && (
-                <Add
-                  {...theme.multiselect.checkbox.checkmark}
-                  color={
-                    inclusionExclusion
-                      ? theme.multiselect.includeBtn.color
-                      : 'brand'
-                  }
-                  size="small"
-                />
-              )}
-              {check === 'subtract' && (
-                <FormSubtract
-                  {...theme.multiselect.checkbox.checkmark}
-                  color={theme.multiselect.excludeBtn.color}
-                  size="small"
-                />
-              )}
-            </>
+              getIcon(check)
           )}
         </CheckBox>
       </CheckBoxWrapper>

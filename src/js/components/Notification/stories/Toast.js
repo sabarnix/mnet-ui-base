@@ -9,7 +9,7 @@ import { addToast } from '..';
 
 const Toast = () => {
   const addToastDefault = () => {
-    addToast({ msg: 'I am default toast', autoClose: false });
+    addToast({ msg: 'I am default toast' });
   };
 
   const addToastCritical = () => {
@@ -22,6 +22,10 @@ const Toast = () => {
 
   const addToastWarning = () => {
     addToast({ msg: 'I am just a warning', type: 'warning' });
+  };
+
+  const addToastAutoClose = () => {
+    addToast({ msg: 'I am default toast', autoClose: false });
   };
 
   return (
@@ -65,6 +69,16 @@ const Toast = () => {
             </Text>
           }
           onClick={addToastWarning}
+          plain
+        />
+        <Button
+          icon={<Add color="brand" />}
+          label={
+            <Text>
+              <strong>Prevent autoClose</strong>
+            </Text>
+          }
+          onClick={addToastAutoClose}
           plain
         />
       </Box>
