@@ -93,7 +93,11 @@ const OptionWithCheckControl = ({
               ? event => onSelect(event, exc, index)
               : undefined
           }
-          background={(exc ? normalizeColor(excBackground, theme): normalizeColor(incBackground, theme)) || 'white'}
+          background={
+            (exc ? 
+              normalizeColor(excBackground, theme): 
+              normalizeColor(incBackground, theme)) || 'white'
+          }
         >
           {(selected ||
             !selected ||
@@ -120,7 +124,10 @@ const OptionWithCheckControl = ({
         {!inclusionExclusion && <Box>{renderCheckbox(incCheck, null)}</Box>}
         {inclusionExclusion && (isExcluded === null || isExcluded !== null) && (
           <Box direction="row">
-            {[null, false].includes(isExcluded) && renderCheckbox(incCheck, false)}
+            {
+              [null, false].includes(isExcluded) && 
+                renderCheckbox(incCheck, false)
+            }
             {[null, true].includes(isExcluded) &&
               renderCheckbox(excCheck, true)}
           </Box>

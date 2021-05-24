@@ -19,7 +19,12 @@ const ValueLabelWithIcon = ({
   const number = valueProp.length;
   const theme = useContext(ThemeContext) || defaultProps.theme;
   const { include, exclude } = theme.multiselect.icons;
-  const { searchbox: { placeholder: placeholderProp = {} } = {}, labelWrap = {} } = theme.multiselect;
+  const { 
+    searchbox: { 
+      placeholder: placeholderProp = {},
+    } = {}, 
+    labelWrap = {},
+  } = theme.multiselect;
   const { icon: IncIcon, extend: incExtend } = include;
   const { icon: ExcIcon, extend: excExtend } = exclude;
   const { label = {} } = theme.multiselect.controls

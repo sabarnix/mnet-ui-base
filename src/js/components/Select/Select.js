@@ -303,7 +303,10 @@ const Select = forwardRef(
                     {isValidElement(SelectIcon) ? (
                       SelectIcon
                     ) : (
-                      <SelectIcon color={iconColor} size={theme.select.icons.size} />
+                      <SelectIcon 
+                        color={iconColor} 
+                        size={theme.select.icons.size} 
+                      />
                     )}
                   </StyledIconContainer>
                 )}

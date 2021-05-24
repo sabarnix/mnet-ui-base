@@ -40,7 +40,9 @@ const FormFieldBox = styled(Box)`
 `;
 
 const FormFieldContentBox = styled(Box)`
-  ${props => !props.error && props.theme.formField.field && props.theme.formField.field.default}
+  ${props => !props.error &&
+    props.theme.formField.field && 
+    props.theme.formField.field.default}
   ${props => props.focus && focusStyle({ justBorder: true })}
   ${props => props.focus && 
     props.plainOnFocus && 
