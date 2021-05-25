@@ -35,6 +35,13 @@ const OptionsBox = styled(Box)`
   }
 `;
 
+const OptionLabel = styled(Text)`
+  ${props => props.theme.multiselect.chips &&
+    props.theme.multiselect.chips.label &&
+    props.theme.multiselect.chips.label.extend};
+`;
+
+
 const SelectOption = styled(Button)`
   display: block;
   width: 100%;
@@ -90,6 +97,7 @@ export {
   OptionBox,
   CheckBox,
   OptionWrapper,
+  OptionLabel,
   OptionText,
   SelectedOption,
   TextAreaWrapper,

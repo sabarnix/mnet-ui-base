@@ -6,13 +6,13 @@ import { defaultProps } from '../../default-props';
 import { Box } from '../Box';
 import { Button } from '../Button';
 import { Text } from '../Text';
-import { OptionWrapper, OptionText } from './StyledMultiSelect';
+import { OptionWrapper, OptionText, OptionLabel } from './StyledMultiSelect';
 
 const OptionChips = ({
   options,
   value,
   isSelected,
-  optionLabel,
+  optionLabel: getLabel,
   onRemove,
   clearAll,
   width,
@@ -95,15 +95,15 @@ const OptionChips = ({
                   twoColumnLayout={layout === 'double-column'}
                   {...theme.multiselect.chips.option}
                 >
-                  <Text
+                  <OptionLabel
                     isExcluded={isExcluded}
                     {...theme.multiselect.chips.label}
                   >
-                    {optionLabel(item)}
-                  </Text>
+                    {getLabel(item)}
+                  </OptionLabel>
                   <Close
                     role="button"
-                    aria-label={`Remove selected chip ${optionLabel(item)}`}
+                    aria-label={`Remove selected chip ${getLabel(item)}`}
                     style={{ cursor: 'pointer' }}
                     onClick={event => onRemove(event, item)}
                     {...theme.multiselect.chips.icon}
