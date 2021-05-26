@@ -31,6 +31,7 @@ const OptionWithCheckControl = ({
   const {
     include = {},
     exclude = {},
+    showUnSelected = true,
   } = theme.multiselect.checkbox;
 
   const {
@@ -72,6 +73,13 @@ const OptionWithCheckControl = ({
     }
   }
 
+  const getBackground = exc => {
+    if (!selected && !showUnSelected && isExcluded !== null) return 'white';
+    return (exc ? 
+      normalizeColor(excBackground, theme): 
+      normalizeColor(incBackground, theme)) || 'white';
+  } 
+
   const renderCheckbox = (check, exc) => {
     
     return (
@@ -93,14 +101,10 @@ const OptionWithCheckControl = ({
               ? event => onSelect(event, exc, index)
               : undefined
           }
-          background={
-            (exc ? 
-              normalizeColor(excBackground, theme): 
-              normalizeColor(incBackground, theme)) || 'white'
-          }
+          background={getBackground(exc)}
         >
           {(selected ||
-            !selected ||
+            showUnSelected ||
             (inclusionExclusion && isExcluded === null)) && (
               getIcon(check)
           )}
