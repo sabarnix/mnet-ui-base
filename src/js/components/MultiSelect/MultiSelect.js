@@ -176,8 +176,6 @@ const MultiSelect = ({
   const shouldRenderLabel = () => !((!valueKey || !labelKey) || (getkeyField(valueKey) === getkeyField(labelKey)));
 
   const renderLabel = () => {
-    console.log(shouldRenderLabel(), value)
-    
     return (
       <ValueLabelWithIcon
         showCount={showCount}
