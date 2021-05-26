@@ -38,7 +38,7 @@ const Searchbox = ({
       margin="none" 
       onClick={onCancel} 
       plain
-      style={{  position: 'absolute', right: '15px'  }}
+      style={{  position: 'relative', right: '15px'  }}
     >
       <CollapsibleIcon
         color="dark-1"
