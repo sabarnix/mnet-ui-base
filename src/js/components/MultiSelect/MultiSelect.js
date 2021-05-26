@@ -171,7 +171,13 @@ const MultiSelect = ({
     return null;
   };
 
+  const getkeyField = key => typeof key === 'object' ? getkeyField(key.key) : key;
+
+  const shouldRenderLabel = () => !((!valueKey || !labelKey) || (getkeyField(valueKey) === getkeyField(labelKey)));
+
   const renderLabel = () => {
+    console.log(shouldRenderLabel(), value)
+    
     return (
       <ValueLabelWithIcon
         showCount={showCount}
@@ -180,9 +186,9 @@ const MultiSelect = ({
         isExcluded={isExcluded}
         size={size}
         placeholder={placeholder}
-        value={custom ? value : (options || []).filter(obj => 
+        value={shouldRenderLabel() ? (options || []).filter(obj => 
           value.includes(applyKey(obj, valueKey)))
-            .map(optionObj => applyKey(optionObj, labelKey))
+            .map(optionObj => applyKey(optionObj, labelKey)): value
         }
       />
     );
