@@ -1198,14 +1198,14 @@ export const generate = (baseSpacing = 24, scale = 6) => {
           icon: Success,
           extend: {
             color: 'status-ok',
-            size: 'large',
+            size: 'small',
           },
         },
         exclude: {
           icon: Block,
           extend: {
             color: 'status-error',
-            size: 'large',
+            size: 'small',
           },
         },
       },
