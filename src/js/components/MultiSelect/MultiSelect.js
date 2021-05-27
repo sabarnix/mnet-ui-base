@@ -35,6 +35,7 @@ const MultiSelect = ({
   isEnableOutSideClick,
   shouldRenderInDrop,
   placeholder,
+  delimiter,
   ...rest
 }) => {
   const [internalValue, updateInternalValue] = useState(valueProp);
@@ -43,6 +44,7 @@ const MultiSelect = ({
   );
   const [isOpen, updateIsOpen] = useState(isOpenState || false);
   const [search, updateSearch] = useState('');
+  const [searchArray, updateSearchArray] = useState([]);
 
   const isExcluded = withUpdateCancelButtons
     ? internalIsExcluded
@@ -94,28 +96,64 @@ const MultiSelect = ({
   const getValue = (index, array, param) => applyKey(array[index], param);
 
   const onSearchChange = searchInput => {
-    const escapedText = searchInput.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+    const escapedText = searchInput.replace(/[-\\^$*+?.()[\]{}]/g, '\\$&');
+    if (delimiter) {
+      if (searchInput === '') {
+        updateSearchArray([]);
+      } else {
+        const escapedTextSplit = escapedText
+          .split(delimiter)
+          .map(item => item.trim());
+          updateSearchArray(escapedTextSplit);
+      }
+    }
     updateSearch(escapedText);
   };
 
   const getOptions = useCallback(() => {
-    if (!search) {
-      return options;
+    if (delimiter) {
+      if (searchArray.length === 0) {
+        return options;
+      }
+      return options.filter(item =>
+        searchArray.some(searchEl => {
+          const exp = new RegExp(`^${searchEl}$`, 'i');
+          return exp.test(item.label);
+        }),
+      );
+    } else {
+      if (!search) {
+        return options;
+      }
+      const exp = new RegExp(search, 'i');
+      return options.filter((item, index) =>
+        exp.test(getValue(index, options, labelKey)),
+      );
     }
-    const exp = new RegExp(search, 'i');
-    return options.filter((item, index) =>
-      exp.test(getValue(index, options, labelKey)),
-    );
   }, [options, search]);
 
   const getOptionsNotMatchingSearch = useCallback(() => {
-    if (!search) {
-      return [];
+    if (delimiter) {
+      if (!searchArray.length) {
+        return [];
+      }
+      const filteredOptions = options.filter(
+        item =>
+          !searchArray.some(searchEl => {
+            const exp = new RegExp(`^${searchEl}$`, 'i');
+            return exp.test(item.label);
+          }),
+      );
+      return filteredOptions;
+    } else {
+      if (!search) {
+        return [];
+      }
+      const exp = new RegExp(search, 'i');
+      return options.filter(
+        (item, index) => !exp.test(getValue(index, options, labelKey)),
+      );
     }
-    const exp = new RegExp(search, 'i');
-    return options.filter(
-      (item, index) => !exp.test(getValue(index, options, labelKey)),
-    );
   }, [options, search]);
 
   const onSelectValueChange = ({ value: newValue }) => {
