@@ -2,21 +2,12 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import { Search } from 'grommet-icons/icons/Search';
 
+import { defaultProps } from '../../default-props';
 import { Text } from '../Text';
 import { TextInput } from '../TextInput';
-import { Button } from '../Button';
-import { Box } from '../Box';
+import { SearchWrapper } from './StyledMultiSelect';
 
-const Searchbox = ({
-  placeholder,
-  value,
-  onValueChange,
-  width,
-  layout,
-  selectIcon,
-  onCancel,
-  reverse = true,
-}) => {
+const Searchbox = ({ placeholder, value, onValueChange, layout }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
   const handleChange = textValue => {

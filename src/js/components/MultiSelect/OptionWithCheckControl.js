@@ -4,6 +4,7 @@ import { FormCheckmark } from 'grommet-icons/icons/FormCheckmark';
 import { FormSubtract } from 'grommet-icons/icons/FormSubtract';
 import { Add } from 'grommet-icons/icons/Add';
 
+import { defaultProps } from '../../default-props';
 import { Box } from '../Box';
 import { Text } from '../Text';
 
