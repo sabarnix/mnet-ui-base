@@ -5,7 +5,7 @@ import { Box } from '../Box';
 import { Select } from '../Select';
 
 import { ColumnSelect } from './ColumnSelect';
-import { ValueLabelWithIcon } from './ValueLabelWithIcon';
+import { ValueLabelWithNumber } from './ValueLabelWithNumber';
 import { applyKey } from './utils';
 
 const MultiSelect = ({
@@ -31,27 +31,23 @@ const MultiSelect = ({
   renderEmptySelected,
   gridArea,
   validate,
-  size,
-  isOpenState,
-  isEnableOutSideClick,
-  shouldRenderInDrop,
-  placeholder,
   delimiter,
   ...rest
 }) => {
+
   const [internalValue, updateInternalValue] = useState(valueProp);
-  const [internalIsExcluded, updateInternalIsExcluded] = useState(
-    isExcludedProp,
-  );
-  const [isOpen, updateIsOpen] = useState(isOpenState || false);
+  const [
+    internalIsExcluded,
+    updateInternalIsExcluded,
+  ] = useState(isExcludedProp);
+  const [isOpen, updateIsOpen] = useState(false);
   const [search, updateSearch] = useState('');
   const [searchArray, updateSearchArray] = useState([]);
 
-  const isExcluded = withUpdateCancelButtons
-    ? internalIsExcluded
-    : isExcludedProp;
+  const isExcluded = withUpdateCancelButtons ? 
+  internalIsExcluded : isExcludedProp;
 
-  const value = withUpdateCancelButtons ? internalValue : valueProp;
+  const value = withUpdateCancelButtons ? internalValue: valueProp;
 
   useEffect(() => {
     if (!isOpen && withUpdateCancelButtons) {
@@ -73,14 +69,13 @@ const MultiSelect = ({
       updateInternalIsExcluded(isExcludedProp);
     }
     updateIsOpen(true);
-  };
+  }
 
   const onIncludeExclude = newValue => {
-    const updater = withUpdateCancelButtons
-      ? updateInternalIsExcluded
-      : onIncExcChange;
+    const updater = withUpdateCancelButtons ? 
+    updateInternalIsExcluded : onIncExcChange;
     updater(newValue);
-  };
+  }
 
   const onCancelClick = () => {
     onClose();
@@ -92,7 +87,7 @@ const MultiSelect = ({
       onIncExcChange(isExcluded);
     }
     updateIsOpen(false);
-  };
+  }
 
   const getValue = (index, array, param) => applyKey(array[index], param);
 
@@ -131,7 +126,7 @@ const MultiSelect = ({
         exp.test(getValue(index, options, labelKey)),
       );
     }
-  }, [options, search]);
+  }, [options, search])
 
   const getOptionsNotMatchingSearch = useCallback(() => {
     if (delimiter) {
@@ -155,18 +150,17 @@ const MultiSelect = ({
         (item, index) => !exp.test(getValue(index, options, labelKey)),
       );
     }
-  }, [options, search]);
+  }, [options, search])
 
   const onSelectValueChange = ({ value: newValue }) => {
     const valuesNotMatchingSearch = getOptionsNotMatchingSearch()
-      .filter((item, index, opt) =>
-        value.includes(getValue(index, opt, valueKey)),
-      )
-      .map((item, index, opt) => getValue(index, opt, valueKey));
+    .filter((item, index, opt) => 
+    value.includes(getValue(index, opt, valueKey)))
+    .map((item, index, opt)=> getValue(index, opt, valueKey));
 
-    const updater = withUpdateCancelButtons
-      ? updateInternalValue
-      : onValueChange;
+    const updater = withUpdateCancelButtons ? 
+    updateInternalValue : 
+    onValueChange;
     updater([...valuesNotMatchingSearch, ...newValue]);
   };
 
@@ -203,13 +197,17 @@ const MultiSelect = ({
   };
 
   const renderLabel = () => {
+    const getLabel = () => {
+      if (withInclusionExclusion && isExcluded) return 'Excluded';
+      if (withInclusionExclusion && isExcluded === false) return 'Included';
+      return 'Selected';
+    };
+
     return (
-      <ValueLabelWithIcon
-        withInclusionExclusion={withInclusionExclusion}
-        isExcluded={isExcluded}
-        size={size}
-        placeholder={placeholder}
-        value={value}
+      <ValueLabelWithNumber
+        value={getLabel()}
+        number={value.length}
+        color="brand"
       />
     );
   };
@@ -236,9 +234,6 @@ const MultiSelect = ({
         onSearch={onSearch}
         searchPlaceholder={searchPlaceholder}
         emptySearchMessage={emptySearchMessage}
-        isEnableOutSideClick={isEnableOutSideClick}
-        shouldRenderInDrop={shouldRenderInDrop}
-        size={size}
         {...rest}
       />
     </Box>
