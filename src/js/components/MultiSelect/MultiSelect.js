@@ -184,7 +184,7 @@ const MultiSelect = ({
         isExcluded={isExcluded}
         size={size}
         placeholder={placeholder}
-        value={shouldRenderLabel() ? (options || []).filter(obj => 
+        value={shouldRenderLabel() && !custom ? (options || []).filter(obj => 
           value.includes(applyKey(obj, valueKey)))
             .map(optionObj => applyKey(optionObj, labelKey)): value
         }

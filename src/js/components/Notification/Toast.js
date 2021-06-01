@@ -38,9 +38,8 @@ export function Toast({ type, id, msg, onClose }) {
         </Text>
       </IconWrapper>
       <Button
-        icon={<CloseIcon />}
+        icon={<CloseIcon color={IconColor} />}
         onClick={handleClose}
-        color={IconColor}
         style={{ display: 'flex', padding: 0 }}
       />
     </Box>
