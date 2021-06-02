@@ -35,6 +35,7 @@ const MultiSelect = ({
   isEnableOutSideClick,
   shouldRenderInDrop,
   placeholder,
+  delimiter,
   ...rest
 }) => {
   const [internalValue, updateInternalValue] = useState(valueProp);
@@ -43,6 +44,7 @@ const MultiSelect = ({
   );
   const [isOpen, updateIsOpen] = useState(isOpenState || false);
   const [search, updateSearch] = useState('');
+  const [multiSearch, updateMultiSearch] = useState([]);
 
   const isExcluded = withUpdateCancelButtons
     ? internalIsExcluded
@@ -94,14 +96,31 @@ const MultiSelect = ({
   const getValue = (index, array, param) => applyKey(array[index], param);
 
   const onSearchChange = searchInput => {
-    const escapedText = searchInput.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+    const escapedText = searchInput.replace(/[-\\^$*+?.()[\]{}]/g, '\\$&');
+    if (delimiter) {
+      if (searchInput === '') {
+        updateMultiSearch([]);
+      } else {
+        const escapedTextSplit = escapedText
+          .split(delimiter)
+          .map(item => item.trim());
+          updateMultiSearch(escapedTextSplit);
+      }
+    }
     updateSearch(escapedText);
   };
 
   const getOptions = useCallback(() => {
-    if (!search) {
-      return options;
+    if (delimiter) {
+      if (multiSearch.length === 0) return options;
+      return options.filter(item =>
+        multiSearch.some(searchEl => {
+          const exp = new RegExp(`^${searchEl}$`, 'i');
+          return exp.test(item.label);
+        }),
+      );
     }
+    if (!search) return options;
     const exp = new RegExp(search, 'i');
     return options.filter((item, index) =>
       exp.test(getValue(index, options, labelKey)),
@@ -109,9 +128,17 @@ const MultiSelect = ({
   }, [options, search]);
 
   const getOptionsNotMatchingSearch = useCallback(() => {
-    if (!search) {
-      return [];
+    if (delimiter) {
+      if (!multiSearch.length) return [];
+      return options.filter(
+        item =>
+          !multiSearch.some(searchEl => {
+            const exp = new RegExp(`^${searchEl}$`, 'i');
+            return exp.test(item.label);
+          }),
+      );
     }
+    if (!search) return [];
     const exp = new RegExp(search, 'i');
     return options.filter(
       (item, index) => !exp.test(getValue(index, options, labelKey)),
