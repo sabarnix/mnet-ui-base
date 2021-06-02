@@ -42,7 +42,7 @@ const MultiSelect = ({
   ] = useState(isExcludedProp);
   const [isOpen, updateIsOpen] = useState(false);
   const [search, updateSearch] = useState('');
-  const [searchArray, updateSearchArray] = useState([]);
+  const [multiSearch, updateMultiSearch] = useState([]);
 
   const isExcluded = withUpdateCancelButtons ? 
   internalIsExcluded : isExcludedProp;
@@ -95,12 +95,12 @@ const MultiSelect = ({
     const escapedText = searchInput.replace(/[-\\^$*+?.()[\]{}]/g, '\\$&');
     if (delimiter) {
       if (searchInput === '') {
-        updateSearchArray([]);
+        updateMultiSearch([]);
       } else {
         const escapedTextSplit = escapedText
           .split(delimiter)
           .map(item => item.trim());
-          updateSearchArray(escapedTextSplit);
+          updateMultiSearch(escapedTextSplit);
       }
     }
     updateSearch(escapedText);
@@ -108,16 +108,16 @@ const MultiSelect = ({
 
   const getOptions = useCallback(() => {
     if (delimiter) {
-      if (searchArray.length === 0) {
+      if (multiSearch.length === 0) {
         return options;
       }
       return options.filter(item =>
-        searchArray.some(searchEl => {
+        multiSearch.some(searchEl => {
           const exp = new RegExp(`^${searchEl}$`, 'i');
           return exp.test(item.label);
         }),
       );
-    } else {
+    } 
       if (!search) {
         return options;
       }
@@ -125,23 +125,23 @@ const MultiSelect = ({
       return options.filter((item, index) =>
         exp.test(getValue(index, options, labelKey)),
       );
-    }
+    
   }, [options, search])
 
   const getOptionsNotMatchingSearch = useCallback(() => {
     if (delimiter) {
-      if (!searchArray.length) {
+      if (!multiSearch.length) {
         return [];
       }
       const filteredOptions = options.filter(
         item =>
-          !searchArray.some(searchEl => {
+          !multiSearch.some(searchEl => {
             const exp = new RegExp(`^${searchEl}$`, 'i');
             return exp.test(item.label);
           }),
       );
       return filteredOptions;
-    } else {
+    } 
       if (!search) {
         return [];
       }
@@ -149,7 +149,7 @@ const MultiSelect = ({
       return options.filter(
         (item, index) => !exp.test(getValue(index, options, labelKey)),
       );
-    }
+    
   }, [options, search])
 
   const onSelectValueChange = ({ value: newValue }) => {
