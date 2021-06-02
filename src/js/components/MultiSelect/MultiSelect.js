@@ -31,6 +31,7 @@ const MultiSelect = ({
   renderEmptySelected,
   gridArea,
   validate,
+  delimiter,
   ...rest
 }) => {
 
@@ -41,6 +42,7 @@ const MultiSelect = ({
   ] = useState(isExcludedProp);
   const [isOpen, updateIsOpen] = useState(false);
   const [search, updateSearch] = useState('');
+  const [multiSearch, updateMultiSearch] = useState([]);
 
   const isExcluded = withUpdateCancelButtons ? 
   internalIsExcluded : isExcludedProp;
@@ -90,14 +92,31 @@ const MultiSelect = ({
   const getValue = (index, array, param) => applyKey(array[index], param);
 
   const onSearchChange = searchInput => {
-    const escapedText = searchInput.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+    const escapedText = searchInput.replace(/[-\\^$*+?.()[\]{}]/g, '\\$&');
+    if (delimiter) {
+      if (searchInput === '') {
+        updateMultiSearch([]);
+      } else {
+        const escapedTextSplit = escapedText
+          .split(delimiter)
+          .map(item => item.trim());
+          updateMultiSearch(escapedTextSplit);
+      }
+    }
     updateSearch(escapedText);
   };
 
   const getOptions = useCallback(() => {
-    if (!search) {
-      return options;
+    if (delimiter) {
+      if (multiSearch.length === 0) return options;
+      return options.filter(item =>
+        multiSearch.some(searchEl => {
+          const exp = new RegExp(`^${searchEl}$`, 'i');
+          return exp.test(item.label);
+        }),
+      );
     }
+    if (!search) return options;
     const exp = new RegExp(search, 'i');
     return options.filter((item, index) =>
       exp.test(getValue(index, options, labelKey)),
@@ -105,24 +124,33 @@ const MultiSelect = ({
   }, [options, search])
 
   const getOptionsNotMatchingSearch = useCallback(() => {
-    if (!search) {
-      return [];
+    if (delimiter) {
+      if (!multiSearch.length) return [];
+      return options.filter(
+        item =>
+          !multiSearch.some(searchEl => {
+            const exp = new RegExp(`^${searchEl}$`, 'i');
+            return exp.test(item.label);
+          }),
+      );
     }
+    if (!search) return [];
     const exp = new RegExp(search, 'i');
-    return options.filter((item, index) =>
-      !exp.test(getValue(index, options, labelKey)),
+    return options.filter(
+      (item, index) => !exp.test(getValue(index, options, labelKey)),
     );
   }, [options, search])
 
   const onSelectValueChange = ({ value: newValue }) => {
     const valuesNotMatchingSearch = getOptionsNotMatchingSearch()
-    .filter((item, index, opt) => 
-    value.includes(getValue(index, opt, valueKey)))
-    .map((item, index, opt)=> getValue(index, opt, valueKey));
+      .filter((item, index, opt) =>
+        value.includes(getValue(index, opt, valueKey)),
+      )
+      .map((item, index, opt) => getValue(index, opt, valueKey));
 
-    const updater = withUpdateCancelButtons ? 
-    updateInternalValue : 
-    onValueChange;
+    const updater = withUpdateCancelButtons
+      ? updateInternalValue
+      : onValueChange;
     updater([...valuesNotMatchingSearch, ...newValue]);
   };
 
