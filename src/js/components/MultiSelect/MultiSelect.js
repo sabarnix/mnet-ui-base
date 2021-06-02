@@ -115,7 +115,7 @@ const MultiSelect = ({
       if (multiSearch.length === 0) return options;
       return options.filter(item =>
         multiSearch.some(searchEl => {
-          const exp = new RegExp(`^${searchEl}$`, 'i');
+          const exp = new RegExp(searchEl, 'i');
           return exp.test(item.label);
         }),
       );
@@ -133,7 +133,7 @@ const MultiSelect = ({
       return options.filter(
         item =>
           !multiSearch.some(searchEl => {
-            const exp = new RegExp(`^${searchEl}$`, 'i');
+            const exp = new RegExp(searchEl, 'i');
             return exp.test(item.label);
           }),
       );
