@@ -118,18 +118,15 @@ const MultiSelect = ({
       );
     }
     if (!search) return options;
-
     const exp = new RegExp(search, 'i');
     return options.filter((item, index) =>
       exp.test(getValue(index, options, labelKey)),
     );
-    
   }, [options, search])
 
   const getOptionsNotMatchingSearch = useCallback(() => {
     if (delimiter) {
       if (!multiSearch.length) return [];
-
       return options.filter(
         item =>
           !multiSearch.some(searchEl => {
@@ -139,12 +136,10 @@ const MultiSelect = ({
       );
     }
     if (!search) return [];
-
     const exp = new RegExp(search, 'i');
     return options.filter(
       (item, index) => !exp.test(getValue(index, options, labelKey)),
     );
-    
   }, [options, search])
 
   const onSelectValueChange = ({ value: newValue }) => {

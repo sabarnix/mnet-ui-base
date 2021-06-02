@@ -10484,8 +10484,7 @@ const options = [
     "id": 15070,
     "label": "8888x9999",
   },
-]
-;
+];
 
 const Example = () => {
   const [value, setValue] = useState([]);
