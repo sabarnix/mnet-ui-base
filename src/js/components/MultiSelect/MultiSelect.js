@@ -109,7 +109,6 @@ const MultiSelect = ({
   const getOptions = useCallback(() => {
     if (delimiter) {
       if (multiSearch.length === 0) return options;
-
       return options.filter(item =>
         multiSearch.some(searchEl => {
           const exp = new RegExp(`^${searchEl}$`, 'i');
@@ -144,13 +143,14 @@ const MultiSelect = ({
 
   const onSelectValueChange = ({ value: newValue }) => {
     const valuesNotMatchingSearch = getOptionsNotMatchingSearch()
-    .filter((item, index, opt) => 
-    value.includes(getValue(index, opt, valueKey)))
-    .map((item, index, opt)=> getValue(index, opt, valueKey));
+      .filter((item, index, opt) =>
+        value.includes(getValue(index, opt, valueKey)),
+      )
+      .map((item, index, opt) => getValue(index, opt, valueKey));
 
-    const updater = withUpdateCancelButtons ? 
-    updateInternalValue : 
-    onValueChange;
+    const updater = withUpdateCancelButtons
+      ? updateInternalValue
+      : onValueChange;
     updater([...valuesNotMatchingSearch, ...newValue]);
   };
 
