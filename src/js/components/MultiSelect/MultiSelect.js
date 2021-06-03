@@ -111,11 +111,11 @@ const MultiSelect = ({
   };
 
   const getOptions = useCallback(() => {
-    if (delimiter) {
+    if (delimiter && search.includes(delimiter)) {
       if (multiSearch.length === 0) return options;
       return options.filter(item =>
         multiSearch.some(searchEl => {
-          const exp = new RegExp(searchEl, 'i');
+          const exp = new RegExp(`^${searchEl}$`, 'i');
           return exp.test(item.label);
         }),
       );
@@ -128,12 +128,12 @@ const MultiSelect = ({
   }, [options, search]);
 
   const getOptionsNotMatchingSearch = useCallback(() => {
-    if (delimiter) {
+    if (delimiter && search.includes(delimiter)) {
       if (!multiSearch.length) return [];
       return options.filter(
         item =>
           !multiSearch.some(searchEl => {
-            const exp = new RegExp(searchEl, 'i');
+            const exp = new RegExp(`^${searchEl}$`, 'i');
             return exp.test(item.label);
           }),
       );
