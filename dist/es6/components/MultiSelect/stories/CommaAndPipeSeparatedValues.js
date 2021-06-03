@@ -7901,7 +7901,7 @@ var Example = function Example() {
     },
     renderEmptySelected: /*#__PURE__*/React.createElement("span", null, "Empty"),
     withSelectAll: true,
-    delimiter: ","
+    multiSearchDelimiter: ","
   }));
 };
 

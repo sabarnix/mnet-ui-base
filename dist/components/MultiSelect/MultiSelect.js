@@ -50,8 +50,8 @@ var MultiSelect = function MultiSelect(_ref) {
       isEnableOutSideClick = _ref.isEnableOutSideClick,
       shouldRenderInDrop = _ref.shouldRenderInDrop,
       placeholder = _ref.placeholder,
-      delimiter = _ref.delimiter,
-      rest = _objectWithoutPropertiesLoose(_ref, ["width", "height", "options", "value", "labelKey", "valueKey", "onValueChange", "layout", "onSearch", "searchPlaceholder", "emptySearchMessage", "withSelectAll", "withOptionChips", "withUpdateCancelButtons", "searchable", "custom", "withInclusionExclusion", "isExcluded", "onIncExcChange", "renderEmptySelected", "validate", "size", "isOpenState", "isEnableOutSideClick", "shouldRenderInDrop", "placeholder", "delimiter"]);
+      multiSearchDelimiter = _ref.multiSearchDelimiter,
+      rest = _objectWithoutPropertiesLoose(_ref, ["width", "height", "options", "value", "labelKey", "valueKey", "onValueChange", "layout", "onSearch", "searchPlaceholder", "emptySearchMessage", "withSelectAll", "withOptionChips", "withUpdateCancelButtons", "searchable", "custom", "withInclusionExclusion", "isExcluded", "onIncExcChange", "renderEmptySelected", "validate", "size", "isOpenState", "isEnableOutSideClick", "shouldRenderInDrop", "placeholder", "multiSearchDelimiter"]);
 
   var _useState = (0, _react.useState)(valueProp),
       internalValue = _useState[0],
@@ -125,11 +125,11 @@ var MultiSelect = function MultiSelect(_ref) {
   var onSearchChange = function onSearchChange(searchInput) {
     var escapedText = searchInput.replace(/[-\\^$*+?.()[\]{}]/g, '\\$&');
 
-    if (delimiter) {
+    if (multiSearchDelimiter) {
       if (searchInput === '') {
         updateMultiSearch([]);
       } else {
-        var escapedTextSplit = escapedText.split(delimiter).map(function (item) {
+        var escapedTextSplit = escapedText.split(multiSearchDelimiter).map(function (item) {
           return item.trim();
         });
         updateMultiSearch(escapedTextSplit);
@@ -140,7 +140,7 @@ var MultiSelect = function MultiSelect(_ref) {
   };
 
   var getOptions = (0, _react.useCallback)(function () {
-    if (delimiter && search.includes(delimiter)) {
+    if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
       if (multiSearch.length === 0) return options;
       return options.filter(function (item) {
         return multiSearch.some(function (searchEl) {
@@ -157,7 +157,7 @@ var MultiSelect = function MultiSelect(_ref) {
     });
   }, [options, search]);
   var getOptionsNotMatchingSearch = (0, _react.useCallback)(function () {
-    if (delimiter && search.includes(delimiter)) {
+    if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
       if (!multiSearch.length) return [];
       return options.filter(function (item) {
         return !multiSearch.some(function (searchEl) {

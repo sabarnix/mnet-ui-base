@@ -7910,7 +7910,7 @@ var Example = function Example() {
     },
     renderEmptySelected: /*#__PURE__*/_react["default"].createElement("span", null, "Empty"),
     withSelectAll: true,
-    delimiter: ","
+    multiSearchDelimiter: ","
   }));
 };
 

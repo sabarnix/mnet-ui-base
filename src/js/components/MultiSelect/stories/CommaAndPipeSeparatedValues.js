@@ -10509,7 +10509,7 @@ const Example = () => {
         onIncExcChange={nextIncExc => setIncExc(nextIncExc)}
         renderEmptySelected={<span>Empty</span>}
         withSelectAll
-        delimiter=","
+        multiSearchDelimiter=","
       />
     </Box>
   );

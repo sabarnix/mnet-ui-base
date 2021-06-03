@@ -35,7 +35,7 @@ const MultiSelect = ({
   isEnableOutSideClick,
   shouldRenderInDrop,
   placeholder,
-  delimiter,
+  multiSearchDelimiter,
   ...rest
 }) => {
   const [internalValue, updateInternalValue] = useState(valueProp);
@@ -97,12 +97,12 @@ const MultiSelect = ({
 
   const onSearchChange = searchInput => {
     const escapedText = searchInput.replace(/[-\\^$*+?.()[\]{}]/g, '\\$&');
-    if (delimiter) {
+    if (multiSearchDelimiter) {
       if (searchInput === '') {
         updateMultiSearch([]);
       } else {
         const escapedTextSplit = escapedText
-          .split(delimiter)
+          .split(multiSearchDelimiter)
           .map(item => item.trim());
           updateMultiSearch(escapedTextSplit);
       }
@@ -111,7 +111,7 @@ const MultiSelect = ({
   };
 
   const getOptions = useCallback(() => {
-    if (delimiter && search.includes(delimiter)) {
+    if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
       if (multiSearch.length === 0) return options;
       return options.filter(item =>
         multiSearch.some(searchEl => {
@@ -128,7 +128,7 @@ const MultiSelect = ({
   }, [options, search]);
 
   const getOptionsNotMatchingSearch = useCallback(() => {
-    if (delimiter && search.includes(delimiter)) {
+    if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
       if (!multiSearch.length) return [];
       return options.filter(
         item =>
