@@ -1,11 +1,15 @@
 import React, { useContext, useCallback } from 'react';
 import { ThemeContext } from 'styled-components';
 
+import { Add } from 'grommet-icons/icons/Add';
+import { FormSubtract } from 'grommet-icons/icons/FormSubtract';
+
 import { defaultProps } from '../../default-props';
 
 import { InfiniteScroll } from '../InfiniteScroll';
 import { Text } from '../Text';
 import { Box } from '../Box';
+import { Button } from '../Button'
 
 import { OptionsBox, SelectOption } from './StyledMultiSelect';
 import { OptionWithCheckControl } from './OptionWithCheckControl';
@@ -149,8 +153,106 @@ const ColumnSelect = ({
       <Box direction="row" height={height || 'small'}>
         <Box
           width={layout === 'single-column' ? '100%' : '50%'}
-          pad={{ vertical: 'small' }}
+          pad={showSelectAll ? { bottom: 'small' } : { vertical: 'small' }}
         >
+          {!allSelected && !inclusionExclusion && showSelectAll && (
+            <Box {...theme.multiselect.custom.actions.wrapper} border="bottom">
+              <Box>
+                <Button
+                  {...theme.multiselect.includeBtn}
+                  onClick={() => {
+                    setUnsetChips(
+                        options.reduce((acc, item, ind) => {
+                            if (!isDisabled(ind)) acc.push(optionValue(ind));
+                            return acc;
+                          }, []),
+                    );
+                  }}
+                >
+                  <Box align="center" justify="center" direction="row">
+                    <Add
+                      {...theme.multiselect.checkbox.checkmark}
+                      color={theme.multiselect.includeBtn.color}
+                      size="small"
+                    />
+                    <Text weight={600} margin={{ left: 'small' }}>
+                      SELECT ALL
+                    </Text>
+                  </Box>
+                </Button>
+              </Box>
+            </Box>
+          )}
+          {!allSelected &&
+            showSelectAll &&
+            inclusionExclusion &&
+            (isExcluded === null || isExcluded !== null) && (
+              <Box
+                {...theme.multiselect.custom.actions.wrapper}
+                border="bottom"
+              >
+                {[null, false].includes(isExcluded) && (
+                  <Button
+                    {...theme.multiselect.includeBtn}
+                    onClick={event => {
+                      setOption(event, false, SELECT_ALL_INDEX);
+                      setUnsetChips(
+                          options.reduce((acc, item, ind) => {
+                              if (!isDisabled(ind))
+                                acc.push(optionValue(ind));
+                              return acc;
+                            }, []),
+                      );
+                    }}
+                  >
+                    <Box align="center" justify="center" direction="row">
+                      <Add
+                        {...theme.multiselect.checkbox.checkmark}
+                        color={theme.multiselect.includeBtn.color}
+                        size="small"
+                      />
+                      <Text weight={600} margin={{ left: 'small' }}>
+                        INCLUDE ALL
+                      </Text>
+                    </Box>
+                  </Button>
+                )}
+                {!allSelected && isExcluded === null && (
+                  <Box background="light-3" width="1px" height="100%" />
+                )}
+
+                {[null, true].includes(isExcluded) && (
+                  <>
+                    <Button
+                      {...theme.multiselect.excludeBtn}
+                      onClick={event => {
+                        setOption(event, true, SELECT_ALL_INDEX);
+                        setUnsetChips(
+                          allSelected
+                            ? []
+                            : options.reduce((acc, item, ind) => {
+                                if (!isDisabled(ind))
+                                  acc.push(optionValue(ind));
+                                return acc;
+                              }, []),
+                        );
+                      }}
+                    >
+                      <Box align="center" justify="center" direction="row">
+                        <FormSubtract
+                          {...theme.multiselect.checkbox.checkmark}
+                          color={theme.multiselect.excludeBtn.color}
+                          size="small"
+                        />
+                        <Text weight={600} margin={{ left: 'small' }}>
+                          EXCLUDE ALL
+                        </Text>
+                      </Box>
+                    </Button>
+                  </>
+                )}
+              </Box>
+            )}
           <OptionsBox role="menubar" tabIndex="-1">
             {options.length > 0 ? (
               <InfiniteScroll
@@ -166,45 +268,6 @@ const ColumnSelect = ({
                   const optionActive = activeIndex === index;
                   return (
                     <>
-                      {index === 0 && showSelectAll && (
-                        <SelectOption
-                          // eslint-disable-next-line react/no-array-index-key
-                          key={`${index}_select_all`}
-                          ref={optionRef}
-                          tabIndex="-1"
-                          role="menuitem"
-                          a11yTitle="select all options"
-                          hoverIndicator={theme.select.activeColor}
-                          selected={allSelected}
-                          plain
-                          onMouseOver={onActiveOption(-1)}
-                          onFocus={onActiveOption(-1)}
-                          onClick={
-                            !inclusionExclusion ||
-                            (inclusionExclusion && isExcluded !== null)
-                              ? () =>
-                                  setUnsetChips(
-                                    allSelected
-                                      ? []
-                                      : options.reduce((acc, item, ind) => {
-                                        if(!isDisabled(ind)) acc.push(optionValue(ind));
-                                        return acc;
-                                      }, []),
-                                  )
-                              : undefined
-                          }
-                        >
-                          <OptionWithCheckControl
-                            selected={allSelected}
-                            label="Select All"
-                            inclusionExclusion={inclusionExclusion}
-                            isExcluded={isExcluded}
-                            index={SELECT_ALL_INDEX}
-                            onSelect={setOption}
-                            active={activeIndex === -1}
-                          />
-                        </SelectOption>
-                      )}
                       <SelectOption
                         // eslint-disable-next-line react/no-array-index-key
                         key={index}

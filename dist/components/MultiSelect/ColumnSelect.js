@@ -7,6 +7,10 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = require("styled-components");
 
+var _Add = require("grommet-icons/icons/Add");
+
+var _FormSubtract = require("grommet-icons/icons/FormSubtract");
+
 var _defaultProps = require("../../default-props");
 
 var _InfiniteScroll = require("../InfiniteScroll");
@@ -14,6 +18,8 @@ var _InfiniteScroll = require("../InfiniteScroll");
 var _Text = require("../Text");
 
 var _Box = require("../Box");
+
+var _Button = require("../Button");
 
 var _StyledMultiSelect = require("./StyledMultiSelect");
 
@@ -155,10 +161,79 @@ var ColumnSelect = function ColumnSelect(_ref) {
     height: height || 'small'
   }, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     width: layout === 'single-column' ? '100%' : '50%',
-    pad: {
+    pad: showSelectAll ? {
+      bottom: 'small'
+    } : {
       vertical: 'small'
     }
-  }, /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionsBox, {
+  }, !allSelected && !inclusionExclusion && showSelectAll && /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+    border: "bottom"
+  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, null, /*#__PURE__*/_react["default"].createElement(_Button.Button, _extends({}, theme.multiselect.includeBtn, {
+    onClick: function onClick() {
+      setUnsetChips(options.reduce(function (acc, item, ind) {
+        if (!isDisabled(ind)) acc.push(optionValue(ind));
+        return acc;
+      }, []));
+    }
+  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    align: "center",
+    justify: "center",
+    direction: "row"
+  }, /*#__PURE__*/_react["default"].createElement(_Add.Add, _extends({}, theme.multiselect.checkbox.checkmark, {
+    color: theme.multiselect.includeBtn.color,
+    size: "small"
+  })), /*#__PURE__*/_react["default"].createElement(_Text.Text, {
+    weight: 600,
+    margin: {
+      left: 'small'
+    }
+  }, "SELECT ALL"))))), !allSelected && showSelectAll && inclusionExclusion && (isExcluded === null || isExcluded !== null) && /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+    border: "bottom"
+  }), [null, false].includes(isExcluded) && /*#__PURE__*/_react["default"].createElement(_Button.Button, _extends({}, theme.multiselect.includeBtn, {
+    onClick: function onClick(event) {
+      setOption(event, false, SELECT_ALL_INDEX);
+      setUnsetChips(options.reduce(function (acc, item, ind) {
+        if (!isDisabled(ind)) acc.push(optionValue(ind));
+        return acc;
+      }, []));
+    }
+  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    align: "center",
+    justify: "center",
+    direction: "row"
+  }, /*#__PURE__*/_react["default"].createElement(_Add.Add, _extends({}, theme.multiselect.checkbox.checkmark, {
+    color: theme.multiselect.includeBtn.color,
+    size: "small"
+  })), /*#__PURE__*/_react["default"].createElement(_Text.Text, {
+    weight: 600,
+    margin: {
+      left: 'small'
+    }
+  }, "INCLUDE ALL"))), !allSelected && isExcluded === null && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    background: "light-3",
+    width: "1px",
+    height: "100%"
+  }), [null, true].includes(isExcluded) && /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, /*#__PURE__*/_react["default"].createElement(_Button.Button, _extends({}, theme.multiselect.excludeBtn, {
+    onClick: function onClick(event) {
+      setOption(event, true, SELECT_ALL_INDEX);
+      setUnsetChips(allSelected ? [] : options.reduce(function (acc, item, ind) {
+        if (!isDisabled(ind)) acc.push(optionValue(ind));
+        return acc;
+      }, []));
+    }
+  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    align: "center",
+    justify: "center",
+    direction: "row"
+  }, /*#__PURE__*/_react["default"].createElement(_FormSubtract.FormSubtract, _extends({}, theme.multiselect.checkbox.checkmark, {
+    color: theme.multiselect.excludeBtn.color,
+    size: "small"
+  })), /*#__PURE__*/_react["default"].createElement(_Text.Text, {
+    weight: 600,
+    margin: {
+      left: 'small'
+    }
+  }, "EXCLUDE ALL"))))), /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionsBox, {
     role: "menubar",
     tabIndex: "-1"
   }, options.length > 0 ? /*#__PURE__*/_react["default"].createElement(_InfiniteScroll.InfiniteScroll, {
@@ -171,33 +246,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     var optionDisabled = isDisabled(index);
     var optionSelected = isSelected(index);
     var optionActive = activeIndex === index;
-    return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, index === 0 && showSelectAll && /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.SelectOption // eslint-disable-next-line react/no-array-index-key
-    , {
-      key: index + "_select_all",
-      ref: optionRef,
-      tabIndex: "-1",
-      role: "menuitem",
-      a11yTitle: "select all options",
-      hoverIndicator: theme.select.activeColor,
-      selected: allSelected,
-      plain: true,
-      onMouseOver: onActiveOption(-1),
-      onFocus: onActiveOption(-1),
-      onClick: !inclusionExclusion || inclusionExclusion && isExcluded !== null ? function () {
-        return setUnsetChips(allSelected ? [] : options.reduce(function (acc, item, ind) {
-          if (!isDisabled(ind)) acc.push(optionValue(ind));
-          return acc;
-        }, []));
-      } : undefined
-    }, /*#__PURE__*/_react["default"].createElement(_OptionWithCheckControl.OptionWithCheckControl, {
-      selected: allSelected,
-      label: "Select All",
-      inclusionExclusion: inclusionExclusion,
-      isExcluded: isExcluded,
-      index: SELECT_ALL_INDEX,
-      onSelect: setOption,
-      active: activeIndex === -1
-    })), /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.SelectOption // eslint-disable-next-line react/no-array-index-key
+    return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.SelectOption // eslint-disable-next-line react/no-array-index-key
     , {
       key: index,
       ref: optionRef,
