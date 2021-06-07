@@ -185,6 +185,7 @@ const MultiSelect = ({
           custom={custom}
           validate={validate}
           showSelectAllOnSearch={showSelectAllOnSearch}
+          multiSearchDelimiter={multiSearchDelimiter}
           {...props}
         />
       );

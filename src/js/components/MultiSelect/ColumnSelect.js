@@ -54,6 +54,7 @@ const ColumnSelect = ({
   validate,
   onChange,
   showSelectAllOnSearch,
+  multiSearchDelimiter,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
@@ -160,7 +161,10 @@ const ColumnSelect = ({
             !inclusionExclusion &&
             showSelectAll &&
             (!showSelectAllOnSearch ||
-              (showSelectAllOnSearch && searchValue !== '')) && (
+              (showSelectAllOnSearch && searchValue !== '')) &&
+            (!multiSearchDelimiter ||
+              (multiSearchDelimiter &&
+                searchValue.includes(multiSearchDelimiter))) && (
               <Box
                 {...theme.multiselect.custom.actions.wrapper}
                 border="bottom"
@@ -196,7 +200,10 @@ const ColumnSelect = ({
             inclusionExclusion &&
             (isExcluded === null || isExcluded !== null) &&
             (!showSelectAllOnSearch ||
-              (showSelectAllOnSearch && searchValue !== '')) && (
+              (showSelectAllOnSearch && searchValue !== '')) &&
+            (!multiSearchDelimiter ||
+              (multiSearchDelimiter &&
+                searchValue.includes(multiSearchDelimiter))) && (
               <Box
                 {...theme.multiselect.custom.actions.wrapper}
                 border="bottom"

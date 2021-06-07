@@ -50,7 +50,8 @@ var ColumnSelect = function ColumnSelect(_ref) {
       custom = _ref.custom,
       validate = _ref.validate,
       onChange = _ref.onChange,
-      showSelectAllOnSearch = _ref.showSelectAllOnSearch;
+      showSelectAllOnSearch = _ref.showSelectAllOnSearch,
+      multiSearchDelimiter = _ref.multiSearchDelimiter;
   var theme = useContext(ThemeContext) || defaultProps.theme;
 
   var selectOptionsStyle = _extends({}, theme.select.options.box, theme.select.options.container);
@@ -142,7 +143,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     } : {
       vertical: 'small'
     }
-  }, !allSelected && !inclusionExclusion && showSelectAll && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+  }, !allSelected && !inclusionExclusion && showSelectAll && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
     border: "bottom"
   }), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.includeBtn, {
     onClick: function onClick() {
@@ -163,7 +164,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     margin: {
       left: 'small'
     }
-  }, "SELECT ALL"))))), !allSelected && showSelectAll && inclusionExclusion && (isExcluded === null || isExcluded !== null) && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+  }, "SELECT ALL"))))), !allSelected && showSelectAll && inclusionExclusion && (isExcluded === null || isExcluded !== null) && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
     border: "bottom"
   }), [null, false].includes(isExcluded) && /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.includeBtn, {
     onClick: function onClick(event) {
