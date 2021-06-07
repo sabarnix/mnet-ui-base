@@ -37,7 +37,8 @@ var OptionChips = function OptionChips(_ref) {
       inclusionExclusion = _ref.inclusionExclusion,
       isExcluded = _ref.isExcluded,
       renderEmptySelected = _ref.renderEmptySelected,
-      layout = _ref.layout;
+      layout = _ref.layout,
+      showSelectAll = _ref.showSelectAll;
 
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
@@ -53,7 +54,10 @@ var OptionChips = function OptionChips(_ref) {
     }, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
       border: theme.multiselect.chips.clear.border,
       height: theme.multiselect.chips.clear.height
-    }, /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.multiselect.chips.clear, "CLEAR ALL")));
+    }, /*#__PURE__*/_react["default"].createElement(_Text.Text, _extends({}, theme.multiselect.chips.clear, {
+      color: "dark-3",
+      weight: 400
+    }), "CLEAR ALL")));
   };
 
   var getSelectedOption = function getSelectedOption() {
@@ -80,7 +84,8 @@ var OptionChips = function OptionChips(_ref) {
     width: width,
     height: height
   }, theme.multiselect.chips.wrapper, {
-    wrap: true
+    wrap: true,
+    border: showSelectAll ? 'top' : 'none'
   }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     width: "100%"
   }, getSelectedOption().map(function (item) {

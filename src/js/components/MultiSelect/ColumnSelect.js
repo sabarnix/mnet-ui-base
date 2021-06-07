@@ -114,6 +114,7 @@ const ColumnSelect = ({
       isExcluded={isExcluded}
       renderEmptySelected={renderEmptySelected}
       layout={layout}
+      showSelectAll={showSelectAll}
     />
   );
 
@@ -155,120 +156,9 @@ const ColumnSelect = ({
       <Box direction="row" height={height || 'small'}>
         <Box
           width={layout === 'single-column' ? '100%' : '50%'}
-          pad={showSelectAll ? { bottom: 'small' } : { vertical: 'small' }}
+          pad={showSelectAll ? { top: 'small' } : { vertical: 'small' }}
         >
-          {!allSelected &&
-            !inclusionExclusion &&
-            showSelectAll &&
-            (!showSelectAllOnSearch ||
-              (showSelectAllOnSearch && searchValue !== '')) &&
-            (!multiSearchDelimiter ||
-              (multiSearchDelimiter &&
-                searchValue.includes(multiSearchDelimiter))) && (
-              <Box
-                {...theme.multiselect.custom.actions.wrapper}
-                border="bottom"
-              >
-                <Box>
-                  <Button
-                    color={theme.global.colors.brand}
-                    onClick={() => {
-                      setUnsetChips(
-                        options.reduce((acc, item, ind) => {
-                          if (!isDisabled(ind)) acc.push(optionValue(ind));
-                          return acc;
-                        }, []),
-                      );
-                    }}
-                  >
-                    <Box align="center" justify="center" direction="row">
-                      <Add
-                        color={theme.global.colors.brand}
-                        size="small"
-                      />
-                      <Text weight={600} margin={{ left: 'small' }}>
-                        SELECT ALL
-                      </Text>
-                    </Box>
-                  </Button>
-                </Box>
-              </Box>
-            )}
-          {!allSelected &&
-            showSelectAll &&
-            inclusionExclusion &&
-            (isExcluded === null || isExcluded !== null) &&
-            (!showSelectAllOnSearch ||
-              (showSelectAllOnSearch && searchValue !== '')) &&
-            (!multiSearchDelimiter ||
-              (multiSearchDelimiter &&
-                searchValue.includes(multiSearchDelimiter))) && (
-              <Box
-                {...theme.multiselect.custom.actions.wrapper}
-                border="bottom"
-              >
-                {[null, false].includes(isExcluded) && (
-                  <Button
-                    {...theme.multiselect.includeBtn}
-                    onClick={event => {
-                      setOption(event, false, SELECT_ALL_INDEX);
-                      setUnsetChips(
-                        options.reduce((acc, item, ind) => {
-                          if (!isDisabled(ind)) acc.push(optionValue(ind));
-                          return acc;
-                        }, []),
-                      );
-                    }}
-                  >
-                    <Box align="center" justify="center" direction="row">
-                      <Add
-                        {...theme.multiselect.checkbox.checkmark}
-                        color={theme.multiselect.includeBtn.color}
-                        size="small"
-                      />
-                      <Text weight={600} margin={{ left: 'small' }}>
-                        INCLUDE ALL
-                      </Text>
-                    </Box>
-                  </Button>
-                )}
-                {!allSelected && isExcluded === null && (
-                  <Box background="light-3" width="1px" height="100%" />
-                )}
-
-                {[null, true].includes(isExcluded) && (
-                  <>
-                    <Button
-                      {...theme.multiselect.excludeBtn}
-                      onClick={event => {
-                        setOption(event, true, SELECT_ALL_INDEX);
-                        setUnsetChips(
-                          allSelected
-                            ? []
-                            : options.reduce((acc, item, ind) => {
-                                if (!isDisabled(ind))
-                                  acc.push(optionValue(ind));
-                                return acc;
-                              }, []),
-                        );
-                      }}
-                    >
-                      <Box align="center" justify="center" direction="row">
-                        <FormSubtract
-                          {...theme.multiselect.checkbox.checkmark}
-                          color={theme.multiselect.excludeBtn.color}
-                          size="small"
-                        />
-                        <Text weight={600} margin={{ left: 'small' }}>
-                          EXCLUDE ALL
-                        </Text>
-                      </Box>
-                    </Button>
-                  </>
-                )}
-              </Box>
-            )}
-          <OptionsBox role="menubar" tabIndex="-1">
+          <OptionsBox role="menubar" tabIndex="-1" {...theme.multiselect.custom.textAreaWrap}>
             {options.length > 0 ? (
               <InfiniteScroll
                 items={options}
@@ -339,6 +229,115 @@ const ColumnSelect = ({
               </SelectOption>
             )}
           </OptionsBox>
+          {!allSelected &&
+            !inclusionExclusion &&
+            showSelectAll &&
+            (!showSelectAllOnSearch ||
+              (showSelectAllOnSearch && searchValue !== '')) &&
+            (!multiSearchDelimiter ||
+              (multiSearchDelimiter &&
+                searchValue.includes(multiSearchDelimiter))) && (
+              <Box
+                {...theme.multiselect.custom.actions.wrapper}
+                border="top"
+                justify="start"
+              >
+                <Box>
+                  <Button
+                    color={theme.global.colors.brand}
+                    onClick={() => {
+                      setUnsetChips(
+                        options.reduce((acc, item, ind) => {
+                          if (!isDisabled(ind)) acc.push(optionValue(ind));
+                          return acc;
+                        }, []),
+                      );
+                    }}
+                  >
+                    <Box align="center" direction="row">
+                      <Text margin={{ left: 'small' }}>
+                        SELECT ALL
+                      </Text>
+                    </Box>
+                  </Button>
+                </Box>
+              </Box>
+            )}
+          {!allSelected &&
+            showSelectAll &&
+            inclusionExclusion &&
+            (isExcluded === null || isExcluded !== null) &&
+            (!showSelectAllOnSearch ||
+              (showSelectAllOnSearch && searchValue !== '')) &&
+            (!multiSearchDelimiter ||
+              (multiSearchDelimiter &&
+                searchValue.includes(multiSearchDelimiter))) && (
+              <Box
+                {...theme.multiselect.custom.actions.wrapper}
+                border="top"
+                justify={[true,false].includes(isExcluded) ? 'start' : 'evenly'}
+              >
+                {[null, false].includes(isExcluded) && (
+                  <Button
+                    {...theme.multiselect.includeBtn}
+                    onClick={event => {
+                      setOption(event, false, SELECT_ALL_INDEX);
+                      setUnsetChips(
+                        options.reduce((acc, item, ind) => {
+                          if (!isDisabled(ind)) acc.push(optionValue(ind));
+                          return acc;
+                        }, []),
+                      );
+                    }}
+                  >
+                    <Box align="center" justify="center" direction="row">
+                      <Add
+                        {...theme.multiselect.checkbox.checkmark}
+                        color={theme.multiselect.includeBtn.color}
+                        size="small"
+                      />
+                      <Text margin={{ left: 'small' }}>
+                        INCLUDE
+                      </Text>
+                    </Box>
+                  </Button>
+                )}
+                {!allSelected && isExcluded === null && (
+                  <Box background="light-3" width="1px" height="100%" />
+                )}
+
+                {[null, true].includes(isExcluded) && (
+                  <>
+                    <Button
+                      {...theme.multiselect.excludeBtn}
+                      onClick={event => {
+                        setOption(event, true, SELECT_ALL_INDEX);
+                        setUnsetChips(
+                          allSelected
+                            ? []
+                            : options.reduce((acc, item, ind) => {
+                                if (!isDisabled(ind))
+                                  acc.push(optionValue(ind));
+                                return acc;
+                              }, []),
+                        );
+                      }}
+                    >
+                      <Box align="center" justify="center" direction="row">
+                        <FormSubtract
+                          {...theme.multiselect.checkbox.checkmark}
+                          color={theme.multiselect.excludeBtn.color}
+                          size="small"
+                        />
+                        <Text margin={{ left: 'small' }}>
+                          EXCLUDE
+                        </Text>
+                      </Box>
+                    </Button>
+                  </>
+                )}
+              </Box>
+            )}
         </Box>
         {layout === 'double-column' && (
           <Box

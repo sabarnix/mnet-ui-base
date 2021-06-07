@@ -99,7 +99,8 @@ var ColumnSelect = function ColumnSelect(_ref) {
       inclusionExclusion: inclusionExclusion,
       isExcluded: isExcluded,
       renderEmptySelected: renderEmptySelected,
-      layout: layout
+      layout: layout,
+      showSelectAll: showSelectAll
     });
   };
 
@@ -139,82 +140,14 @@ var ColumnSelect = function ColumnSelect(_ref) {
   }, /*#__PURE__*/React.createElement(Box, {
     width: layout === 'single-column' ? '100%' : '50%',
     pad: showSelectAll ? {
-      bottom: 'small'
+      top: 'small'
     } : {
       vertical: 'small'
     }
-  }, !allSelected && !inclusionExclusion && showSelectAll && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
-    border: "bottom"
-  }), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Button, {
-    color: theme.global.colors.brand,
-    onClick: function onClick() {
-      setUnsetChips(options.reduce(function (acc, item, ind) {
-        if (!isDisabled(ind)) acc.push(optionValue(ind));
-        return acc;
-      }, []));
-    }
-  }, /*#__PURE__*/React.createElement(Box, {
-    align: "center",
-    justify: "center",
-    direction: "row"
-  }, /*#__PURE__*/React.createElement(Add, {
-    color: theme.global.colors.brand,
-    size: "small"
-  }), /*#__PURE__*/React.createElement(Text, {
-    weight: 600,
-    margin: {
-      left: 'small'
-    }
-  }, "SELECT ALL"))))), !allSelected && showSelectAll && inclusionExclusion && (isExcluded === null || isExcluded !== null) && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
-    border: "bottom"
-  }), [null, false].includes(isExcluded) && /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.includeBtn, {
-    onClick: function onClick(event) {
-      setOption(event, false, SELECT_ALL_INDEX);
-      setUnsetChips(options.reduce(function (acc, item, ind) {
-        if (!isDisabled(ind)) acc.push(optionValue(ind));
-        return acc;
-      }, []));
-    }
-  }), /*#__PURE__*/React.createElement(Box, {
-    align: "center",
-    justify: "center",
-    direction: "row"
-  }, /*#__PURE__*/React.createElement(Add, _extends({}, theme.multiselect.checkbox.checkmark, {
-    color: theme.multiselect.includeBtn.color,
-    size: "small"
-  })), /*#__PURE__*/React.createElement(Text, {
-    weight: 600,
-    margin: {
-      left: 'small'
-    }
-  }, "INCLUDE ALL"))), !allSelected && isExcluded === null && /*#__PURE__*/React.createElement(Box, {
-    background: "light-3",
-    width: "1px",
-    height: "100%"
-  }), [null, true].includes(isExcluded) && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.excludeBtn, {
-    onClick: function onClick(event) {
-      setOption(event, true, SELECT_ALL_INDEX);
-      setUnsetChips(allSelected ? [] : options.reduce(function (acc, item, ind) {
-        if (!isDisabled(ind)) acc.push(optionValue(ind));
-        return acc;
-      }, []));
-    }
-  }), /*#__PURE__*/React.createElement(Box, {
-    align: "center",
-    justify: "center",
-    direction: "row"
-  }, /*#__PURE__*/React.createElement(FormSubtract, _extends({}, theme.multiselect.checkbox.checkmark, {
-    color: theme.multiselect.excludeBtn.color,
-    size: "small"
-  })), /*#__PURE__*/React.createElement(Text, {
-    weight: 600,
-    margin: {
-      left: 'small'
-    }
-  }, "EXCLUDE ALL"))))), /*#__PURE__*/React.createElement(OptionsBox, {
+  }, /*#__PURE__*/React.createElement(OptionsBox, _extends({
     role: "menubar",
     tabIndex: "-1"
-  }, options.length > 0 ? /*#__PURE__*/React.createElement(InfiniteScroll, {
+  }, theme.multiselect.custom.textAreaWrap), options.length > 0 ? /*#__PURE__*/React.createElement(InfiniteScroll, {
     items: options,
     step: theme.select.step,
     onMore: onMore,
@@ -257,7 +190,70 @@ var ColumnSelect = function ColumnSelect(_ref) {
     hoverIndicator: "background",
     disabled: true,
     option: "No values available"
-  }, /*#__PURE__*/React.createElement(Box, selectOptionsStyle, /*#__PURE__*/React.createElement(Text, theme.select.container.text, emptySearchMessage || 'No values available'))))), layout === 'double-column' && /*#__PURE__*/React.createElement(Box, {
+  }, /*#__PURE__*/React.createElement(Box, selectOptionsStyle, /*#__PURE__*/React.createElement(Text, theme.select.container.text, emptySearchMessage || 'No values available')))), !allSelected && !inclusionExclusion && showSelectAll && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+    border: "top",
+    justify: "start"
+  }), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Button, {
+    color: theme.global.colors.brand,
+    onClick: function onClick() {
+      setUnsetChips(options.reduce(function (acc, item, ind) {
+        if (!isDisabled(ind)) acc.push(optionValue(ind));
+        return acc;
+      }, []));
+    }
+  }, /*#__PURE__*/React.createElement(Box, {
+    align: "center",
+    direction: "row"
+  }, /*#__PURE__*/React.createElement(Text, {
+    margin: {
+      left: 'small'
+    }
+  }, "SELECT ALL"))))), !allSelected && showSelectAll && inclusionExclusion && (isExcluded === null || isExcluded !== null) && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+    border: "top",
+    justify: [true, false].includes(isExcluded) ? 'start' : 'evenly'
+  }), [null, false].includes(isExcluded) && /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.includeBtn, {
+    onClick: function onClick(event) {
+      setOption(event, false, SELECT_ALL_INDEX);
+      setUnsetChips(options.reduce(function (acc, item, ind) {
+        if (!isDisabled(ind)) acc.push(optionValue(ind));
+        return acc;
+      }, []));
+    }
+  }), /*#__PURE__*/React.createElement(Box, {
+    align: "center",
+    justify: "center",
+    direction: "row"
+  }, /*#__PURE__*/React.createElement(Add, _extends({}, theme.multiselect.checkbox.checkmark, {
+    color: theme.multiselect.includeBtn.color,
+    size: "small"
+  })), /*#__PURE__*/React.createElement(Text, {
+    margin: {
+      left: 'small'
+    }
+  }, "INCLUDE"))), !allSelected && isExcluded === null && /*#__PURE__*/React.createElement(Box, {
+    background: "light-3",
+    width: "1px",
+    height: "100%"
+  }), [null, true].includes(isExcluded) && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.excludeBtn, {
+    onClick: function onClick(event) {
+      setOption(event, true, SELECT_ALL_INDEX);
+      setUnsetChips(allSelected ? [] : options.reduce(function (acc, item, ind) {
+        if (!isDisabled(ind)) acc.push(optionValue(ind));
+        return acc;
+      }, []));
+    }
+  }), /*#__PURE__*/React.createElement(Box, {
+    align: "center",
+    justify: "center",
+    direction: "row"
+  }, /*#__PURE__*/React.createElement(FormSubtract, _extends({}, theme.multiselect.checkbox.checkmark, {
+    color: theme.multiselect.excludeBtn.color,
+    size: "small"
+  })), /*#__PURE__*/React.createElement(Text, {
+    margin: {
+      left: 'small'
+    }
+  }, "EXCLUDE")))))), layout === 'double-column' && /*#__PURE__*/React.createElement(Box, {
     width: "50%",
     border: [{
       side: 'left',

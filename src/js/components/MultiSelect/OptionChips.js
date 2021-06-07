@@ -21,6 +21,7 @@ const OptionChips = ({
   isExcluded,
   renderEmptySelected,
   layout,
+  showSelectAll,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
@@ -36,7 +37,7 @@ const OptionChips = ({
         border={theme.multiselect.chips.clear.border}
         height={theme.multiselect.chips.clear.height}
       >
-        <Text {...theme.multiselect.chips.clear}>CLEAR ALL</Text>
+        <Text {...theme.multiselect.chips.clear} color='dark-3' weight={400}>CLEAR ALL</Text>
       </Box>
     </Button>
   );
@@ -84,6 +85,7 @@ const OptionChips = ({
             height={height}
             {...theme.multiselect.chips.wrapper}
             wrap
+            border={showSelectAll ? 'top': 'none'}
           >
             <Box width="100%">
               {getSelectedOption().map(item => (
