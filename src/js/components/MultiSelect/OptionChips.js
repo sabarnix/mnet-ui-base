@@ -1,23 +1,18 @@
 import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import { ThemeContext } from 'styled-components';
 import { Close } from 'grommet-icons/icons/Close';
 
 import { defaultProps } from '../../default-props';
 import { Box } from '../Box';
 import { Button } from '../Button';
 import { Text } from '../Text';
-import {
-  OptionsBox,
-  OptionWrapper,
-  OptionText,
-  OptionLabel,
-} from './StyledMultiSelect';
+import { OptionWrapper, OptionText, OptionLabel } from './StyledMultiSelect';
 
 const OptionChips = ({
   options,
   value,
   isSelected,
-  optionLabel,
+  optionLabel: getLabel,
   onRemove,
   clearAll,
   width,
@@ -26,6 +21,7 @@ const OptionChips = ({
   isExcluded,
   renderEmptySelected,
   layout,
+  showCount,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
@@ -38,10 +34,8 @@ const OptionChips = ({
       plain
     >
       <Box
-        border={{
-          side: 'bottom',
-          color: theme.multiselect.chips.clear.color,
-        }}
+        border={theme.multiselect.chips.clear.border}
+        height={theme.multiselect.chips.clear.height}
       >
         <Text {...theme.multiselect.chips.clear}>CLEAR ALL</Text>
       </Box>
@@ -54,59 +48,82 @@ const OptionChips = ({
       return acc;
     }, []);
 
-  const IncExcHeader = styled(Box)`
-    position: sticky;
-    top: 0;
-  `;
-
   return (
-    <OptionsBox>
+    <Box height={height}>
       {Array.isArray(value) && value.length > 0 && (
-        <Box height={{ max: layout === 'single-column' ? height : 'auto' }}>
+        <Box>
           {inclusionExclusion && isExcluded !== null && (
-            <IncExcHeader {...theme.multiselect.rightPanel.incExcHeader.box}>
-              <Text
-                aria-label="Chip List header"
-                {...theme.multiselect.rightPanel.incExcHeader.text}
-              >
-                {isExcluded ? 'Excluded' : 'Included'} List
-              </Text>
-              {renderClearButton()}
-            </IncExcHeader>
+            <Box {...theme.multiselect.rightPanel.incExcHeader.box}>
+              <Box direction="row">
+                <Text
+                  aria-label="Chip List header"
+                  {...theme.multiselect.rightPanel.incExcHeader.text}
+                >
+                  {isExcluded ? 'Excluded' : 'Included'}
+                </Text>
+                <Box {...theme.multiselect.rightPanel.incExcHeader.count}>
+                  <Text weight="600">{value.length}</Text>
+                </Box>
+              </Box>
+            </Box>
+          )}
+          {!inclusionExclusion && layout === 'double-column' && (
+            <Box {...theme.multiselect.rightPanel.incExcHeader.box}>
+              <Box direction="row">
+                <Text {...theme.multiselect.rightPanel.incExcHeader.text}>
+                  Selected
+                </Text>
+                {!showCount && 
+                  <Box {...theme.multiselect.rightPanel.incExcHeader.count}>
+                  <Text weight="600">{value.length}</Text>
+                  </Box>
+                }
+              </Box>
+            </Box>
           )}
           <OptionWrapper
             twoColumnLayout={layout === 'double-column'}
             width={width}
+            height={height}
             {...theme.multiselect.chips.wrapper}
             wrap
           >
-            {getSelectedOption().map(item => (
-              <OptionText
-                key={item}
-                twoColumnLayout={layout === 'double-column'}
-                {...theme.multiselect.chips.option}
-              >
-                <OptionLabel
-                  isExcluded={isExcluded}
-                  {...theme.multiselect.chips.label}
+            <Box width="100%">
+              {getSelectedOption().map(item => (
+                <OptionText
+                  key={item}
+                  twoColumnLayout={layout === 'double-column'}
+                  {...theme.multiselect.chips.option}
                 >
-                  {optionLabel(item)}
-                </OptionLabel>
-                <Close
-                  role="button"
-                  aria-label={`Remove selected chip ${optionLabel(item)}`}
-                  style={{cursor: 'pointer'}}
-                  onClick={event => onRemove(event, item)}
-                  {...theme.multiselect.chips.icon}
-                />
-              </OptionText>
-            ))}
-            {!inclusionExclusion && renderClearButton()}
+                  <OptionLabel
+                    isExcluded={isExcluded}
+                    {...theme.multiselect.chips.label}
+                  >
+                    {getLabel(item)}
+                  </OptionLabel>
+                  <Close
+                    role="button"
+                    aria-label={`Remove selected chip ${getLabel(item)}`}
+                    style={{ cursor: 'pointer' }}
+                    onClick={event => onRemove(event, item)}
+                    {...theme.multiselect.chips.icon}
+                  />
+                </OptionText>
+              ))}
+            </Box>
           </OptionWrapper>
+          {(!inclusionExclusion ||
+            (inclusionExclusion && isExcluded !== null)) &&
+            renderClearButton()}
         </Box>
       )}
-      {(!Array.isArray(value) || !value.length) && renderEmptySelected}
-    </OptionsBox>
+
+      {(!Array.isArray(value) || !value.length) && (
+        <Box justify="center" align="center" height={height}>
+          {renderEmptySelected}
+        </Box>
+      )}
+    </Box>
   );
 };
 

@@ -13,7 +13,7 @@ let timeoutId;
 
 export const addNotification = (type, config) => {
   const id = uuid();
-  emitter.emit('addNotification', id, type, config);
+  emitter.emit('addNotification', id, type, { autoClose: true, ...config });
   return id;
 };
 
@@ -36,7 +36,10 @@ export function Notification() {
 
   const deleteLast = () => {
     if (notifications.length) {
-      deleteNotification(notifications[0].id);
+      const index = notifications.
+        findIndex(({ config: { autoClose } }) => autoClose)
+      if (index >= 0)
+        deleteNotification(notifications[index].id);
     }
   };
 
@@ -57,8 +60,9 @@ export function Notification() {
     return null;
   }
 
-  if (notifications.length)
+  if (notifications.some(({ config: { autoClose }}) => autoClose)) {
     autoRemoveNotification(theme.notification.toast.timeout || 2000);
+  }
 
   return (
     <Layer

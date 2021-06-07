@@ -3,7 +3,7 @@ import { ThemeContext } from 'styled-components';
 import { Box } from '../Box';
 import { Text } from '../Text';
 import { Button } from '../Button';
-
+import { IconWrapper } from './StyledNotification';
 import { defaultProps } from '../../default-props';
 
 export function Toast({ type, id, msg, onClose }) {
@@ -11,7 +11,9 @@ export function Toast({ type, id, msg, onClose }) {
   const Icon =
     theme.notification.toast.icon[type] ||
     theme.notification.toast.icon.default;
-  const IconSize = theme.notification.toast.icon.size;
+  const { 
+    size: IconSize, 
+    container: iconWrapper } = theme.notification.toast.icon;
   const IconColor =
     (theme.notification.toast.text[type] &&
       theme.notification.toast.text[type].color) ||
@@ -26,7 +28,7 @@ export function Toast({ type, id, msg, onClose }) {
       {...theme.notification.toast.default}
       {...theme.notification.toast[type]}
     >
-      <Box align="center" direction="row" gap="xsmall">
+      <IconWrapper align="center" direction="row" gap="xsmall" {...iconWrapper}>
         {Icon && <Icon size={IconSize} color={IconColor} />}
         <Text
           {...(theme.notification.toast.text[type] ||
@@ -34,12 +36,11 @@ export function Toast({ type, id, msg, onClose }) {
         >
           {msg}
         </Text>
-      </Box>
+      </IconWrapper>
       <Button
-        icon={<CloseIcon />}
+        icon={<CloseIcon color={IconColor} />}
         onClick={handleClose}
-        plain
-        style={{ display: 'flex' }}
+        style={{ display: 'flex', padding: 0 }}
       />
     </Box>
   );

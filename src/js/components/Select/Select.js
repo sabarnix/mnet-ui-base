@@ -100,6 +100,8 @@ const Select = forwardRef(
       renderOptionTop,
       renderOptionBottom,
       renderCustomContent,
+      isEnableOutSideClick = true,
+      shouldRenderInDrop = true,
       ...rest
     },
     ref,
@@ -211,97 +213,109 @@ const Select = forwardRef(
       theme,
     );
 
+    const getDropDownContent = () => (
+      <SelectContainer
+        disabled={disabled}
+        disabledKey={disabledKey}
+        dropHeight={dropHeight}
+        emptySearchMessage={emptySearchMessage}
+        id={id}
+        labelKey={labelKey}
+        multiple={multiple}
+        name={name}
+        onChange={onSelectChange}
+        onKeyDown={onKeyDown}
+        onMore={onMore}
+        onSearch={onSearch}
+        options={options}
+        optionIndexesInValue={optionIndexesInValue}
+        replace={replace}
+        searchPlaceholder={searchPlaceholder}
+        selected={selected}
+        value={value}
+        valueKey={valueKey}
+        customSearch={customSearch}
+        renderOptionTop={renderOptionTop}
+        renderOptionBottom={renderOptionBottom}
+        renderCustomContent={renderCustomContent}
+      >
+        {children}
+      </SelectContainer>
+    )
+
     return (
       <Keyboard onDown={onRequestOpen} onUp={onRequestOpen}>
-        <StyledSelectDropButton
-          ref={ref}
-          id={id}
-          disabled={disabled === true || undefined}
-          dropAlign={dropAlign}
-          dropTarget={dropTarget}
-          open={open}
-          alignSelf={alignSelf}
-          focusIndicator={focusIndicator}
-          gridArea={gridArea}
-          margin={margin}
-          onOpen={onRequestOpen}
-          onClose={onRequestClose}
-          onClick={onClick}
-          dropContent={
-            <SelectContainer
-              disabled={disabled}
-              disabledKey={disabledKey}
-              dropHeight={dropHeight}
-              emptySearchMessage={emptySearchMessage}
+        <>
+          {(shouldRenderInDrop || (!shouldRenderInDrop && !open)) &&
+            <StyledSelectDropButton
+              ref={ref}
               id={id}
-              labelKey={labelKey}
-              multiple={multiple}
-              name={name}
-              onChange={onSelectChange}
-              onKeyDown={onKeyDown}
-              onMore={onMore}
-              onSearch={onSearch}
-              options={options}
-              optionIndexesInValue={optionIndexesInValue}
-              replace={replace}
-              searchPlaceholder={searchPlaceholder}
-              selected={selected}
-              value={value}
-              valueKey={valueKey}
-              customSearch={customSearch}
-              renderOptionTop={renderOptionTop}
-              renderOptionBottom={renderOptionBottom}
-              renderCustomContent={renderCustomContent}
+              disabled={disabled === true || undefined}
+              dropAlign={dropAlign}
+              dropTarget={dropTarget}
+              open={open}
+              alignSelf={alignSelf}
+              focusIndicator={focusIndicator}
+              gridArea={gridArea}
+              margin={margin}
+              onOpen={onRequestOpen}
+              onClose={onRequestClose}
+              onClick={onClick}
+              dropContent={shouldRenderInDrop ? (getDropDownContent()) : null}
+              plain={plain}
+              dropProps={dropProps}
+              theme={theme}
+              isEnableOutSideClick={isEnableOutSideClick}
             >
-              {children}
-            </SelectContainer>
-          }
-          plain={plain}
-          dropProps={dropProps}
-          theme={theme}
-        >
-          <Box align="center" direction="row" justify="between">
-            <Box direction="row" flex basis="auto">
-              {selectValue || (
-                <SelectTextInput
-                  a11yTitle={
-                    a11yTitle &&
-                    `${a11yTitle}${
-                      value && typeof value === 'string' ? `, ${value}` : ''
-                    }`
-                  }
-                  id={id ? `${id}__input` : undefined}
-                  name={name}
-                  ref={inputRef}
-                  {...rest}
-                  tabIndex="-1"
-                  type="text"
-                  placeholder={placeholder}
-                  plain
-                  readOnly
-                  value={inputValue}
-                  size={size}
-                  theme={theme}
-                  onClick={disabled === true ? undefined : onRequestOpen}
-                />
-              )}
-            </Box>
-            {SelectIcon && (
-              <StyledIconContainer
-                margin={theme.select.icons.margin}
-                pad={theme.select.icons.pad}
-                background={theme.select.icons.background}
-                flex={false}
-              >
-                {isValidElement(SelectIcon) ? (
-                  SelectIcon
-                ) : (
-                  <SelectIcon color={iconColor} size={size} />
+              <Box align="center" direction="row" justify="between">
+                <Box direction="row" flex basis="auto">
+                  {selectValue || (
+                    <SelectTextInput
+                      a11yTitle={
+                        a11yTitle &&
+                        `${a11yTitle}${
+                          value && typeof value === 'string' ? `, ${value}` : ''
+                        }`
+                      }
+                      id={id ? `${id}__input` : undefined}
+                      name={name}
+                      ref={inputRef}
+                      {...rest}
+                      tabIndex="-1"
+                      type="text"
+                      placeholder={placeholder}
+                      plain
+                      readOnly
+                      value={inputValue}
+                      size={size}
+                      theme={theme}
+                      onClick={disabled === true ? undefined : onRequestOpen}
+                    />
+                  )}
+                </Box>
+                {SelectIcon && (
+                  <StyledIconContainer
+                    margin={theme.select.icons.margin}
+                    pad={theme.select.icons.pad}
+                    background={theme.select.icons.background}
+                    flex={false}
+                  >
+                    {isValidElement(SelectIcon) ? (
+                      SelectIcon
+                    ) : (
+                      <SelectIcon 
+                        color={iconColor} 
+                        size={theme.select.icons.size} 
+                      />
+                    )}
+                  </StyledIconContainer>
                 )}
-              </StyledIconContainer>
-            )}
-          </Box>
-        </StyledSelectDropButton>
+              </Box>
+            </StyledSelectDropButton>
+          }
+      
+          {(!shouldRenderInDrop && open) && getDropDownContent()}
+        </>  
       </Keyboard>
     );
   },

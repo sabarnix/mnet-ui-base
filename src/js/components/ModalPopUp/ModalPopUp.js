@@ -11,6 +11,7 @@ const emitter = new EventEmitter();
 const ModalPopUp = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [position, setPosition] = useState({position: "center" });
   const [popUpConfig, setPopUpConfig] = useState({
     title: '',
     message: '',
@@ -24,6 +25,11 @@ const ModalPopUp = () => {
   const onClose = () => setModalOpen(false);
 
   emitter.on(OPEN_MODAL, config => {
+    if (config.position) {
+      setPosition(config.position);
+      // eslint-disable-next-line no-param-reassign
+      delete config.position;
+    }
     setPopUpConfig({ ...popUpConfig, ...config });
     setModalOpen(true);
   });
@@ -35,7 +41,7 @@ const ModalPopUp = () => {
       {modalOpen && (
         <Box width="100vw" height="100vh">
           <Layer 
-            position="center" 
+            {...position}
             onClickOutside={popUpConfig.closeOnOutSideClick ? onClose: null} 
             onEsc={popUpConfig.closeOnEscape ? onClose: null}
           >
