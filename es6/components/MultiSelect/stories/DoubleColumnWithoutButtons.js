@@ -52,14 +52,14 @@ var Example = function Example() {
     value: value,
     labelKey: "label",
     valueKey: {
-      key: 'id',
+      key: 'label',
       reduce: true
     },
     onValueChange: function onValueChange(nextValue) {
       return setValue(nextValue);
     },
     layout: "double-column",
-    width: "medium",
+    width: "large",
     height: "medium",
     searchPlaceholder: "Search",
     searchable: true,

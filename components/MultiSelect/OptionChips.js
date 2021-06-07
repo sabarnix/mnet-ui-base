@@ -5,7 +5,7 @@ exports.OptionChips = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _styledComponents = _interopRequireWildcard(require("styled-components"));
+var _styledComponents = require("styled-components");
 
 var _Close = require("grommet-icons/icons/Close");
 
@@ -29,7 +29,7 @@ var OptionChips = function OptionChips(_ref) {
   var options = _ref.options,
       value = _ref.value,
       isSelected = _ref.isSelected,
-      optionLabel = _ref.optionLabel,
+      getLabel = _ref.optionLabel,
       onRemove = _ref.onRemove,
       clearAll = _ref.clearAll,
       width = _ref.width,
@@ -37,7 +37,8 @@ var OptionChips = function OptionChips(_ref) {
       inclusionExclusion = _ref.inclusionExclusion,
       isExcluded = _ref.isExcluded,
       renderEmptySelected = _ref.renderEmptySelected,
-      layout = _ref.layout;
+      layout = _ref.layout,
+      showCount = _ref.showCount;
 
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
@@ -51,10 +52,8 @@ var OptionChips = function OptionChips(_ref) {
       },
       plain: true
     }, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-      border: {
-        side: 'bottom',
-        color: theme.multiselect.chips.clear.color
-      }
+      border: theme.multiselect.chips.clear.border,
+      height: theme.multiselect.chips.clear.height
     }, /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.multiselect.chips.clear, "CLEAR ALL")));
   };
 
@@ -65,30 +64,35 @@ var OptionChips = function OptionChips(_ref) {
     }, []);
   };
 
-  var IncExcHeader = (0, _styledComponents["default"])(_Box.Box).withConfig({
-    displayName: "OptionChips__IncExcHeader",
-    componentId: "sc-1w3ospt-0"
-  })(["position:sticky;top:0;"]);
-  return /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionsBox, null, Array.isArray(value) && value.length > 0 && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-    height: {
-      max: layout === 'single-column' ? height : 'auto'
-    }
-  }, inclusionExclusion && isExcluded !== null && /*#__PURE__*/_react["default"].createElement(IncExcHeader, theme.multiselect.rightPanel.incExcHeader.box, /*#__PURE__*/_react["default"].createElement(_Text.Text, _extends({
+  return /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    height: height
+  }, Array.isArray(value) && value.length > 0 && /*#__PURE__*/_react["default"].createElement(_Box.Box, null, inclusionExclusion && isExcluded !== null && /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.multiselect.rightPanel.incExcHeader.box, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    direction: "row"
+  }, /*#__PURE__*/_react["default"].createElement(_Text.Text, _extends({
     "aria-label": "Chip List header"
-  }, theme.multiselect.rightPanel.incExcHeader.text), isExcluded ? 'Excluded' : 'Included', " List"), renderClearButton()), /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionWrapper, _extends({
+  }, theme.multiselect.rightPanel.incExcHeader.text), isExcluded ? 'Excluded' : 'Included'), /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.multiselect.rightPanel.incExcHeader.count, /*#__PURE__*/_react["default"].createElement(_Text.Text, {
+    weight: "600"
+  }, value.length)))), !inclusionExclusion && layout === 'double-column' && /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.multiselect.rightPanel.incExcHeader.box, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    direction: "row"
+  }, /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.multiselect.rightPanel.incExcHeader.text, "Selected"), !showCount && /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.multiselect.rightPanel.incExcHeader.count, /*#__PURE__*/_react["default"].createElement(_Text.Text, {
+    weight: "600"
+  }, value.length)))), /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionWrapper, _extends({
     twoColumnLayout: layout === 'double-column',
-    width: width
+    width: width,
+    height: height
   }, theme.multiselect.chips.wrapper, {
     wrap: true
-  }), getSelectedOption().map(function (item) {
+  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    width: "100%"
+  }, getSelectedOption().map(function (item) {
     return /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionText, _extends({
       key: item,
       twoColumnLayout: layout === 'double-column'
     }, theme.multiselect.chips.option), /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionLabel, _extends({
       isExcluded: isExcluded
-    }, theme.multiselect.chips.label), optionLabel(item)), /*#__PURE__*/_react["default"].createElement(_Close.Close, _extends({
+    }, theme.multiselect.chips.label), getLabel(item)), /*#__PURE__*/_react["default"].createElement(_Close.Close, _extends({
       role: "button",
-      "aria-label": "Remove selected chip " + optionLabel(item),
+      "aria-label": "Remove selected chip " + getLabel(item),
       style: {
         cursor: 'pointer'
       },
@@ -96,7 +100,11 @@ var OptionChips = function OptionChips(_ref) {
         return onRemove(event, item);
       }
     }, theme.multiselect.chips.icon)));
-  }), !inclusionExclusion && renderClearButton())), (!Array.isArray(value) || !value.length) && renderEmptySelected);
+  }))), (!inclusionExclusion || inclusionExclusion && isExcluded !== null) && renderClearButton()), (!Array.isArray(value) || !value.length) && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    justify: "center",
+    align: "center",
+    height: height
+  }, renderEmptySelected));
 };
 
 exports.OptionChips = OptionChips;

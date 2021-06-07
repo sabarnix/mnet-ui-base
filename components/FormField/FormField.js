@@ -56,10 +56,14 @@ var FormFieldBox = (0, _styledComponents["default"])(_Box.Box).withConfig({
 var FormFieldContentBox = (0, _styledComponents["default"])(_Box.Box).withConfig({
   displayName: "FormField__FormFieldContentBox",
   componentId: "sc-13hlgkg-1"
-})(["", ""], function (props) {
+})(["", " ", " ", ""], function (props) {
+  return !props.error && props.theme.formField.field && props.theme.formField.field["default"];
+}, function (props) {
   return props.focus && (0, _utils.focusStyle)({
     justBorder: true
   });
+}, function (props) {
+  return props.focus && props.plainOnFocus && props.theme.formField.field && props.theme.formField.field.focus;
 });
 
 var Message = function Message(_ref) {
@@ -102,7 +106,8 @@ var FormField = /*#__PURE__*/(0, _react.forwardRef)(function (_ref2, ref) {
       width = _ref2$width === void 0 ? 'auto' : _ref2$width,
       _ref2$showBorder = _ref2.showBorder,
       showBorder = _ref2$showBorder === void 0 ? true : _ref2$showBorder,
-      rest = _objectWithoutPropertiesLoose(_ref2, ["children", "className", "component", "disabled", "error", "help", "htmlFor", "info", "label", "margin", "name", "onBlur", "onFocus", "pad", "required", "style", "validate", "direction", "postfix", "prefix", "labelWidth", "width", "showBorder"]);
+      plainOnFocus = _ref2.plainOnFocus,
+      rest = _objectWithoutPropertiesLoose(_ref2, ["children", "className", "component", "disabled", "error", "help", "htmlFor", "info", "label", "margin", "name", "onBlur", "onFocus", "pad", "required", "style", "validate", "direction", "postfix", "prefix", "labelWidth", "width", "showBorder", "plainOnFocus"]);
 
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
@@ -257,10 +262,9 @@ var FormField = /*#__PURE__*/(0, _react.forwardRef)(function (_ref2, ref) {
   }
 
   contents = /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, contentProps, {
-    width: width
-  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    width: width,
     direction: "row"
-  }, prefix && /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, formFieldTheme.prefix, {
+  }), prefix && /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, formFieldTheme.prefix, {
     style: {
       wordBreak: 'normal'
     }
@@ -268,7 +272,7 @@ var FormField = /*#__PURE__*/(0, _react.forwardRef)(function (_ref2, ref) {
     style: {
       wordBreak: 'normal'
     }
-  }), postfix)));
+  }), postfix));
   var borderColor;
 
   if (disabled && formFieldTheme.disabled.border && formFieldTheme.disabled.border.color) {
@@ -302,7 +306,11 @@ var FormField = /*#__PURE__*/(0, _react.forwardRef)(function (_ref2, ref) {
     } : {};
     contents = /*#__PURE__*/_react["default"].createElement(FormFieldContentBox, _extends({
       overflow: "hidden"
-    }, showBorder && innerProps), contents);
+    }, showBorder && innerProps, {
+      plainOnFocus: plainOnFocus,
+      theme: theme,
+      error: error
+    }), contents);
     var mergedMargin = margin || formFieldTheme.margin;
     abut = themeBorder.position === 'outer' && (themeBorder.side === 'all' || themeBorder.side === 'horizontal' || !themeBorder.side) && !(mergedMargin && (typeof mergedMargin === 'string' && mergedMargin !== 'none' || mergedMargin.bottom && mergedMargin.bottom !== 'none' || mergedMargin.horizontal && mergedMargin.horizontal !== 'none'));
 
@@ -377,9 +385,7 @@ var FormField = /*#__PURE__*/(0, _react.forwardRef)(function (_ref2, ref) {
   }), label && component !== _CheckBox.CheckBox && /*#__PURE__*/_react["default"].createElement(_Text.Text, {
     as: "label",
     htmlFor: htmlFor
-  }, label, " ", required && /*#__PURE__*/_react["default"].createElement(_Text.Text, {
-    color: "status-critical"
-  }, "*"))) : null, /*#__PURE__*/_react["default"].createElement(_Box.Box, null, contents, normalizedError && /*#__PURE__*/_react["default"].createElement(_Box.Box, null, /*#__PURE__*/_react["default"].createElement(Message, _extends({
+  }, label)) : null, /*#__PURE__*/_react["default"].createElement(_Box.Box, null, contents, normalizedError && /*#__PURE__*/_react["default"].createElement(_Box.Box, null, /*#__PURE__*/_react["default"].createElement(Message, _extends({
     message: normalizedError
   }, formFieldTheme.error, {
     style: {

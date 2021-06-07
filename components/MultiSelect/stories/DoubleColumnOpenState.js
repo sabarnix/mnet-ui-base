@@ -12,25 +12,29 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var options = [{
   id: 1,
-  label: '300x250'
+  label: 'Desktop'
 }, {
   id: 2,
-  label: '250x250'
+  label: 'Mobile'
 }, {
   id: 3,
-  label: '100x100'
+  label: 'Tablet'
 }, {
   id: 4,
-  label: '728x90'
+  label: 'Television'
 }, {
   id: 5,
-  label: '300x100'
+  label: 'Bot'
 }];
 
 var Example = function Example() {
-  var _useState = (0, _react.useState)([]),
+  var _useState = (0, _react.useState)(['Mobile', 'Tablet']),
       value = _useState[0],
       setValue = _useState[1];
+
+  var _useState2 = (0, _react.useState)(false),
+      isExcluded = _useState2[0],
+      setIncExc = _useState2[1];
 
   return /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Box, {
     fill: true,
@@ -53,11 +57,20 @@ var Example = function Example() {
     height: "medium",
     searchPlaceholder: "Search",
     searchable: true,
+    withSelectAll: true,
     withOptionChips: true,
-    renderEmptySelected: /*#__PURE__*/_react["default"].createElement("span", null, "Empty")
+    withInclusionExclusion: true,
+    isExcluded: isExcluded,
+    onIncExcChange: function onIncExcChange(nextIncExc) {
+      return setIncExc(nextIncExc);
+    },
+    renderEmptySelected: /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Text, null, "No Selection"),
+    isEnableOutSideClick: true,
+    shouldRenderInDrop: true,
+    isOpenState: true
   }));
 };
 
-(0, _react2.storiesOf)('MultiSelect', module).add('Double Column without Inclusion / Exclusion', function () {
+(0, _react2.storiesOf)('MultiSelect', module).add('Double Column Open State', function () {
   return /*#__PURE__*/_react["default"].createElement(Example, null);
 });

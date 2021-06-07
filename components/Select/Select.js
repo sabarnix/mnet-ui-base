@@ -112,7 +112,11 @@ var Select = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
       renderOptionTop = _ref.renderOptionTop,
       renderOptionBottom = _ref.renderOptionBottom,
       renderCustomContent = _ref.renderCustomContent,
-      rest = _objectWithoutPropertiesLoose(_ref, ["a11yTitle", "alignSelf", "children", "closeOnChange", "disabled", "disabledKey", "dropAlign", "dropHeight", "dropProps", "dropTarget", "emptySearchMessage", "focusIndicator", "gridArea", "id", "icon", "labelKey", "margin", "messages", "multiple", "name", "onChange", "onClick", "onClose", "onKeyDown", "onMore", "onOpen", "onSearch", "open", "options", "placeholder", "plain", "replace", "searchPlaceholder", "selected", "size", "value", "valueKey", "valueLabel", "customSearch", "renderOptionTop", "renderOptionBottom", "renderCustomContent"]);
+      _ref$isEnableOutSideC = _ref.isEnableOutSideClick,
+      isEnableOutSideClick = _ref$isEnableOutSideC === void 0 ? true : _ref$isEnableOutSideC,
+      _ref$shouldRenderInDr = _ref.shouldRenderInDrop,
+      shouldRenderInDrop = _ref$shouldRenderInDr === void 0 ? true : _ref$shouldRenderInDr,
+      rest = _objectWithoutPropertiesLoose(_ref, ["a11yTitle", "alignSelf", "children", "closeOnChange", "disabled", "disabledKey", "dropAlign", "dropHeight", "dropProps", "dropTarget", "emptySearchMessage", "focusIndicator", "gridArea", "id", "icon", "labelKey", "margin", "messages", "multiple", "name", "onChange", "onClick", "onClose", "onKeyDown", "onMore", "onOpen", "onSearch", "open", "options", "placeholder", "plain", "replace", "searchPlaceholder", "selected", "size", "value", "valueKey", "valueLabel", "customSearch", "renderOptionTop", "renderOptionBottom", "renderCustomContent", "isEnableOutSideClick", "shouldRenderInDrop"]);
 
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
@@ -223,24 +227,9 @@ var Select = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
     return undefined;
   }, [labelKey, messages, optionIndexesInValue, options, selectValue]);
   var iconColor = (0, _utils.normalizeColor)(theme.select.icons.color || 'control', theme);
-  return /*#__PURE__*/_react["default"].createElement(_Keyboard.Keyboard, {
-    onDown: onRequestOpen,
-    onUp: onRequestOpen
-  }, /*#__PURE__*/_react["default"].createElement(StyledSelectDropButton, {
-    ref: ref,
-    id: id,
-    disabled: disabled === true || undefined,
-    dropAlign: dropAlign,
-    dropTarget: dropTarget,
-    open: open,
-    alignSelf: alignSelf,
-    focusIndicator: focusIndicator,
-    gridArea: gridArea,
-    margin: margin,
-    onOpen: onRequestOpen,
-    onClose: onRequestClose,
-    onClick: onClick,
-    dropContent: /*#__PURE__*/_react["default"].createElement(_SelectContainer.SelectContainer, {
+
+  var getDropDownContent = function getDropDownContent() {
+    return /*#__PURE__*/_react["default"].createElement(_SelectContainer.SelectContainer, {
       disabled: disabled,
       disabledKey: disabledKey,
       dropHeight: dropHeight,
@@ -264,10 +253,31 @@ var Select = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
       renderOptionTop: renderOptionTop,
       renderOptionBottom: renderOptionBottom,
       renderCustomContent: renderCustomContent
-    }, children),
+    }, children);
+  };
+
+  return /*#__PURE__*/_react["default"].createElement(_Keyboard.Keyboard, {
+    onDown: onRequestOpen,
+    onUp: onRequestOpen
+  }, /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, (shouldRenderInDrop || !shouldRenderInDrop && !open) && /*#__PURE__*/_react["default"].createElement(StyledSelectDropButton, {
+    ref: ref,
+    id: id,
+    disabled: disabled === true || undefined,
+    dropAlign: dropAlign,
+    dropTarget: dropTarget,
+    open: open,
+    alignSelf: alignSelf,
+    focusIndicator: focusIndicator,
+    gridArea: gridArea,
+    margin: margin,
+    onOpen: onRequestOpen,
+    onClose: onRequestClose,
+    onClick: onClick,
+    dropContent: shouldRenderInDrop ? getDropDownContent() : null,
     plain: plain,
     dropProps: dropProps,
-    theme: theme
+    theme: theme,
+    isEnableOutSideClick: isEnableOutSideClick
   }, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     align: "center",
     direction: "row",
@@ -298,8 +308,8 @@ var Select = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
     flex: false
   }, /*#__PURE__*/(0, _react.isValidElement)(SelectIcon) ? SelectIcon : /*#__PURE__*/_react["default"].createElement(SelectIcon, {
     color: iconColor,
-    size: size
-  })))));
+    size: theme.select.icons.size
+  })))), !shouldRenderInDrop && open && getDropDownContent()));
 });
 Select.defaultProps = _extends({}, _defaultProps.defaultProps);
 Select.displayName = 'Select';

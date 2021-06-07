@@ -5,6 +5,7 @@ import { ThemeContext } from 'styled-components';
 import { Box } from '../Box';
 import { Text } from '../Text';
 import { Button } from '../Button';
+import { IconWrapper } from './StyledNotification';
 import { defaultProps } from '../../default-props';
 export function Toast(_ref) {
   var type = _ref.type,
@@ -13,7 +14,9 @@ export function Toast(_ref) {
       onClose = _ref.onClose;
   var theme = useContext(ThemeContext) || defaultProps.theme;
   var Icon = theme.notification.toast.icon[type] || theme.notification.toast.icon["default"];
-  var IconSize = theme.notification.toast.icon.size;
+  var _theme$notification$t = theme.notification.toast.icon,
+      IconSize = _theme$notification$t.size,
+      iconWrapper = _theme$notification$t.container;
   var IconColor = theme.notification.toast.text[type] && theme.notification.toast.text[type].color || theme.notification.toast.text["default"].color;
   var CloseIcon = theme.notification.toast.closeIcon;
 
@@ -23,19 +26,21 @@ export function Toast(_ref) {
 
   return /*#__PURE__*/React.createElement(Box, _extends({
     key: id
-  }, theme.notification.toast["default"], theme.notification.toast[type]), /*#__PURE__*/React.createElement(Box, {
+  }, theme.notification.toast["default"], theme.notification.toast[type]), /*#__PURE__*/React.createElement(IconWrapper, _extends({
     align: "center",
     direction: "row",
     gap: "xsmall"
-  }, Icon && /*#__PURE__*/React.createElement(Icon, {
+  }, iconWrapper), Icon && /*#__PURE__*/React.createElement(Icon, {
     size: IconSize,
     color: IconColor
   }), /*#__PURE__*/React.createElement(Text, theme.notification.toast.text[type] || theme.notification.toast.text["default"], msg)), /*#__PURE__*/React.createElement(Button, {
-    icon: /*#__PURE__*/React.createElement(CloseIcon, null),
+    icon: /*#__PURE__*/React.createElement(CloseIcon, {
+      color: IconColor
+    }),
     onClick: handleClose,
-    plain: true,
     style: {
-      display: 'flex'
+      display: 'flex',
+      padding: 0
     }
   }));
 }

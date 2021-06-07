@@ -15,7 +15,9 @@ var _Text = require("../Text");
 
 var _TextInput = require("../TextInput");
 
-var _StyledMultiSelect = require("./StyledMultiSelect");
+var _Button = require("../Button");
+
+var _Box = require("../Box");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
@@ -27,7 +29,13 @@ var Searchbox = function Searchbox(_ref) {
   var placeholder = _ref.placeholder,
       value = _ref.value,
       onValueChange = _ref.onValueChange,
-      layout = _ref.layout;
+      width = _ref.width,
+      layout = _ref.layout,
+      selectIcon = _ref.selectIcon,
+      onCancel = _ref.onCancel,
+      _ref$reverse = _ref.reverse,
+      reverse = _ref$reverse === void 0 ? true : _ref$reverse,
+      shouldRenderInDrop = _ref.shouldRenderInDrop;
 
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
@@ -36,19 +44,41 @@ var Searchbox = function Searchbox(_ref) {
     return null;
   };
 
-  return /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.SearchWrapper, _extends({
+  var CollapsibleIcon = selectIcon && selectIcon.up;
+
+  var icons = /*#__PURE__*/_react["default"].createElement(_Search.Search, theme.multiselect.searchbox.icon);
+
+  var collapseBtn = !shouldRenderInDrop && selectIcon && /*#__PURE__*/_react["default"].createElement(_Button.Button, {
+    role: "button",
+    margin: "none",
+    onClick: onCancel,
+    plain: true,
+    style: {
+      position: 'absolute',
+      right: '15px'
+    }
+  }, /*#__PURE__*/_react["default"].createElement(CollapsibleIcon, {
+    color: "dark-1",
+    size: selectIcon.size
+  }));
+
+  return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({
     layout: layout
   }, theme.multiselect.searchbox.container), /*#__PURE__*/_react["default"].createElement(_TextInput.TextInput, {
     role: "search",
     "aria-label": "multiselect searchbox",
     plain: true,
+    fill: true,
+    icon: icons,
+    reverse: reverse,
+    width: width,
     value: value,
     valueLabel: /*#__PURE__*/_react["default"].createElement(_Text.Text, null, "value"),
     onChange: function onChange(event) {
       return handleChange(event.target.value);
     },
     placeholder: /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.multiselect.searchbox.placeholder, value ? '' : placeholder)
-  }), /*#__PURE__*/_react["default"].createElement(_Search.Search, theme.multiselect.searchbox.icon));
+  }), collapseBtn);
 };
 
 exports.Searchbox = Searchbox;

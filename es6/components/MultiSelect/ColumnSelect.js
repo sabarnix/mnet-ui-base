@@ -46,7 +46,9 @@ var ColumnSelect = function ColumnSelect(_ref) {
       onValueChange = _ref.onValueChange,
       custom = _ref.custom,
       validate = _ref.validate,
-      onChange = _ref.onChange;
+      onChange = _ref.onChange,
+      shouldRenderInDrop = _ref.shouldRenderInDrop,
+      showCount = _ref.showCount;
   var theme = useContext(ThemeContext) || defaultProps.theme;
 
   var selectOptionsStyle = _extends({}, theme.select.options.box, theme.select.options.container);
@@ -94,7 +96,8 @@ var ColumnSelect = function ColumnSelect(_ref) {
       inclusionExclusion: inclusionExclusion,
       isExcluded: isExcluded,
       renderEmptySelected: renderEmptySelected,
-      layout: layout
+      layout: layout,
+      showCount: showCount
     });
   };
 
@@ -112,24 +115,29 @@ var ColumnSelect = function ColumnSelect(_ref) {
       isExcluded: isExcluded,
       setIncExcVal: setIncExcVal,
       inclusionExclusion: inclusionExclusion,
-      validate: validate
+      validate: validate,
+      onCancel: onCancel
     });
   }
 
-  return /*#__PURE__*/React.createElement(React.Fragment, null, renderSearch && /*#__PURE__*/React.createElement(Searchbox, {
+  return /*#__PURE__*/React.createElement(Box, _extends({
+    width: width
+  }, theme.multiselect.container), renderSearch && /*#__PURE__*/React.createElement(Searchbox, {
+    reverse: false,
+    width: width,
     placeholder: searchPlaceholder,
     value: searchValue,
     onValueChange: onSearchChange,
-    layout: layout
+    layout: layout,
+    shouldRenderInDrop: shouldRenderInDrop,
+    selectIcon: theme.select.icons,
+    onCancel: onCancel
   }), /*#__PURE__*/React.createElement(Box, {
     direction: "row",
     height: height || 'small'
   }, /*#__PURE__*/React.createElement(Box, {
-    width: width,
-    border: [{
-      side: 'bottom',
-      color: theme.multiselect.rightPanel.border
-    }]
+    width: layout === 'single-column' ? '100%' : '50%' // pad={{ vertical: 'small' }}
+
   }, /*#__PURE__*/React.createElement(OptionsBox, {
     role: "menubar",
     tabIndex: "-1"
@@ -176,7 +184,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
       role: "menuitem",
       a11yTitle: "option id - " + option.id,
       hoverIndicator: theme.select.activeColor,
-      disabled: optionDisabled || undefined,
+      disabled: optionDisabled || optionSelected || undefined,
       active: optionActive,
       selected: optionSelected,
       option: option,
@@ -202,12 +210,9 @@ var ColumnSelect = function ColumnSelect(_ref) {
     disabled: true,
     option: "No values available"
   }, /*#__PURE__*/React.createElement(Box, selectOptionsStyle, /*#__PURE__*/React.createElement(Text, theme.select.container.text, emptySearchMessage || 'No values available'))))), layout === 'double-column' && /*#__PURE__*/React.createElement(Box, {
-    width: width,
+    width: "50%",
     border: [{
       side: 'left',
-      color: theme.multiselect.rightPanel.border
-    }, {
-      side: 'bottom',
       color: theme.multiselect.rightPanel.border
     }]
   }, renderOptionChips())), showOptionChips && layout === 'single-column' && renderOptionChips(), showControlButtons && /*#__PURE__*/React.createElement(ControlButton, {

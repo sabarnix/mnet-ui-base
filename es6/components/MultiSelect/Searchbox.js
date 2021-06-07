@@ -6,13 +6,20 @@ import { Search } from 'grommet-icons/icons/Search';
 import { defaultProps } from '../../default-props';
 import { Text } from '../Text';
 import { TextInput } from '../TextInput';
-import { SearchWrapper } from './StyledMultiSelect';
+import { Button } from '../Button';
+import { Box } from '../Box';
 
 var Searchbox = function Searchbox(_ref) {
   var placeholder = _ref.placeholder,
       value = _ref.value,
       onValueChange = _ref.onValueChange,
-      layout = _ref.layout;
+      width = _ref.width,
+      layout = _ref.layout,
+      selectIcon = _ref.selectIcon,
+      onCancel = _ref.onCancel,
+      _ref$reverse = _ref.reverse,
+      reverse = _ref$reverse === void 0 ? true : _ref$reverse,
+      shouldRenderInDrop = _ref.shouldRenderInDrop;
   var theme = useContext(ThemeContext) || defaultProps.theme;
 
   var handleChange = function handleChange(textValue) {
@@ -20,19 +27,38 @@ var Searchbox = function Searchbox(_ref) {
     return null;
   };
 
-  return /*#__PURE__*/React.createElement(SearchWrapper, _extends({
+  var CollapsibleIcon = selectIcon && selectIcon.up;
+  var icons = /*#__PURE__*/React.createElement(Search, theme.multiselect.searchbox.icon);
+  var collapseBtn = !shouldRenderInDrop && selectIcon && /*#__PURE__*/React.createElement(Button, {
+    role: "button",
+    margin: "none",
+    onClick: onCancel,
+    plain: true,
+    style: {
+      position: 'absolute',
+      right: '15px'
+    }
+  }, /*#__PURE__*/React.createElement(CollapsibleIcon, {
+    color: "dark-1",
+    size: selectIcon.size
+  }));
+  return /*#__PURE__*/React.createElement(Box, _extends({
     layout: layout
   }, theme.multiselect.searchbox.container), /*#__PURE__*/React.createElement(TextInput, {
     role: "search",
     "aria-label": "multiselect searchbox",
     plain: true,
+    fill: true,
+    icon: icons,
+    reverse: reverse,
+    width: width,
     value: value,
     valueLabel: /*#__PURE__*/React.createElement(Text, null, "value"),
     onChange: function onChange(event) {
       return handleChange(event.target.value);
     },
     placeholder: /*#__PURE__*/React.createElement(Text, theme.multiselect.searchbox.placeholder, value ? '' : placeholder)
-  }), /*#__PURE__*/React.createElement(Search, theme.multiselect.searchbox.icon));
+  }), collapseBtn);
 };
 
 export { Searchbox };

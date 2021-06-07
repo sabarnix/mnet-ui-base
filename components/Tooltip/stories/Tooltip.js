@@ -32,11 +32,12 @@ var TooltipPreview = function TooltipPreview() {
   })), /*#__PURE__*/_react["default"].createElement(_Tooltip.Tooltip, {
     message: "Down Side",
     position: "down",
-    margin: "large"
+    margin: "large",
+    closeOnTooltipHover: false
   }, /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Button, {
-    label: "Down"
+    label: "Down (Prevent tooltip on hover)"
   })), /*#__PURE__*/_react["default"].createElement(_Tooltip.Tooltip, {
-    message: "Enabling this allows bidders to drop pixels or scripts to sync cookies in order to match their cookies with DSP\u2019s cookies. They do this since some DSPs are most likely to bid on.",
+    message: "Enabling this allows bidders to drop pixels or scripts to sync \n             cookies in order to match their cookies with DSP\u2019s cookies.\n             They do this since some DSPs are most likely to bid on.",
     position: "right",
     margin: "large"
   }, /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Button, {

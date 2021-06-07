@@ -40,6 +40,13 @@ var Toast = function Toast() {
     });
   };
 
+  var addToastAutoClose = function addToastAutoClose() {
+    (0, _.addToast)({
+      msg: 'I am default toast',
+      autoClose: false
+    });
+  };
+
   return /*#__PURE__*/_react["default"].createElement("div", {
     style: {
       width: '100vw',
@@ -77,6 +84,13 @@ var Toast = function Toast() {
     }),
     label: /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Text, null, /*#__PURE__*/_react["default"].createElement("strong", null, "Add Warning")),
     onClick: addToastWarning,
+    plain: true
+  }), /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Button, {
+    icon: /*#__PURE__*/_react["default"].createElement(_grommetIcons.Add, {
+      color: "brand"
+    }),
+    label: /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Text, null, /*#__PURE__*/_react["default"].createElement("strong", null, "Prevent autoClose")),
+    onClick: addToastAutoClose,
     plain: true
   })));
 };
