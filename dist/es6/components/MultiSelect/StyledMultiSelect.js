@@ -4,6 +4,7 @@ import { Box } from '../Box';
 import { Button } from '../Button';
 import { Text } from '../Text';
 var disabledStyle = "\n  opacity: 0.4;\n  cursor: not-allowed;\n  display: none;\n  box-shadow: none\n";
+var disabledButton = "\n  box-shadow: none\n";
 var CheckBoxWrapper = styled(Box).withConfig({
   displayName: "StyledMultiSelect__CheckBoxWrapper",
   componentId: "sc-1yaxkjp-0"
@@ -23,8 +24,10 @@ var OptionsBox = styled(Box).withConfig({
 var SelectOption = styled(Button).withConfig({
   displayName: "StyledMultiSelect__SelectOption",
   componentId: "sc-1yaxkjp-3"
-})(["display:block;width:100%;background:", ";"], function (props) {
+})(["display:block;width:100%;background:", ";", ""], function (props) {
   return props.active ? props.theme.select.activeColor : 'transparent';
+}, function (props) {
+  return props.disabled && disabledButton;
 });
 var OptionBox = styled(Box).withConfig({
   displayName: "StyledMultiSelect__OptionBox",

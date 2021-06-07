@@ -170,21 +170,22 @@ var ColumnSelect = function ColumnSelect(_ref) {
     }
   }, !allSelected && !inclusionExclusion && showSelectAll && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
     border: "bottom"
-  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, null, /*#__PURE__*/_react["default"].createElement(_Button.Button, _extends({}, theme.multiselect.includeBtn, {
+  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, null, /*#__PURE__*/_react["default"].createElement(_Button.Button, {
+    color: theme.global.colors.brand,
     onClick: function onClick() {
       setUnsetChips(options.reduce(function (acc, item, ind) {
         if (!isDisabled(ind)) acc.push(optionValue(ind));
         return acc;
       }, []));
     }
-  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+  }, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     align: "center",
     justify: "center",
     direction: "row"
-  }, /*#__PURE__*/_react["default"].createElement(_Add.Add, _extends({}, theme.multiselect.checkbox.checkmark, {
-    color: theme.multiselect.includeBtn.color,
+  }, /*#__PURE__*/_react["default"].createElement(_Add.Add, {
+    color: theme.global.colors.brand,
     size: "small"
-  })), /*#__PURE__*/_react["default"].createElement(_Text.Text, {
+  }), /*#__PURE__*/_react["default"].createElement(_Text.Text, {
     weight: 600,
     margin: {
       left: 'small'

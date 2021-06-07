@@ -171,7 +171,7 @@ const ColumnSelect = ({
               >
                 <Box>
                   <Button
-                    {...theme.multiselect.includeBtn}
+                    color={theme.global.colors.brand}
                     onClick={() => {
                       setUnsetChips(
                         options.reduce((acc, item, ind) => {
@@ -183,8 +183,7 @@ const ColumnSelect = ({
                   >
                     <Box align="center" justify="center" direction="row">
                       <Add
-                        {...theme.multiselect.checkbox.checkmark}
-                        color={theme.multiselect.includeBtn.color}
+                        color={theme.global.colors.brand}
                         size="small"
                       />
                       <Text weight={600} margin={{ left: 'small' }}>

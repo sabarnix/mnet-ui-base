@@ -145,21 +145,22 @@ var ColumnSelect = function ColumnSelect(_ref) {
     }
   }, !allSelected && !inclusionExclusion && showSelectAll && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
     border: "bottom"
-  }), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.includeBtn, {
+  }), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Button, {
+    color: theme.global.colors.brand,
     onClick: function onClick() {
       setUnsetChips(options.reduce(function (acc, item, ind) {
         if (!isDisabled(ind)) acc.push(optionValue(ind));
         return acc;
       }, []));
     }
-  }), /*#__PURE__*/React.createElement(Box, {
+  }, /*#__PURE__*/React.createElement(Box, {
     align: "center",
     justify: "center",
     direction: "row"
-  }, /*#__PURE__*/React.createElement(Add, _extends({}, theme.multiselect.checkbox.checkmark, {
-    color: theme.multiselect.includeBtn.color,
+  }, /*#__PURE__*/React.createElement(Add, {
+    color: theme.global.colors.brand,
     size: "small"
-  })), /*#__PURE__*/React.createElement(Text, {
+  }), /*#__PURE__*/React.createElement(Text, {
     weight: 600,
     margin: {
       left: 'small'

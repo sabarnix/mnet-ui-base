@@ -13,6 +13,10 @@ const disabledStyle = `
   box-shadow: none
 `;
 
+const disabledButton = `
+  box-shadow: none
+`;
+
 const CheckBoxWrapper = styled(Box)`
   ${props => props.theme.multiselect.checkbox.extend};
 `;
@@ -40,6 +44,7 @@ const SelectOption = styled(Button)`
   width: 100%;
   background: ${props =>
     props.active ? props.theme.select.activeColor : 'transparent'};
+  ${props => props.disabled && disabledButton}
 `;
 
 const OptionBox = styled(Box)`

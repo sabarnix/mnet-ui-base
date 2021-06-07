@@ -16,6 +16,7 @@ var _Text = require("../Text");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var disabledStyle = "\n  opacity: 0.4;\n  cursor: not-allowed;\n  display: none;\n  box-shadow: none\n";
+var disabledButton = "\n  box-shadow: none\n";
 var CheckBoxWrapper = (0, _styledComponents["default"])(_Box.Box).withConfig({
   displayName: "StyledMultiSelect__CheckBoxWrapper",
   componentId: "sc-1yaxkjp-0"
@@ -38,8 +39,10 @@ exports.OptionsBox = OptionsBox;
 var SelectOption = (0, _styledComponents["default"])(_Button.Button).withConfig({
   displayName: "StyledMultiSelect__SelectOption",
   componentId: "sc-1yaxkjp-3"
-})(["display:block;width:100%;background:", ";"], function (props) {
+})(["display:block;width:100%;background:", ";", ""], function (props) {
   return props.active ? props.theme.select.activeColor : 'transparent';
+}, function (props) {
+  return props.disabled && disabledButton;
 });
 exports.SelectOption = SelectOption;
 var OptionBox = (0, _styledComponents["default"])(_Box.Box).withConfig({
