@@ -36,6 +36,7 @@ const MultiSelect = ({
   shouldRenderInDrop,
   placeholder,
   multiSearchDelimiter,
+  showSelectAllOnSearch,
   ...rest
 }) => {
   const [internalValue, updateInternalValue] = useState(valueProp);
@@ -183,6 +184,7 @@ const MultiSelect = ({
           onValueChange={onValueChange}
           custom={custom}
           validate={validate}
+          showSelectAllOnSearch={showSelectAllOnSearch}
           {...props}
         />
       );

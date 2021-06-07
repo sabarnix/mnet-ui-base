@@ -51,7 +51,8 @@ var MultiSelect = function MultiSelect(_ref) {
       shouldRenderInDrop = _ref.shouldRenderInDrop,
       placeholder = _ref.placeholder,
       multiSearchDelimiter = _ref.multiSearchDelimiter,
-      rest = _objectWithoutPropertiesLoose(_ref, ["width", "height", "options", "value", "labelKey", "valueKey", "onValueChange", "layout", "onSearch", "searchPlaceholder", "emptySearchMessage", "withSelectAll", "withOptionChips", "withUpdateCancelButtons", "searchable", "custom", "withInclusionExclusion", "isExcluded", "onIncExcChange", "renderEmptySelected", "validate", "size", "isOpenState", "isEnableOutSideClick", "shouldRenderInDrop", "placeholder", "multiSearchDelimiter"]);
+      showSelectAllOnSearch = _ref.showSelectAllOnSearch,
+      rest = _objectWithoutPropertiesLoose(_ref, ["width", "height", "options", "value", "labelKey", "valueKey", "onValueChange", "layout", "onSearch", "searchPlaceholder", "emptySearchMessage", "withSelectAll", "withOptionChips", "withUpdateCancelButtons", "searchable", "custom", "withInclusionExclusion", "isExcluded", "onIncExcChange", "renderEmptySelected", "validate", "size", "isOpenState", "isEnableOutSideClick", "shouldRenderInDrop", "placeholder", "multiSearchDelimiter", "showSelectAllOnSearch"]);
 
   var _useState = (0, _react.useState)(valueProp),
       internalValue = _useState[0],
@@ -208,7 +209,8 @@ var MultiSelect = function MultiSelect(_ref) {
         renderEmptySelected: renderEmptySelected,
         onValueChange: onValueChange,
         custom: custom,
-        validate: validate
+        validate: validate,
+        showSelectAllOnSearch: showSelectAllOnSearch
       }, props));
     }
 

@@ -10510,6 +10510,7 @@ const Example = () => {
         renderEmptySelected={<span>Empty</span>}
         withSelectAll
         multiSearchDelimiter=","
+        showSelectAllOnSearch
       />
     </Box>
   );
