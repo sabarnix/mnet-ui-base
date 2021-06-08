@@ -86,6 +86,18 @@ var ColumnSelect = function ColumnSelect(_ref) {
     });
   }, [inclusionExclusion, setIncExcVal, onChange]);
 
+  var selectAllButtonsCondition = function selectAllButtonsCondition(isSelectAll) {
+    if (isSelectAll === void 0) {
+      isSelectAll = false;
+    }
+
+    if (isSelectAll) {
+      return !allSelected && !inclusionExclusion && showSelectAll && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!showSelectAllOnSearch || showSelectAllOnSearch && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)));
+    }
+
+    return !allSelected && showSelectAll && inclusionExclusion && (isExcluded === null || isExcluded !== null) && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!showSelectAllOnSearch || showSelectAllOnSearch && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)));
+  };
+
   var renderOptionChips = function renderOptionChips() {
     return /*#__PURE__*/React.createElement(OptionChips, {
       width: width,
@@ -190,7 +202,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     hoverIndicator: "background",
     disabled: true,
     option: "No values available"
-  }, /*#__PURE__*/React.createElement(Box, selectOptionsStyle, /*#__PURE__*/React.createElement(Text, theme.select.container.text, emptySearchMessage || 'No values available')))), !allSelected && !inclusionExclusion && showSelectAll && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+  }, /*#__PURE__*/React.createElement(Box, selectOptionsStyle, /*#__PURE__*/React.createElement(Text, theme.select.container.text, emptySearchMessage || 'No values available')))), selectAllButtonsCondition(true) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
     border: "top",
     justify: "start"
   }), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Button, {
@@ -208,7 +220,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     margin: {
       left: 'small'
     }
-  }, "SELECT ALL"))))), !allSelected && showSelectAll && inclusionExclusion && (isExcluded === null || isExcluded !== null) && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+  }, "SELECT ALL"))))), selectAllButtonsCondition() && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
     border: "top",
     justify: [true, false].includes(isExcluded) ? 'start' : 'evenly'
   }), [null, false].includes(isExcluded) && /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.includeBtn, {
@@ -230,7 +242,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     margin: {
       left: 'small'
     }
-  }, "INCLUDE"))), !allSelected && isExcluded === null && /*#__PURE__*/React.createElement(Box, {
+  }, "INCLUDE ALL"))), !allSelected && isExcluded === null && /*#__PURE__*/React.createElement(Box, {
     background: "light-3",
     width: "1px",
     height: "100%"
@@ -253,7 +265,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     margin: {
       left: 'small'
     }
-  }, "EXCLUDE")))))), layout === 'double-column' && /*#__PURE__*/React.createElement(Box, {
+  }, "EXCLUDE ALL")))))), layout === 'double-column' && /*#__PURE__*/React.createElement(Box, {
     width: "50%",
     border: [{
       side: 'left',

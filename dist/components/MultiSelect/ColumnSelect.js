@@ -111,6 +111,18 @@ var ColumnSelect = function ColumnSelect(_ref) {
     });
   }, [inclusionExclusion, setIncExcVal, onChange]);
 
+  var selectAllButtonsCondition = function selectAllButtonsCondition(isSelectAll) {
+    if (isSelectAll === void 0) {
+      isSelectAll = false;
+    }
+
+    if (isSelectAll) {
+      return !allSelected && !inclusionExclusion && showSelectAll && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!showSelectAllOnSearch || showSelectAllOnSearch && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)));
+    }
+
+    return !allSelected && showSelectAll && inclusionExclusion && (isExcluded === null || isExcluded !== null) && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!showSelectAllOnSearch || showSelectAllOnSearch && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)));
+  };
+
   var renderOptionChips = function renderOptionChips() {
     return /*#__PURE__*/_react["default"].createElement(_OptionChips.OptionChips, {
       width: width,
@@ -215,7 +227,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     hoverIndicator: "background",
     disabled: true,
     option: "No values available"
-  }, /*#__PURE__*/_react["default"].createElement(_Box.Box, selectOptionsStyle, /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.select.container.text, emptySearchMessage || 'No values available')))), !allSelected && !inclusionExclusion && showSelectAll && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+  }, /*#__PURE__*/_react["default"].createElement(_Box.Box, selectOptionsStyle, /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.select.container.text, emptySearchMessage || 'No values available')))), selectAllButtonsCondition(true) && /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
     border: "top",
     justify: "start"
   }), /*#__PURE__*/_react["default"].createElement(_Box.Box, null, /*#__PURE__*/_react["default"].createElement(_Button.Button, {
@@ -233,7 +245,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     margin: {
       left: 'small'
     }
-  }, "SELECT ALL"))))), !allSelected && showSelectAll && inclusionExclusion && (isExcluded === null || isExcluded !== null) && (!showSelectAllOnSearch || showSelectAllOnSearch && searchValue !== '') && (!multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter)) && /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+  }, "SELECT ALL"))))), selectAllButtonsCondition() && /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
     border: "top",
     justify: [true, false].includes(isExcluded) ? 'start' : 'evenly'
   }), [null, false].includes(isExcluded) && /*#__PURE__*/_react["default"].createElement(_Button.Button, _extends({}, theme.multiselect.includeBtn, {
@@ -255,7 +267,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     margin: {
       left: 'small'
     }
-  }, "INCLUDE"))), !allSelected && isExcluded === null && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+  }, "INCLUDE ALL"))), !allSelected && isExcluded === null && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     background: "light-3",
     width: "1px",
     height: "100%"
@@ -278,7 +290,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     margin: {
       left: 'small'
     }
-  }, "EXCLUDE")))))), layout === 'double-column' && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+  }, "EXCLUDE ALL")))))), layout === 'double-column' && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     width: "50%",
     border: [{
       side: 'left',

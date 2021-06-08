@@ -332,10 +332,6 @@ var Example = function Example() {
       value = _useState[0],
       setValue = _useState[1];
 
-  var _useState2 = useState(null),
-      isExcluded = _useState2[0],
-      setIncExc = _useState2[1];
-
   return /*#__PURE__*/React.createElement(Box, {
     fill: true,
     align: "center",
@@ -358,18 +354,11 @@ var Example = function Example() {
     searchPlaceholder: "Search",
     searchable: true,
     withOptionChips: true,
-    withInclusionExclusion: true,
-    isExcluded: isExcluded,
-    onIncExcChange: function onIncExcChange(nextIncExc) {
-      return setIncExc(nextIncExc);
-    },
     renderEmptySelected: /*#__PURE__*/React.createElement("span", null, "Empty"),
-    withSelectAll: true,
-    multiSearchDelimiter: ",",
-    showSelectAllOnSearch: true
+    withSelectAll: true
   }));
 };
 
-storiesOf('MultiSelect', module).add('Comma And Pipe Separated Values', function () {
+storiesOf('MultiSelect', module).add('Double Column Without Inc Exc - With Select All', function () {
   return /*#__PURE__*/React.createElement(Example, null);
 });

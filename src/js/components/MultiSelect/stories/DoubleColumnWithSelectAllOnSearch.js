@@ -461,7 +461,6 @@ const Example = () => {
         onIncExcChange={nextIncExc => setIncExc(nextIncExc)}
         renderEmptySelected={<span>Empty</span>}
         withSelectAll
-        multiSearchDelimiter=","
         showSelectAllOnSearch
       />
     </Box>
@@ -469,6 +468,6 @@ const Example = () => {
 };
 
 storiesOf('MultiSelect', module).add(
-  'Comma And Pipe Separated Values',
+  'Double Column - Show Select All Options When Search Value Is Present',
   () => <Example />,
 );

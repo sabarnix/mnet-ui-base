@@ -100,6 +100,36 @@ const ColumnSelect = ({
     [inclusionExclusion, setIncExcVal, onChange],
   );
 
+  const selectAllButtonsCondition = (isSelectAll = false) => {
+    if (isSelectAll) {
+      return (
+        !allSelected &&
+        !inclusionExclusion &&
+        showSelectAll &&
+        (!showSelectAllOnSearch ||
+          (showSelectAllOnSearch && searchValue !== '')) &&
+        (!showSelectAllOnSearch ||
+          (showSelectAllOnSearch &&
+            (!multiSearchDelimiter ||
+              (multiSearchDelimiter &&
+                searchValue.includes(multiSearchDelimiter)))))
+      );
+    }
+    return (
+      !allSelected &&
+      showSelectAll &&
+      inclusionExclusion &&
+      (isExcluded === null || isExcluded !== null) &&
+      (!showSelectAllOnSearch ||
+        (showSelectAllOnSearch && searchValue !== '')) &&
+      (!showSelectAllOnSearch ||
+        (showSelectAllOnSearch &&
+          (!multiSearchDelimiter ||
+            (multiSearchDelimiter &&
+              searchValue.includes(multiSearchDelimiter)))))
+    );
+  };
+
   const renderOptionChips = () => (
     <OptionChips
       width={width}
@@ -229,14 +259,7 @@ const ColumnSelect = ({
               </SelectOption>
             )}
           </OptionsBox>
-          {!allSelected &&
-            !inclusionExclusion &&
-            showSelectAll &&
-            (!showSelectAllOnSearch ||
-              (showSelectAllOnSearch && searchValue !== '')) &&
-            (!multiSearchDelimiter ||
-              (multiSearchDelimiter &&
-                searchValue.includes(multiSearchDelimiter))) && (
+          {selectAllButtonsCondition(true) && (
               <Box
                 {...theme.multiselect.custom.actions.wrapper}
                 border="top"
@@ -263,15 +286,7 @@ const ColumnSelect = ({
                 </Box>
               </Box>
             )}
-          {!allSelected &&
-            showSelectAll &&
-            inclusionExclusion &&
-            (isExcluded === null || isExcluded !== null) &&
-            (!showSelectAllOnSearch ||
-              (showSelectAllOnSearch && searchValue !== '')) &&
-            (!multiSearchDelimiter ||
-              (multiSearchDelimiter &&
-                searchValue.includes(multiSearchDelimiter))) && (
+          { selectAllButtonsCondition() && (
               <Box
                 {...theme.multiselect.custom.actions.wrapper}
                 border="top"
@@ -297,7 +312,7 @@ const ColumnSelect = ({
                         size="small"
                       />
                       <Text margin={{ left: 'small' }}>
-                        INCLUDE
+                        INCLUDE ALL
                       </Text>
                     </Box>
                   </Button>
@@ -330,7 +345,7 @@ const ColumnSelect = ({
                           size="small"
                         />
                         <Text margin={{ left: 'small' }}>
-                          EXCLUDE
+                          EXCLUDE ALL
                         </Text>
                       </Box>
                     </Button>

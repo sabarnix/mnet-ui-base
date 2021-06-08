@@ -374,11 +374,10 @@ var Example = function Example() {
     },
     renderEmptySelected: /*#__PURE__*/_react["default"].createElement("span", null, "Empty"),
     withSelectAll: true,
-    multiSearchDelimiter: ",",
-    showSelectAllOnSearch: true
+    multiSearchDelimiter: ","
   }));
 };
 
-(0, _react2.storiesOf)('MultiSelect', module).add('Comma And Pipe Separated Values', function () {
+(0, _react2.storiesOf)('MultiSelect', module).add('Delimiter Seperated Search', function () {
   return /*#__PURE__*/_react["default"].createElement(Example, null);
 });

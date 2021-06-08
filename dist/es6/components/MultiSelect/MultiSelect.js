@@ -197,7 +197,7 @@ var MultiSelect = function MultiSelect(_ref) {
         onValueChange: onValueChange,
         custom: custom,
         validate: validate,
-        showSelectAllOnSearch: showSelectAllOnSearch,
+        showSelectAllOnSearch: showSelectAllOnSearch || false,
         multiSearchDelimiter: multiSearchDelimiter
       }, props));
     }
