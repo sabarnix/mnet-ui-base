@@ -369,6 +369,6 @@ var Example = function Example() {
   }));
 };
 
-storiesOf('MultiSelect', module).add('Delimiter Seperated Search', function () {
+storiesOf('MultiSelect', module).add('MultiSearch', function () {
   return /*#__PURE__*/React.createElement(Example, null);
 });

@@ -468,6 +468,6 @@ const Example = () => {
 };
 
 storiesOf('MultiSelect', module).add(
-  'Delimiter Seperated Search',
+  'MultiSearch',
   () => <Example />,
 );
