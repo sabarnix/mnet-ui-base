@@ -105,6 +105,10 @@ var CheckBox = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
     borderColor = (0, _utils.normalizeColor)(theme.checkBox.color || 'control', theme);
   }
 
+  var checkIcon = CheckedIcon && CheckedIcon.notSvg ? /*#__PURE__*/_react["default"].createElement(CheckedIcon, theme.checkBox.icon) : /*#__PURE__*/_react["default"].createElement(CheckedIcon, {
+    theme: theme,
+    as: _StyledCheckBox.StyledCheckBoxIcon
+  });
   var visual = toggle ? /*#__PURE__*/_react["default"].createElement(_StyledCheckBox.StyledCheckBoxToggle, themeableProps, /*#__PURE__*/_react["default"].createElement(_StyledCheckBox.StyledCheckBoxKnob, themeableProps)) : /*#__PURE__*/_react["default"].createElement(_StyledCheckBox.StyledCheckBoxBox, _extends({
     as: _Box.Box,
     align: "center",
@@ -116,10 +120,7 @@ var CheckBox = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
       color: borderColor
     },
     round: theme.checkBox.check.radius
-  }, themeableProps), !indeterminate && checked && (CheckedIcon ? /*#__PURE__*/_react["default"].createElement(CheckedIcon, {
-    theme: theme,
-    size: "large"
-  }) : /*#__PURE__*/_react["default"].createElement(_StyledCheckBox.StyledCheckBoxIcon, _extends({
+  }, themeableProps), !indeterminate && checked && (CheckedIcon ? checkIcon : /*#__PURE__*/_react["default"].createElement(_StyledCheckBox.StyledCheckBoxIcon, _extends({
     theme: theme,
     viewBox: "0 0 24 24",
     preserveAspectRatio: "xMidYMid meet"

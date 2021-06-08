@@ -83,10 +83,10 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     onValueChange([]);
   };
 
-  return /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.wrapper, {
+  return /*#__PURE__*/React.createElement(Box, _extends({
     height: height,
     width: width
-  }), /*#__PURE__*/React.createElement(Box, {
+  }, theme.multiselect.custom.wrapper), /*#__PURE__*/React.createElement(Box, {
     width: "50%",
     border: {
       side: 'right',
@@ -96,7 +96,7 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     error: !isValid ? errorMsg : null
   }, /*#__PURE__*/React.createElement(Box, {
     width: "full",
-    pad: "medium"
+    height: "full"
   }, /*#__PURE__*/React.createElement(TextArea, {
     placeholder: custom && custom.label || 'Label',
     value: textAreaValue,
@@ -115,7 +115,7 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     align: "center",
     justify: "center",
     direction: "row"
-  }, /*#__PURE__*/React.createElement(Add, _extends({}, theme.multiselect.checkbox.checkmark, {
+  }, Boolean(theme.multiselect.includeBtn.showIcon) && /*#__PURE__*/React.createElement(Add, _extends({}, theme.multiselect.checkbox.checkmark, {
     color: theme.multiselect.includeBtn.color,
     size: "small"
   })), /*#__PURE__*/React.createElement(Text, {
@@ -135,7 +135,7 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     align: "center",
     justify: "center",
     direction: "row"
-  }, /*#__PURE__*/React.createElement(FormSubtract, _extends({}, theme.multiselect.checkbox.checkmark, {
+  }, Boolean(theme.multiselect.excludeBtn.showIcon) && /*#__PURE__*/React.createElement(FormSubtract, _extends({}, theme.multiselect.checkbox.checkmark, {
     color: theme.multiselect.excludeBtn.color,
     size: "small"
   })), /*#__PURE__*/React.createElement(Text, {

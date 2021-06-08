@@ -3,7 +3,12 @@ import { Box } from '../Box';
 import { backgroundStyle, normalizeColor } from '../../utils';
 
 var ArrowStyle = function ArrowStyle(props) {
-  var position = props.position;
+  var position = props.position,
+      showArrow = props.showArrow;
+
+  if (!showArrow) {
+    return css(["display:none;"]);
+  }
 
   var _backgroundStyle = backgroundStyle(normalizeColor(props.theme.tooptip && props.theme.tooptip.background || 'dark-1', props.theme), props.theme),
       tipColor = _backgroundStyle[1];

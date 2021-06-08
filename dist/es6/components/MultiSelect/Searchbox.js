@@ -3,6 +3,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import { Search } from 'grommet-icons/icons/Search';
+import { defaultProps } from '../../default-props';
 import { Text } from '../Text';
 import { TextInput } from '../TextInput';
 import { Button } from '../Button';
@@ -17,7 +18,8 @@ var Searchbox = function Searchbox(_ref) {
       selectIcon = _ref.selectIcon,
       onCancel = _ref.onCancel,
       _ref$reverse = _ref.reverse,
-      reverse = _ref$reverse === void 0 ? true : _ref$reverse;
+      reverse = _ref$reverse === void 0 ? true : _ref$reverse,
+      shouldRenderInDrop = _ref.shouldRenderInDrop;
   var theme = useContext(ThemeContext) || defaultProps.theme;
 
   var handleChange = function handleChange(textValue) {
@@ -27,11 +29,15 @@ var Searchbox = function Searchbox(_ref) {
 
   var CollapsibleIcon = selectIcon && selectIcon.up;
   var icons = /*#__PURE__*/React.createElement(Search, theme.multiselect.searchbox.icon);
-  var collapseBtn = selectIcon && /*#__PURE__*/React.createElement(Button, {
+  var collapseBtn = !shouldRenderInDrop && selectIcon && /*#__PURE__*/React.createElement(Button, {
     role: "button",
     margin: "none",
     onClick: onCancel,
-    plain: true
+    plain: true,
+    style: {
+      position: 'absolute',
+      right: '15px'
+    }
   }, /*#__PURE__*/React.createElement(CollapsibleIcon, {
     color: "dark-1",
     size: selectIcon.size
@@ -44,7 +50,6 @@ var Searchbox = function Searchbox(_ref) {
     plain: true,
     fill: true,
     icon: icons,
-    collapseBtn: collapseBtn,
     reverse: reverse,
     width: width,
     value: value,
@@ -53,7 +58,7 @@ var Searchbox = function Searchbox(_ref) {
       return handleChange(event.target.value);
     },
     placeholder: /*#__PURE__*/React.createElement(Text, theme.multiselect.searchbox.placeholder, value ? '' : placeholder)
-  }));
+  }), collapseBtn);
 };
 
 export { Searchbox };

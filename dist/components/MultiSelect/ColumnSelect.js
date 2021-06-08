@@ -75,7 +75,9 @@ var ColumnSelect = function ColumnSelect(_ref) {
       validate = _ref.validate,
       onChange = _ref.onChange,
       showSelectAllOnSearch = _ref.showSelectAllOnSearch,
-      multiSearchDelimiter = _ref.multiSearchDelimiter;
+      multiSearchDelimiter = _ref.multiSearchDelimiter,
+      shouldRenderInDrop = _ref.shouldRenderInDrop,
+      showCount = _ref.showCount;
 
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
@@ -137,7 +139,8 @@ var ColumnSelect = function ColumnSelect(_ref) {
       isExcluded: isExcluded,
       renderEmptySelected: renderEmptySelected,
       layout: layout,
-      showSelectAll: showSelectAll
+      showSelectAll: showSelectAll,
+      showCount: showCount
     });
   };
 
@@ -160,27 +163,24 @@ var ColumnSelect = function ColumnSelect(_ref) {
     });
   }
 
-  return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.container, {
+  return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({
     width: width
-  }), renderSearch && /*#__PURE__*/_react["default"].createElement(_Searchbox.Searchbox, {
+  }, theme.multiselect.container), renderSearch && /*#__PURE__*/_react["default"].createElement(_Searchbox.Searchbox, {
     reverse: false,
     width: width,
     placeholder: searchPlaceholder,
     value: searchValue,
     onValueChange: onSearchChange,
     layout: layout,
+    shouldRenderInDrop: shouldRenderInDrop,
     selectIcon: theme.select.icons,
     onCancel: onCancel
   }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     direction: "row",
     height: height || 'small'
   }, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-    width: layout === 'single-column' ? '100%' : '50%',
-    pad: showSelectAll ? {
-      top: 'small'
-    } : {
-      vertical: 'small'
-    }
+    width: layout === 'single-column' ? '100%' : '50%' // pad={{ vertical: 'small' }}
+
   }, /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionsBox, {
     role: "menubar",
     tabIndex: "-1",

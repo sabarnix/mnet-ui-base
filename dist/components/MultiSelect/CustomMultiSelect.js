@@ -104,10 +104,10 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     onValueChange([]);
   };
 
-  return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.wrapper, {
+  return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({
     height: height,
     width: width
-  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+  }, theme.multiselect.custom.wrapper), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     width: "50%",
     border: {
       side: 'right',
@@ -117,7 +117,7 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     error: !isValid ? errorMsg : null
   }, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     width: "full",
-    pad: "medium"
+    height: "full"
   }, /*#__PURE__*/_react["default"].createElement(_TextArea.TextArea, {
     placeholder: custom && custom.label || 'Label',
     value: textAreaValue,
@@ -136,7 +136,7 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     align: "center",
     justify: "center",
     direction: "row"
-  }, /*#__PURE__*/_react["default"].createElement(_Add.Add, _extends({}, theme.multiselect.checkbox.checkmark, {
+  }, Boolean(theme.multiselect.includeBtn.showIcon) && /*#__PURE__*/_react["default"].createElement(_Add.Add, _extends({}, theme.multiselect.checkbox.checkmark, {
     color: theme.multiselect.includeBtn.color,
     size: "small"
   })), /*#__PURE__*/_react["default"].createElement(_Text.Text, {
@@ -156,7 +156,7 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     align: "center",
     justify: "center",
     direction: "row"
-  }, /*#__PURE__*/_react["default"].createElement(_FormSubtract.FormSubtract, _extends({}, theme.multiselect.checkbox.checkmark, {
+  }, Boolean(theme.multiselect.excludeBtn.showIcon) && /*#__PURE__*/_react["default"].createElement(_FormSubtract.FormSubtract, _extends({}, theme.multiselect.checkbox.checkmark, {
     color: theme.multiselect.excludeBtn.color,
     size: "small"
   })), /*#__PURE__*/_react["default"].createElement(_Text.Text, {

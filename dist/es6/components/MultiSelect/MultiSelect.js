@@ -31,15 +31,17 @@ var MultiSelect = function MultiSelect(_ref) {
       isExcludedProp = _ref.isExcluded,
       onIncExcChange = _ref.onIncExcChange,
       renderEmptySelected = _ref.renderEmptySelected,
+      gridArea = _ref.gridArea,
       validate = _ref.validate,
       size = _ref.size,
       isOpenState = _ref.isOpenState,
       isEnableOutSideClick = _ref.isEnableOutSideClick,
-      shouldRenderInDrop = _ref.shouldRenderInDrop,
+      _ref$shouldRenderInDr = _ref.shouldRenderInDrop,
+      shouldRenderInDrop = _ref$shouldRenderInDr === void 0 ? true : _ref$shouldRenderInDr,
       placeholder = _ref.placeholder,
       multiSearchDelimiter = _ref.multiSearchDelimiter,
       showSelectAllOnSearch = _ref.showSelectAllOnSearch,
-      rest = _objectWithoutPropertiesLoose(_ref, ["width", "height", "options", "value", "labelKey", "valueKey", "onValueChange", "layout", "onSearch", "searchPlaceholder", "emptySearchMessage", "withSelectAll", "withOptionChips", "withUpdateCancelButtons", "searchable", "custom", "withInclusionExclusion", "isExcluded", "onIncExcChange", "renderEmptySelected", "validate", "size", "isOpenState", "isEnableOutSideClick", "shouldRenderInDrop", "placeholder", "multiSearchDelimiter", "showSelectAllOnSearch"]);
+      rest = _objectWithoutPropertiesLoose(_ref, ["width", "height", "options", "value", "labelKey", "valueKey", "onValueChange", "layout", "onSearch", "searchPlaceholder", "emptySearchMessage", "withSelectAll", "withOptionChips", "withUpdateCancelButtons", "searchable", "custom", "withInclusionExclusion", "isExcluded", "onIncExcChange", "renderEmptySelected", "gridArea", "validate", "size", "isOpenState", "isEnableOutSideClick", "shouldRenderInDrop", "placeholder", "multiSearchDelimiter", "showSelectAllOnSearch"]);
 
   var _useState = useState(valueProp),
       internalValue = _useState[0],
@@ -63,6 +65,10 @@ var MultiSelect = function MultiSelect(_ref) {
 
   var isExcluded = withUpdateCancelButtons ? internalIsExcluded : isExcludedProp;
   var value = withUpdateCancelButtons ? internalValue : valueProp;
+  var _rest$showCount = rest.showCount,
+      showCount = _rest$showCount === void 0 ? false : _rest$showCount,
+      _rest$rowCount = rest.rowCount,
+      rowCount = _rest$rowCount === void 0 ? 5 : _rest$rowCount;
   useEffect(function () {
     if (!isOpen && withUpdateCancelButtons) {
       updateInternalValue(valueProp);
@@ -198,25 +204,42 @@ var MultiSelect = function MultiSelect(_ref) {
         custom: custom,
         validate: validate,
         showSelectAllOnSearch: showSelectAllOnSearch || false,
-        multiSearchDelimiter: multiSearchDelimiter
+        multiSearchDelimiter: multiSearchDelimiter,
+        shouldRenderInDrop: shouldRenderInDrop,
+        showCount: showCount
       }, props));
     }
 
     return null;
   };
 
+  var getkeyField = function getkeyField(key) {
+    return typeof key === 'object' ? getkeyField(key.key) : key;
+  };
+
+  var shouldRenderLabel = function shouldRenderLabel() {
+    return !(!valueKey || !labelKey || getkeyField(valueKey) === getkeyField(labelKey));
+  };
+
   var renderLabel = function renderLabel() {
     return /*#__PURE__*/React.createElement(ValueLabelWithIcon, {
+      showCount: showCount,
+      rowCount: rowCount,
       withInclusionExclusion: withInclusionExclusion,
       isExcluded: isExcluded,
       size: size,
       placeholder: placeholder,
-      value: value
+      value: shouldRenderLabel() && !custom ? (options || []).filter(function (obj) {
+        return value.includes(applyKey(obj, valueKey));
+      }).map(function (optionObj) {
+        return applyKey(optionObj, labelKey);
+      }) : value
     });
   };
 
   return /*#__PURE__*/React.createElement(Box, {
-    width: width
+    width: width,
+    gridArea: gridArea
   }, /*#__PURE__*/React.createElement(Select, _extends({
     multiple: true,
     value: value,

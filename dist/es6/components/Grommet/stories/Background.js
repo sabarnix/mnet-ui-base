@@ -1,10 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { mnet, MnetUIBase, Box, Text } from 'mnet-ui-base';
-import { neo } from 'mnet-ui-base-theme-neo';
+import { mnet, MnetUIBase, Box, Text } from 'mnet-ui-base'; // import { neo } from 'mnet-ui-base-theme-neo';
+// import { cdp } from 'mnet-ui-base-theme-cdp';
 
 var Background = function Background() {
-  var themeColor = 'background-back';
+  // const themeColor = 'background-back';
   var hexValue = '#DCD0FF';
   var cssColor = 'gold';
   return /*#__PURE__*/React.createElement(Box, {
@@ -12,17 +12,6 @@ var Background = function Background() {
   }, /*#__PURE__*/React.createElement(MnetUIBase, null, /*#__PURE__*/React.createElement(Box, {
     pad: "medium"
   }, /*#__PURE__*/React.createElement(Text, null, "MnetUIBase with no theme or background prop"))), /*#__PURE__*/React.createElement(MnetUIBase, {
-    theme: neo,
-    themeMode: "dark"
-  }, /*#__PURE__*/React.createElement(Box, {
-    pad: "medium"
-  }, /*#__PURE__*/React.createElement(Text, null, "MnetUIBase with theme & themeMode but no background prop"))), /*#__PURE__*/React.createElement(MnetUIBase, {
-    theme: neo,
-    themeMode: "light",
-    background: themeColor
-  }, /*#__PURE__*/React.createElement(Box, {
-    pad: "medium"
-  }, /*#__PURE__*/React.createElement(Text, null, "MnetUIBase with background as theme color of '", themeColor, "'"))), /*#__PURE__*/React.createElement(MnetUIBase, {
     theme: mnet,
     background: hexValue
   }, /*#__PURE__*/React.createElement(Box, {

@@ -51,7 +51,9 @@ var ColumnSelect = function ColumnSelect(_ref) {
       validate = _ref.validate,
       onChange = _ref.onChange,
       showSelectAllOnSearch = _ref.showSelectAllOnSearch,
-      multiSearchDelimiter = _ref.multiSearchDelimiter;
+      multiSearchDelimiter = _ref.multiSearchDelimiter,
+      shouldRenderInDrop = _ref.shouldRenderInDrop,
+      showCount = _ref.showCount;
   var theme = useContext(ThemeContext) || defaultProps.theme;
 
   var selectOptionsStyle = _extends({}, theme.select.options.box, theme.select.options.container);
@@ -112,7 +114,8 @@ var ColumnSelect = function ColumnSelect(_ref) {
       isExcluded: isExcluded,
       renderEmptySelected: renderEmptySelected,
       layout: layout,
-      showSelectAll: showSelectAll
+      showSelectAll: showSelectAll,
+      showCount: showCount
     });
   };
 
@@ -135,27 +138,24 @@ var ColumnSelect = function ColumnSelect(_ref) {
     });
   }
 
-  return /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.container, {
+  return /*#__PURE__*/React.createElement(Box, _extends({
     width: width
-  }), renderSearch && /*#__PURE__*/React.createElement(Searchbox, {
+  }, theme.multiselect.container), renderSearch && /*#__PURE__*/React.createElement(Searchbox, {
     reverse: false,
     width: width,
     placeholder: searchPlaceholder,
     value: searchValue,
     onValueChange: onSearchChange,
     layout: layout,
+    shouldRenderInDrop: shouldRenderInDrop,
     selectIcon: theme.select.icons,
     onCancel: onCancel
   }), /*#__PURE__*/React.createElement(Box, {
     direction: "row",
     height: height || 'small'
   }, /*#__PURE__*/React.createElement(Box, {
-    width: layout === 'single-column' ? '100%' : '50%',
-    pad: showSelectAll ? {
-      top: 'small'
-    } : {
-      vertical: 'small'
-    }
+    width: layout === 'single-column' ? '100%' : '50%' // pad={{ vertical: 'small' }}
+
   }, /*#__PURE__*/React.createElement(OptionsBox, {
     role: "menubar",
     tabIndex: "-1",

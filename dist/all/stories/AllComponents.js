@@ -12,17 +12,17 @@ var _base = require("mnet-ui-base/themes/base");
 
 var _utils = require("mnet-ui-base/utils");
 
-var _mnetUiBaseThemeNeo = require("mnet-ui-base-theme-neo");
-
-var _mnetUiBaseThemeHb = require("mnet-ui-base-theme-hb");
-
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+// import { neo } from 'mnet-ui-base-theme-neo';
+// import { hb } from 'mnet-ui-base-theme-hb';
+// import { cdp } from 'mnet-ui-base-theme-cdp';
 var themes = {
-  hb: _mnetUiBaseThemeHb.hb,
-  neo: _mnetUiBaseThemeNeo.neo,
+  // hb,
+  // neo,
+  // cdp,
   dark: _themes.dark
 };
 
