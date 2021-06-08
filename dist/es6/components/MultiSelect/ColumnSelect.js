@@ -170,7 +170,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     var optionDisabled = isDisabled(index);
     var optionSelected = isSelected(index);
     var optionActive = activeIndex === index;
-    return /*#__PURE__*/React.createElement(React.Fragment, null, console.log(index === 0 && showSelectAll, "index"), /*#__PURE__*/React.createElement(SelectOption // eslint-disable-next-line react/no-array-index-key
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SelectOption // eslint-disable-next-line react/no-array-index-key
     , {
       key: index,
       ref: optionRef,

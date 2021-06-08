@@ -203,7 +203,6 @@ const ColumnSelect = ({
                   const optionActive = activeIndex === index;
                   return (
                     <>
-                    {console.log(index === 0 && showSelectAll,"index")}
                       <SelectOption
                         // eslint-disable-next-line react/no-array-index-key
                         key={index}
