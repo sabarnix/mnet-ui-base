@@ -156,10 +156,11 @@ var ColumnSelect = function ColumnSelect(_ref) {
     } : {
       vertical: 'small'
     }
-  }, /*#__PURE__*/React.createElement(OptionsBox, _extends({
+  }, /*#__PURE__*/React.createElement(OptionsBox, {
     role: "menubar",
-    tabIndex: "-1"
-  }, theme.multiselect.custom.textAreaWrap), options.length > 0 ? /*#__PURE__*/React.createElement(InfiniteScroll, {
+    tabIndex: "-1",
+    fill: true
+  }, options.length > 0 ? /*#__PURE__*/React.createElement(InfiniteScroll, {
     items: options,
     step: theme.select.step,
     onMore: onMore,
@@ -169,7 +170,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     var optionDisabled = isDisabled(index);
     var optionSelected = isSelected(index);
     var optionActive = activeIndex === index;
-    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SelectOption // eslint-disable-next-line react/no-array-index-key
+    return /*#__PURE__*/React.createElement(React.Fragment, null, console.log(index === 0 && showSelectAll, "index"), /*#__PURE__*/React.createElement(SelectOption // eslint-disable-next-line react/no-array-index-key
     , {
       key: index,
       ref: optionRef,

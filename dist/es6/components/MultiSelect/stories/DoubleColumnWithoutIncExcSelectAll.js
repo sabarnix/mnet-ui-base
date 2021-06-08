@@ -359,6 +359,6 @@ var Example = function Example() {
   }));
 };
 
-storiesOf('MultiSelect', module).add('Double Column Without Inc Exc - With Select All', function () {
+storiesOf('MultiSelect', module).add('Double Column Without Inc Exc - Select All', function () {
   return /*#__PURE__*/React.createElement(Example, null);
 });

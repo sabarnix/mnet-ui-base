@@ -440,6 +440,7 @@ const options = [
 
 const Example = () => {
   const [value, setValue] = useState([]);
+  const [isExcluded, setIncExc] = useState(null);
 
   return (
     <Box fill align="center" justify="start" pad="large">
@@ -455,14 +456,19 @@ const Example = () => {
         searchPlaceholder="Search"
         searchable
         withOptionChips
+        withInclusionExclusion
+        isExcluded={isExcluded}
+        onIncExcChange={nextIncExc => setIncExc(nextIncExc)}
         renderEmptySelected={<span>Empty</span>}
         withSelectAll
+        multiSearchDelimiter=","
+        showSelectAllOnSearch
       />
     </Box>
   );
 };
 
 storiesOf('MultiSelect', module).add(
-  'Double Column Without Inc Exc - With Select All',
+  'MultiSearch - Select All On Search ',
   () => <Example />,
 );

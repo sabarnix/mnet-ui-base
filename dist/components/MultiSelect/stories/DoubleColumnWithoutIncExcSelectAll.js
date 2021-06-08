@@ -341,10 +341,6 @@ var Example = function Example() {
       value = _useState[0],
       setValue = _useState[1];
 
-  var _useState2 = (0, _react.useState)(null),
-      isExcluded = _useState2[0],
-      setIncExc = _useState2[1];
-
   return /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Box, {
     fill: true,
     align: "center",
@@ -367,18 +363,11 @@ var Example = function Example() {
     searchPlaceholder: "Search",
     searchable: true,
     withOptionChips: true,
-    withInclusionExclusion: true,
-    isExcluded: isExcluded,
-    onIncExcChange: function onIncExcChange(nextIncExc) {
-      return setIncExc(nextIncExc);
-    },
     renderEmptySelected: /*#__PURE__*/_react["default"].createElement("span", null, "Empty"),
-    withSelectAll: true,
-    multiSearchDelimiter: ",",
-    showSelectAllOnSearch: true
+    withSelectAll: true
   }));
 };
 
-(0, _react2.storiesOf)('MultiSelect', module).add('Delimiter Seperated Search - Show Select All Options When Search Value Is Present', function () {
+(0, _react2.storiesOf)('MultiSelect', module).add('Double Column Without Inc Exc - Select All', function () {
   return /*#__PURE__*/_react["default"].createElement(Example, null);
 });

@@ -440,7 +440,6 @@ const options = [
 
 const Example = () => {
   const [value, setValue] = useState([]);
-  const [isExcluded, setIncExc] = useState(null);
 
   return (
     <Box fill align="center" justify="start" pad="large">
@@ -456,12 +455,8 @@ const Example = () => {
         searchPlaceholder="Search"
         searchable
         withOptionChips
-        withInclusionExclusion
-        isExcluded={isExcluded}
-        onIncExcChange={nextIncExc => setIncExc(nextIncExc)}
         renderEmptySelected={<span>Empty</span>}
         withSelectAll
-        multiSearchDelimiter=","
         showSelectAllOnSearch
       />
     </Box>
@@ -469,6 +464,6 @@ const Example = () => {
 };
 
 storiesOf('MultiSelect', module).add(
-  'Delimiter Seperated Search - Show Select All Options When Search Value Is Present',
+  'Select All On Search Without Inc Exc',
   () => <Example />,
 );

@@ -457,13 +457,12 @@ const Example = () => {
         withOptionChips
         renderEmptySelected={<span>Empty</span>}
         withSelectAll
-        showSelectAllOnSearch
       />
     </Box>
   );
 };
 
 storiesOf('MultiSelect', module).add(
-  'Double Column Without Inc Exc - Show Select All Options When Search Value Is Present',
+  'Double Column Without Inc Exc - Select All',
   () => <Example />,
 );

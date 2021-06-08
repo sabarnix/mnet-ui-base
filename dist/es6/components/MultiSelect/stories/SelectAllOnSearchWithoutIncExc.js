@@ -360,6 +360,6 @@ var Example = function Example() {
   }));
 };
 
-storiesOf('MultiSelect', module).add('Double Column Without Inc Exc - Show Select All Options When Search Value Is Present', function () {
+storiesOf('MultiSelect', module).add('Select All On Search Without Inc Exc', function () {
   return /*#__PURE__*/React.createElement(Example, null);
 });

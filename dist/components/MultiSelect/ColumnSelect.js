@@ -181,10 +181,11 @@ var ColumnSelect = function ColumnSelect(_ref) {
     } : {
       vertical: 'small'
     }
-  }, /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionsBox, _extends({
+  }, /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionsBox, {
     role: "menubar",
-    tabIndex: "-1"
-  }, theme.multiselect.custom.textAreaWrap), options.length > 0 ? /*#__PURE__*/_react["default"].createElement(_InfiniteScroll.InfiniteScroll, {
+    tabIndex: "-1",
+    fill: true
+  }, options.length > 0 ? /*#__PURE__*/_react["default"].createElement(_InfiniteScroll.InfiniteScroll, {
     items: options,
     step: theme.select.step,
     onMore: onMore,
@@ -194,7 +195,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     var optionDisabled = isDisabled(index);
     var optionSelected = isSelected(index);
     var optionActive = activeIndex === index;
-    return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.SelectOption // eslint-disable-next-line react/no-array-index-key
+    return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, console.log(index === 0 && showSelectAll, "index"), /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.SelectOption // eslint-disable-next-line react/no-array-index-key
     , {
       key: index,
       ref: optionRef,

@@ -188,7 +188,7 @@ const ColumnSelect = ({
           width={layout === 'single-column' ? '100%' : '50%'}
           pad={showSelectAll ? { top: 'small' } : { vertical: 'small' }}
         >
-          <OptionsBox role="menubar" tabIndex="-1" {...theme.multiselect.custom.textAreaWrap}>
+          <OptionsBox role="menubar" tabIndex="-1" fill>
             {options.length > 0 ? (
               <InfiniteScroll
                 items={options}
@@ -203,6 +203,7 @@ const ColumnSelect = ({
                   const optionActive = activeIndex === index;
                   return (
                     <>
+                    {console.log(index === 0 && showSelectAll,"index")}
                       <SelectOption
                         // eslint-disable-next-line react/no-array-index-key
                         key={index}

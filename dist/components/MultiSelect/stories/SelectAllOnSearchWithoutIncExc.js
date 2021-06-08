@@ -369,6 +369,6 @@ var Example = function Example() {
   }));
 };
 
-(0, _react2.storiesOf)('MultiSelect', module).add('Double Column Without Inc Exc - Show Select All Options When Search Value Is Present', function () {
+(0, _react2.storiesOf)('MultiSelect', module).add('Select All On Search Without Inc Exc', function () {
   return /*#__PURE__*/_react["default"].createElement(Example, null);
 });
