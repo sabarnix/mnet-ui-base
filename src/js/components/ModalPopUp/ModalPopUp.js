@@ -11,7 +11,7 @@ const emitter = new EventEmitter();
 const ModalPopUp = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [position, setPosition] = useState({ position: 'center' });
+  const [position, setPosition] = useState({position: "center" });
   const [popUpConfig, setPopUpConfig] = useState({
     title: '',
     message: '',
@@ -41,10 +41,10 @@ const ModalPopUp = () => {
     <>
       {modalOpen && (
         <Box width="100vw" height="100vh">
-          <Layer
+          <Layer 
             {...position}
-            onClickOutside={popUpConfig.closeOnOutSideClick ? onClose : null}
-            onEsc={popUpConfig.closeOnEscape ? onClose : null}
+            onClickOutside={popUpConfig.closeOnOutSideClick ? onClose: null} 
+            onEsc={popUpConfig.closeOnEscape ? onClose: null}
           >
             <PopUpContainer
               isLoading={isLoading}

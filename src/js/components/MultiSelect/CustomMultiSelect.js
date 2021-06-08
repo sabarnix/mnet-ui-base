@@ -71,7 +71,7 @@ const CustomMultiSelect = ({
   };
 
   return (
-    <Box {...theme.multiselect.custom.wrapper} height={height} width={width}>
+    <Box height={height} width={width} {...theme.multiselect.custom.wrapper}>
       <Box
         width="50%"
         border={{
@@ -81,7 +81,7 @@ const CustomMultiSelect = ({
       >
         <TextAreaWrapper {...theme.multiselect.custom.textAreaWrap}>
           <FormField error={!isValid ? errorMsg : null}>
-            <Box width="full" pad="medium">
+            <Box width="full" height="full">
               <TextArea
                 placeholder={(custom && custom.label) || 'Label'}
                 value={textAreaValue}
@@ -101,11 +101,13 @@ const CustomMultiSelect = ({
               onClick={() => setItems(false)}
             >
               <Box align="center" justify="center" direction="row">
-                <Add
-                  {...theme.multiselect.checkbox.checkmark}
-                  color={theme.multiselect.includeBtn.color}
-                  size="small"
-                />
+                { Boolean(theme.multiselect.includeBtn.showIcon) && 
+                  <Add
+                    {...theme.multiselect.checkbox.checkmark}
+                    color={theme.multiselect.includeBtn.color}
+                    size="small"
+                  />
+                }
                 <Text weight={600} margin={{ left: 'small' }}>
                   INCLUDE
                 </Text>
@@ -121,11 +123,13 @@ const CustomMultiSelect = ({
               onClick={() => setItems(true)}
             >
               <Box align="center" justify="center" direction="row">
-                <FormSubtract
-                  {...theme.multiselect.checkbox.checkmark}
-                  color={theme.multiselect.excludeBtn.color}
-                  size="small"
-                />
+              { Boolean(theme.multiselect.excludeBtn.showIcon) && 
+                 <FormSubtract
+                   {...theme.multiselect.checkbox.checkmark}
+                   color={theme.multiselect.excludeBtn.color}
+                   size="small"
+                 />
+              }
                 <Text weight={600} margin={{ left: 'small' }}>
                   EXCLUDE
                 </Text>

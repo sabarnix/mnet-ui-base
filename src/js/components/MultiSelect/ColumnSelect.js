@@ -55,6 +55,8 @@ const ColumnSelect = ({
   onChange,
   showSelectAllOnSearch,
   multiSearchDelimiter,
+  shouldRenderInDrop,
+  showCount,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
@@ -145,6 +147,7 @@ const ColumnSelect = ({
       renderEmptySelected={renderEmptySelected}
       layout={layout}
       showSelectAll={showSelectAll}
+      showCount={showCount}
     />
   );
 
@@ -170,7 +173,7 @@ const ColumnSelect = ({
   }
 
   return (
-    <Box {...theme.multiselect.container} width={width}>
+    <Box width={width} {...theme.multiselect.container}>
       {renderSearch && (
         <Searchbox
           reverse={false}
@@ -179,6 +182,7 @@ const ColumnSelect = ({
           value={searchValue}
           onValueChange={onSearchChange}
           layout={layout}
+          shouldRenderInDrop={shouldRenderInDrop}
           selectIcon={theme.select.icons}
           onCancel={onCancel}
         />
@@ -186,7 +190,7 @@ const ColumnSelect = ({
       <Box direction="row" height={height || 'small'}>
         <Box
           width={layout === 'single-column' ? '100%' : '50%'}
-          pad={showSelectAll ? { top: 'small' } : { vertical: 'small' }}
+          // pad={{ vertical: 'small' }}
         >
           <OptionsBox role="menubar" tabIndex="-1" fill>
             {options.length > 0 ? (

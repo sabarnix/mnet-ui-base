@@ -40,8 +40,14 @@ const FormFieldBox = styled(Box)`
 `;
 
 const FormFieldContentBox = styled(Box)`
+  ${props => !props.error &&
+    props.theme.formField.field && 
+    props.theme.formField.field.default}
   ${props => props.focus && focusStyle({ justBorder: true })}
-  ${props => props.focus && props.plainOnFocus && `border-color: white;`}
+  ${props => props.focus && 
+    props.plainOnFocus && 
+    props.theme.formField.field && 
+    props.theme.formField.field.focus}
 `;
 
 const Message = ({ message, ...rest }) => {
@@ -247,20 +253,18 @@ const FormField = forwardRef(
       }
     }
     contents = (
-      <Box {...contentProps} width={width}>
-        <Box direction="row">
-          {prefix && (
-            <Box {...formFieldTheme.prefix} style={{ wordBreak: 'normal' }}>
-              {prefix}
-            </Box>
-          )}
-          {contents}
-          {postfix && (
-            <Box {...formFieldTheme.postfix} style={{ wordBreak: 'normal' }}>
-              {postfix}
-            </Box>
-          )}
-        </Box>
+      <Box {...contentProps} width={width} direction="row">
+        {prefix && (
+          <Box {...formFieldTheme.prefix} style={{ wordBreak: 'normal' }}>
+            {prefix}
+          </Box>
+        )}
+        {contents}
+        {postfix && (
+          <Box {...formFieldTheme.postfix} style={{ wordBreak: 'normal' }}>
+            {postfix}
+          </Box>
+        )}
       </Box>
     );
 
@@ -323,6 +327,8 @@ const FormField = forwardRef(
           overflow="hidden"
           {...(showBorder && innerProps)}
           plainOnFocus={plainOnFocus}
+          theme={theme}
+          error={error}
         >
           {contents}
         </FormFieldContentBox>
@@ -430,7 +436,7 @@ const FormField = forwardRef(
           {(label && component !== CheckBox) || labelWidth ? (
             <Box {...labelStyle} width={labelWidth}>
               {label && component !== CheckBox && (
-                <Text as="label" htmlFor={htmlFor} {...formFieldTheme.label}>
+                <Text as="label" htmlFor={htmlFor}>
                   {label} 
                 </Text>
               )}

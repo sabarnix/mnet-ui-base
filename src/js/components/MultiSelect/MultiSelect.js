@@ -29,14 +29,15 @@ const MultiSelect = ({
   isExcluded: isExcludedProp,
   onIncExcChange,
   renderEmptySelected,
+  gridArea,
   validate,
   size,
   isOpenState,
   isEnableOutSideClick,
-  shouldRenderInDrop,
+  shouldRenderInDrop = true,
   placeholder,
   multiSearchDelimiter,
-  showSelectAllOnSearch,
+  showSelectAllOnSearch,  
   ...rest
 }) => {
   const [internalValue, updateInternalValue] = useState(valueProp);
@@ -52,6 +53,11 @@ const MultiSelect = ({
     : isExcludedProp;
 
   const value = withUpdateCancelButtons ? internalValue : valueProp;
+
+  const {
+    showCount = false,
+    rowCount = 5,
+  } = rest;
 
   useEffect(() => {
     if (!isOpen && withUpdateCancelButtons) {
@@ -186,6 +192,8 @@ const MultiSelect = ({
           validate={validate}
           showSelectAllOnSearch={showSelectAllOnSearch || false}
           multiSearchDelimiter={multiSearchDelimiter}
+          shouldRenderInDrop={shouldRenderInDrop}
+          showCount={showCount}
           {...props}
         />
       );
@@ -193,20 +201,29 @@ const MultiSelect = ({
     return null;
   };
 
+  const getkeyField = key => typeof key === 'object' ? getkeyField(key.key) : key;
+
+  const shouldRenderLabel = () => !((!valueKey || !labelKey) || (getkeyField(valueKey) === getkeyField(labelKey)));
+
   const renderLabel = () => {
     return (
       <ValueLabelWithIcon
+        showCount={showCount}
+        rowCount={rowCount}
         withInclusionExclusion={withInclusionExclusion}
         isExcluded={isExcluded}
         size={size}
         placeholder={placeholder}
-        value={value}
+        value={shouldRenderLabel() && !custom ? (options || []).filter(obj => 
+          value.includes(applyKey(obj, valueKey)))
+            .map(optionObj => applyKey(optionObj, labelKey)): value
+        }
       />
     );
   };
 
   return (
-    <Box width={width}>
+    <Box width={width} gridArea={gridArea}>
       <Select
         multiple
         value={value}

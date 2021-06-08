@@ -17,6 +17,8 @@ import { Volume } from 'grommet-icons/icons/Volume';
 import { VolumeLow } from 'grommet-icons/icons/VolumeLow';
 import { Info } from 'grommet-icons/icons/Info';
 import { FormClose } from 'grommet-icons/icons/FormClose';
+import { Select as Success }  from 'grommet-icons/icons/Select'
+import { Split as Block }  from 'grommet-icons/icons/Split'
 import { base as iconBase } from 'grommet-icons/themes/base';
 
 import { deepFreeze, deepMerge } from '../utils/object';
@@ -379,6 +381,34 @@ export const generate = (baseSpacing = 24, scale = 6) => {
     box: {
       responsiveBreakpoint: 'small', // when we switch rows to columns
       // extend: undefined,
+    },
+    breadcrumb: {
+      item: {
+        margin: {
+          right: 'medium',
+        },
+      },
+      content: {
+        color: 'dark-1',
+        size: 'large',
+        // extend: undefined,
+      },
+      icon: {
+        color: 'dark-1',
+        size: 'small',
+      },
+      icons: {
+        separator: Next,
+      },
+      extend: {
+        ul: {
+          display: 'flex',
+          li: {
+            border: 'none',
+            padding: 0,
+          },
+        },
+      },
     },
     button: {
       size: {
@@ -753,7 +783,7 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       extend: {
         button: {
           flex: 1,
-          border: 'none',
+          // border: 'none',
         },
       },
       tooltip: {
@@ -763,7 +793,6 @@ export const generate = (baseSpacing = 24, scale = 6) => {
           size: 'large',
         },
       },
-
       // round: undefined,
     },
     mnet: {
@@ -933,11 +962,23 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       },
     },
     multiselect: {
+      container: {
+        border: {
+          color: 'light-3',
+        },
+        round: 'small',
+      },
       option: {
         width: 'full',
         direction: 'row',
         justify: 'between',
         pad: { horizontal: 'medium' },
+      },
+      includeBtn: {
+        color: 'status-ok',
+      },
+      excludeBtn: {
+        color: 'status-error',
       },
       checkbox: {
         box: {
@@ -950,6 +991,7 @@ export const generate = (baseSpacing = 24, scale = 6) => {
           size: `${baseSpacing * 1.2}px`,
           color: 'white',
         },
+        type: 'add',
         check: {
           height: `${baseSpacing * 1.2}px`,
           width: `${baseSpacing * 1.2}px`,
@@ -980,10 +1022,9 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       },
       chips: {
         wrapper: {
-          pad: 'medium',
+          pad: { vertical: 'medium', left: 'medium', right: 'small' },
           direction: 'row',
           extend: props => ({
-            padding: props.twoColumnLayout ? 0 : `${baseSpacing / 1.618}px`,
             'border-bottom': props.twoColumnLayout
               ? 'none'
               : '1px solid #D9DBE5',
@@ -993,7 +1034,7 @@ export const generate = (baseSpacing = 24, scale = 6) => {
           background: 'light-3',
           round: 'small',
           pad: {
-            vertical: 'small',
+            vertical: 'medium',
             horizontal: 'medium',
           },
           margin: 'small',
@@ -1005,41 +1046,17 @@ export const generate = (baseSpacing = 24, scale = 6) => {
               ? 0
               : `${baseSpacing / (1.618 * 2)}px`,
             background: props.twoColumnLayout ? 'white' : lightColors[2],
-            padding: props.twoColumnLayout
-              ? `${baseSpacing / 1.618}px`
-              : `${baseSpacing / (1.618 * 2)}px ${baseSpacing / 1.618}px`,
-            'border-radius': props.twoColumnLayout
-              ? 0
-              : `${baseSpacing / (1.618 * 2)}px`,
-            'border-bottom': props.twoColumnLayout
-              ? '1px solid #D9DBE5'
-              : 'none',
             'justify-content': props.twoColumnLayout
               ? 'space-between'
               : 'flex-start',
           }),
         },
         label: {
-          color: 'dark-3',
+          color: 'dark-1',
           size: 'medium',
-          weight: 600,
+          weight: 400,
           margin: {
             right: 'small',
-          },
-          extend: props => {
-            const getTextColor = () => {
-              switch (props.isExcluded) {
-                case false:
-                  return '#38C18B';
-                case true:
-                  return '#FC564F';
-                default:
-                  return darkColors[2];
-              }
-            };
-            return {
-              color: getTextColor(),
-            };
           },
         },
         icon: {
@@ -1047,8 +1064,16 @@ export const generate = (baseSpacing = 24, scale = 6) => {
           color: 'dark-3',
         },
         clear: {
-          color: 'accent-2',
-          size: 'small',
+          margin: 'medium',
+          border: {
+            side: 'top',
+            color: 'light-3',
+          },
+          color: 'dark-1',
+          size: 'medium',
+          alignSelf: 'end',
+          weight: '600',
+          height: '30px',
         },
       },
       controls: {
@@ -1068,28 +1093,30 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         textWrapper: {
           flex: 'grow',
         },
+        iconWrapper: {
+          gap: 'medium',
+          width: 'xxsmall',
+          direction: 'row',
+          justify: 'center',
+        },
         container: {
-          height: {
-            min: 'xxsmall',
-            max: 'xxsmall',
-          },
+          height: '40px',
           direction: 'row',
           align: 'center',
-          background: 'light-2',
-          pad: { right: 'medium', vertical: 'small' },
-          extend: props => ({
-            background:
-              props.layout === 'double-column' ? 'white' : lightColors[1],
-            'flex-direction':
-              props.layout === 'double-column' ? 'row-reverse' : 'row',
-            'padding-left':
-              props.layout === 'double-column' ? `${baseSpacing / 1.618}px` : 0,
-            'border-bottom':
-              props.layout === 'double-column' ? '1px solid #D9DBE5' : 'none',
-          }),
+          background: 'transparent',
+          // pad: { horizontal: 'medium', vertical: 'medium' },
+          pad: 'none',
+          border: {
+            side: 'bottom',
+            color: 'light-3',
+          },
+          style: {
+            minHeight: '40px',
+          },
+          position: 'relative',
         },
         placeholder: {
-          color: 'dark-5',
+          color: 'dark-4',
           size: 'medium',
         },
         icon: {
@@ -1098,45 +1125,86 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         },
       },
       rightPanel: {
-        border: '#D9DBE5',
+        border: 'light-3',
         incExcHeader: {
           box: {
             direction: 'row',
             justify: 'between',
-            pad: 'medium',
-            background: 'background-back',
+            align: 'center',
+            pad: 'large',
+            background: 'white',
             border: {
               side: 'bottom',
-              color: '#D9DBE5',
+              color: 'light-3',
             },
           },
           text: {
-            color: 'accent-2',
+            color: 'dark-1',
             size: 'medium',
-            weight: 600,
+            weight: '400',
+          },
+          count: {
+            margin: { left: 'small' },
+            background: statusColors.info,
+            round: 'medium',
+            pad: { horizontal: 'medium' },
+            justify: 'center',
           },
         },
       },
+      label: undefined,
       custom: {
         wrapper: {
           direction: 'row',
+          border: {
+            color: 'light-3',
+          },
+          round: 'small',
         },
         textAreaWrap: {
-          border: { side: 'right' },
-          pad: 'large',
-        },
-        label: {
-          weight: 600,
-        },
-        textAreaContainer: {
-          minHeight: '140px',
-          margin: { vertical: 'medium' },
+          border: {
+            side: 'right',
+            color: 'transparent',
+          },
+          pad: '0',
+          height: '100%',
+          extend: {
+            '*': {
+              // border: 'none',
+              // height: '100%',
+            },
+          },
         },
         actions: {
           wrapper: {
             direction: 'row',
-            margin: { vertical: 'small' },
-            gap: 'medium',
+            gap: '0',
+            margin: '0',
+            justify: 'evenly',
+            align: 'center',
+            border: {
+              side: 'top',
+              color: 'light-3',
+            },
+            height: {
+              min: '30px',
+            },
+          },
+        },
+      },
+      icons: {
+        include: {
+          icon: Success,
+          extend: {
+            color: 'status-ok',
+            size: 'small',
+          },
+        },
+        exclude: {
+          icon: Block,
+          extend: {
+            color: 'status-error',
+            size: 'small',
           },
         },
       },
@@ -1215,7 +1283,7 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         color: 'white',
         margin: { horizontal: 'small' },
         down: FormDown,
-        // up: undefined
+        up: FormUp,
       },
       options: {
         container: {
@@ -1228,6 +1296,32 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       },
       // searchInput: undefined,
       step: 20,
+    },
+    switch: {
+      padding: `${baseSpacing * 0.625}px`,
+      background: {
+        active: 'accent-1',
+        inactive: 'dark-3',
+        disabled: {
+          // active: 'dark-2',
+          // inactive: undefined,
+        },
+      },
+      text: {
+        active: 'white',
+        inactive: 'dark-2',
+        disabled: {
+          // active: 'dark-3',
+          // inactive: undefined,
+        },
+      },
+      container: {
+        direction: 'row',
+        gap: 'none',
+        round: 'small',
+        overflow: 'hidden',
+      },
+      disabled: undefined,
     },
     tab: {
       active: {

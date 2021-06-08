@@ -18,6 +18,7 @@ const Tooltip = forwardRef(
       position = 'right',
       title,
       showArrow = true,
+      closeOnTooltipHover = true,
       ...rest
     },
     ref,
@@ -50,12 +51,13 @@ const Tooltip = forwardRef(
         setOver(show);
       }
     };
+    const normalizedMouseOverfn = closeOnTooltipHover ? setOver : showToolTip;
     return (
       <Box ref={ref} {...rest}>
         <Box
           ref={overRef}
-          onMouseOver={() => showToolTip(true)}
-          onMouseOut={() => showToolTip(false, true)}
+          onMouseOver={() => normalizedMouseOverfn(true)}
+          onMouseOut={() => normalizedMouseOverfn(false, true)}
           onFocus={() => {}}
           onBlur={() => {}}
         >
@@ -71,13 +73,10 @@ const Tooltip = forwardRef(
             target={overRef.current}
             elevation="none"
             plain
-            style={{ boxShadow: tooptip.boxShadow, maxWidth: tooptip.maxWidth }}
+            style={{ boxShadow: null, maxWidth: tooptip.maxWidth }}
           >
-            <ArrowWrap
-              position={position}
-              background={tooptip.background || 'dark-1'}
-            >
-              {showArrow && <Arrow position={position} />}
+            <ArrowWrap position={position}>
+              <Arrow position={position} showArrow={showArrow} />
               <Box
                 pad={tooptip.pad}
                 background={tooptip.background || 'dark-1'}
