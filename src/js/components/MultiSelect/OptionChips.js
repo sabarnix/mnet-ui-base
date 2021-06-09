@@ -38,7 +38,7 @@ const OptionChips = ({
         border={theme.multiselect.chips.clear.border}
         height={theme.multiselect.chips.clear.height}
       >
-        <Text {...theme.multiselect.chips.clear} color='dark-3' weight={400}>CLEAR ALL</Text>
+        <Text {...theme.multiselect.chips.clear}>CLEAR ALL</Text>
       </Box>
     </Button>
   );

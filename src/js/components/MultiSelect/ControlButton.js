@@ -13,7 +13,7 @@ const ControlButton = ({ onOk, onCancel }) => {
   `;
 
   return (
-    <ControlButtonWrapper {...theme.multiselect.controls.wrapper} border="top">
+    <ControlButtonWrapper {...theme.multiselect.controls.wrapper}>
       <Button
         role="button"
         a11yTitle="OK button (Update selected values)"
