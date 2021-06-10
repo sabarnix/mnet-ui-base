@@ -6,12 +6,12 @@ var _react2 = require("@storybook/react");
 
 var _mnetUiBase = require("mnet-ui-base");
 
-var _mnetUiBaseThemeNeo = require("mnet-ui-base-theme-neo");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// import { neo } from 'mnet-ui-base-theme-neo';
+// import { cdp } from 'mnet-ui-base-theme-cdp';
 var Background = function Background() {
-  var themeColor = 'background-back';
+  // const themeColor = 'background-back';
   var hexValue = '#DCD0FF';
   var cssColor = 'gold';
   return /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Box, {
@@ -19,17 +19,6 @@ var Background = function Background() {
   }, /*#__PURE__*/_react["default"].createElement(_mnetUiBase.MnetUIBase, null, /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Box, {
     pad: "medium"
   }, /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Text, null, "MnetUIBase with no theme or background prop"))), /*#__PURE__*/_react["default"].createElement(_mnetUiBase.MnetUIBase, {
-    theme: _mnetUiBaseThemeNeo.neo,
-    themeMode: "dark"
-  }, /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Box, {
-    pad: "medium"
-  }, /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Text, null, "MnetUIBase with theme & themeMode but no background prop"))), /*#__PURE__*/_react["default"].createElement(_mnetUiBase.MnetUIBase, {
-    theme: _mnetUiBaseThemeNeo.neo,
-    themeMode: "light",
-    background: themeColor
-  }, /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Box, {
-    pad: "medium"
-  }, /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Text, null, "MnetUIBase with background as theme color of '", themeColor, "'"))), /*#__PURE__*/_react["default"].createElement(_mnetUiBase.MnetUIBase, {
     theme: _mnetUiBase.mnet,
     background: hexValue
   }, /*#__PURE__*/_react["default"].createElement(_mnetUiBase.Box, {

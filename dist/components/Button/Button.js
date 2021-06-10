@@ -136,15 +136,11 @@ var Button = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
 
 
   var kind = (0, _react.useMemo)(function () {
-    if (theme.button["default"]) {
-      if (kindArg) return kindArg;
-      if (primary) return 'primary';
-      if (secondary) return 'secondary';
-      if (tertiary) return 'tertiary';
-      return 'default';
-    }
-
-    return undefined; // pre-default, no kind
+    if (kindArg) return kindArg;
+    if (primary) return 'primary';
+    if (secondary) return 'secondary';
+    if (tertiary) return 'tertiary';
+    return theme.button["default"] ? 'default' : undefined;
   }, [kindArg, primary, secondary, tertiary, theme.button["default"]]); // When we have a kind and are not plain, themePaths stores the relative
   // paths within the theme for the current kind and state of the button.
   // These paths are used with getIconColor() above and kindStyle() within

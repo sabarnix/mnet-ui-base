@@ -35,7 +35,7 @@ var ModalPopUp = function ModalPopUp() {
       setIsLoading = _useState2[1];
 
   var _useState3 = (0, _react.useState)({
-    position: 'center'
+    position: "center"
   }),
       position = _useState3[0],
       setPosition = _useState3[1];

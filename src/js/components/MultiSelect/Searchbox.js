@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 import { Search } from 'grommet-icons/icons/Search';
 
+import { defaultProps } from '../../default-props';
 import { Text } from '../Text';
 import { TextInput } from '../TextInput';
 import { Button } from '../Button';
@@ -16,6 +17,7 @@ const Searchbox = ({
   selectIcon,
   onCancel,
   reverse = true,
+  shouldRenderInDrop,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
@@ -30,8 +32,14 @@ const Searchbox = ({
   const icons = (
       <Search {...theme.multiselect.searchbox.icon} />
   );
-  const collapseBtn = selectIcon && (
-    <Button role="button" margin="none" onClick={onCancel} plain>
+  const collapseBtn = !shouldRenderInDrop && selectIcon && (
+    <Button 
+      role="button" 
+      margin="none" 
+      onClick={onCancel} 
+      plain
+      style={{  position: 'absolute', right: '15px'  }}
+    >
       <CollapsibleIcon
         color="dark-1"
         size={selectIcon.size}
@@ -47,7 +55,6 @@ const Searchbox = ({
         plain
         fill
         icon={icons}
-        collapseBtn={collapseBtn}
         reverse={reverse}
         width={width}
         value={value}
@@ -59,6 +66,7 @@ const Searchbox = ({
           </Text>
         }
       />
+      {collapseBtn}
     </Box>
   );
 };

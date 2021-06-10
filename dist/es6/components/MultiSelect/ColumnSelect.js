@@ -2,10 +2,13 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 import React, { useContext, useCallback } from 'react';
 import { ThemeContext } from 'styled-components';
+import { Add } from 'grommet-icons/icons/Add';
+import { FormSubtract } from 'grommet-icons/icons/FormSubtract';
 import { defaultProps } from '../../default-props';
 import { InfiniteScroll } from '../InfiniteScroll';
 import { Text } from '../Text';
 import { Box } from '../Box';
+import { Button } from '../Button';
 import { OptionsBox, SelectOption } from './StyledMultiSelect';
 import { OptionWithCheckControl } from './OptionWithCheckControl';
 import { OptionChips } from './OptionChips';
@@ -46,7 +49,11 @@ var ColumnSelect = function ColumnSelect(_ref) {
       onValueChange = _ref.onValueChange,
       custom = _ref.custom,
       validate = _ref.validate,
-      onChange = _ref.onChange;
+      onChange = _ref.onChange,
+      showSelectAllOnSearch = _ref.showSelectAllOnSearch,
+      multiSearchDelimiter = _ref.multiSearchDelimiter,
+      shouldRenderInDrop = _ref.shouldRenderInDrop,
+      showCount = _ref.showCount;
   var theme = useContext(ThemeContext) || defaultProps.theme;
 
   var selectOptionsStyle = _extends({}, theme.select.options.box, theme.select.options.container);
@@ -81,6 +88,21 @@ var ColumnSelect = function ColumnSelect(_ref) {
     });
   }, [inclusionExclusion, setIncExcVal, onChange]);
 
+  var selectAllButtonsCondition = function selectAllButtonsCondition(isSelectAll) {
+    if (isSelectAll === void 0) {
+      isSelectAll = false;
+    }
+
+    var isDelemeterPresent = !multiSearchDelimiter || multiSearchDelimiter && searchValue.includes(multiSearchDelimiter);
+    var isShowSelectAllOnSearch = !showSelectAllOnSearch || showSelectAllOnSearch && searchValue && isDelemeterPresent;
+
+    if (isSelectAll) {
+      return !allSelected && showSelectAll && !inclusionExclusion && isShowSelectAllOnSearch;
+    }
+
+    return !allSelected && showSelectAll && inclusionExclusion && (isExcluded === null || isExcluded !== null) && isShowSelectAllOnSearch;
+  };
+
   var renderOptionChips = function renderOptionChips() {
     return /*#__PURE__*/React.createElement(OptionChips, {
       width: width,
@@ -94,7 +116,8 @@ var ColumnSelect = function ColumnSelect(_ref) {
       inclusionExclusion: inclusionExclusion,
       isExcluded: isExcluded,
       renderEmptySelected: renderEmptySelected,
-      layout: layout
+      layout: layout,
+      showCount: showCount
     });
   };
 
@@ -117,25 +140,24 @@ var ColumnSelect = function ColumnSelect(_ref) {
     });
   }
 
-  return /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.container, {
+  return /*#__PURE__*/React.createElement(Box, _extends({
     width: width
-  }), renderSearch && /*#__PURE__*/React.createElement(Searchbox, {
+  }, theme.multiselect.container), renderSearch && /*#__PURE__*/React.createElement(Searchbox, {
     reverse: false,
     width: width,
     placeholder: searchPlaceholder,
     value: searchValue,
     onValueChange: onSearchChange,
     layout: layout,
+    shouldRenderInDrop: shouldRenderInDrop,
     selectIcon: theme.select.icons,
     onCancel: onCancel
   }), /*#__PURE__*/React.createElement(Box, {
     direction: "row",
     height: height || 'small'
   }, /*#__PURE__*/React.createElement(Box, {
-    width: layout === 'single-column' ? '100%' : '50%',
-    pad: {
-      vertical: 'small'
-    }
+    width: layout === 'single-column' ? '100%' : '50%' // pad={{ vertical: 'small' }}
+
   }, /*#__PURE__*/React.createElement(OptionsBox, {
     role: "menubar",
     tabIndex: "-1"
@@ -149,33 +171,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
     var optionDisabled = isDisabled(index);
     var optionSelected = isSelected(index);
     var optionActive = activeIndex === index;
-    return /*#__PURE__*/React.createElement(React.Fragment, null, index === 0 && showSelectAll && /*#__PURE__*/React.createElement(SelectOption // eslint-disable-next-line react/no-array-index-key
-    , {
-      key: index + "_select_all",
-      ref: optionRef,
-      tabIndex: "-1",
-      role: "menuitem",
-      a11yTitle: "select all options",
-      hoverIndicator: theme.select.activeColor,
-      selected: allSelected,
-      plain: true,
-      onMouseOver: onActiveOption(-1),
-      onFocus: onActiveOption(-1),
-      onClick: !inclusionExclusion || inclusionExclusion && isExcluded !== null ? function () {
-        return setUnsetChips(allSelected ? [] : options.reduce(function (acc, item, ind) {
-          if (!isDisabled(ind)) acc.push(optionValue(ind));
-          return acc;
-        }, []));
-      } : undefined
-    }, /*#__PURE__*/React.createElement(OptionWithCheckControl, {
-      selected: allSelected,
-      label: "Select All",
-      inclusionExclusion: inclusionExclusion,
-      isExcluded: isExcluded,
-      index: SELECT_ALL_INDEX,
-      onSelect: setOption,
-      active: activeIndex === -1
-    })), /*#__PURE__*/React.createElement(SelectOption // eslint-disable-next-line react/no-array-index-key
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SelectOption // eslint-disable-next-line react/no-array-index-key
     , {
       key: index,
       ref: optionRef,
@@ -208,7 +204,70 @@ var ColumnSelect = function ColumnSelect(_ref) {
     hoverIndicator: "background",
     disabled: true,
     option: "No values available"
-  }, /*#__PURE__*/React.createElement(Box, selectOptionsStyle, /*#__PURE__*/React.createElement(Text, theme.select.container.text, emptySearchMessage || 'No values available'))))), layout === 'double-column' && /*#__PURE__*/React.createElement(Box, {
+  }, /*#__PURE__*/React.createElement(Box, selectOptionsStyle, /*#__PURE__*/React.createElement(Text, theme.select.container.text, emptySearchMessage || 'No values available')))), selectAllButtonsCondition(true) && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+    border: "top",
+    justify: "start"
+  }), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Button, {
+    color: theme.global.colors.brand,
+    onClick: function onClick() {
+      setUnsetChips(options.reduce(function (acc, item, ind) {
+        if (!isDisabled(ind)) acc.push(optionValue(ind));
+        return acc;
+      }, []));
+    }
+  }, /*#__PURE__*/React.createElement(Box, {
+    align: "center",
+    direction: "row"
+  }, /*#__PURE__*/React.createElement(Text, {
+    margin: {
+      left: 'small'
+    }
+  }, "SELECT ALL"))))), selectAllButtonsCondition() && /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.actions.wrapper, {
+    border: "top",
+    justify: [true, false].includes(isExcluded) ? 'start' : 'evenly'
+  }), [null, false].includes(isExcluded) && /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.includeBtn, {
+    onClick: function onClick(event) {
+      setOption(event, false, SELECT_ALL_INDEX);
+      setUnsetChips(options.reduce(function (acc, item, ind) {
+        if (!isDisabled(ind)) acc.push(optionValue(ind));
+        return acc;
+      }, []));
+    }
+  }), /*#__PURE__*/React.createElement(Box, {
+    align: "center",
+    justify: "center",
+    direction: "row"
+  }, /*#__PURE__*/React.createElement(Add, _extends({}, theme.multiselect.checkbox.checkmark, {
+    color: theme.multiselect.includeBtn.color,
+    size: "small"
+  })), /*#__PURE__*/React.createElement(Text, {
+    margin: {
+      left: 'small'
+    }
+  }, "INCLUDE ALL"))), !allSelected && isExcluded === null && /*#__PURE__*/React.createElement(Box, {
+    background: "light-3",
+    width: "1px",
+    height: "100%"
+  }), [null, true].includes(isExcluded) && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.excludeBtn, {
+    onClick: function onClick(event) {
+      setOption(event, true, SELECT_ALL_INDEX);
+      setUnsetChips(allSelected ? [] : options.reduce(function (acc, item, ind) {
+        if (!isDisabled(ind)) acc.push(optionValue(ind));
+        return acc;
+      }, []));
+    }
+  }), /*#__PURE__*/React.createElement(Box, {
+    align: "center",
+    justify: "center",
+    direction: "row"
+  }, /*#__PURE__*/React.createElement(FormSubtract, _extends({}, theme.multiselect.checkbox.checkmark, {
+    color: theme.multiselect.excludeBtn.color,
+    size: "small"
+  })), /*#__PURE__*/React.createElement(Text, {
+    margin: {
+      left: 'small'
+    }
+  }, "EXCLUDE ALL")))))), layout === 'double-column' && /*#__PURE__*/React.createElement(Box, {
     width: "50%",
     border: [{
       side: 'left',

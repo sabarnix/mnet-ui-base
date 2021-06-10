@@ -96,6 +96,12 @@ const CheckBox = forwardRef(
       borderColor = normalizeColor(theme.checkBox.color || 'control', theme);
     }
 
+    const checkIcon = CheckedIcon && CheckedIcon.notSvg ? (
+      <CheckedIcon {...theme.checkBox.icon} />
+    ) : (
+      <CheckedIcon theme={theme} as={StyledCheckBoxIcon} />
+    );
+
     const visual = toggle ? (
       <StyledCheckBoxToggle {...themeableProps}>
         <StyledCheckBoxKnob {...themeableProps} />
@@ -116,9 +122,7 @@ const CheckBox = forwardRef(
       >
         {!indeterminate &&
           checked &&
-          (CheckedIcon ? (
-            <CheckedIcon theme={theme} size="large" />
-          ) : (
+          (CheckedIcon ? checkIcon : (
             <StyledCheckBoxIcon
               theme={theme}
               viewBox="0 0 24 24"

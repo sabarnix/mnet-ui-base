@@ -19,7 +19,9 @@ var Tooltip = /*#__PURE__*/forwardRef(function (_ref, ref) {
       title = _ref.title,
       _ref$showArrow = _ref.showArrow,
       showArrow = _ref$showArrow === void 0 ? true : _ref$showArrow,
-      rest = _objectWithoutPropertiesLoose(_ref, ["children", "message", "body", "position", "title", "showArrow"]);
+      _ref$closeOnTooltipHo = _ref.closeOnTooltipHover,
+      closeOnTooltipHover = _ref$closeOnTooltipHo === void 0 ? true : _ref$closeOnTooltipHo,
+      rest = _objectWithoutPropertiesLoose(_ref, ["children", "message", "body", "position", "title", "showArrow", "closeOnTooltipHover"]);
 
   var _useState = useState(),
       over = _useState[0],
@@ -65,15 +67,16 @@ var Tooltip = /*#__PURE__*/forwardRef(function (_ref, ref) {
     }
   };
 
+  var normalizedMouseOverfn = closeOnTooltipHover ? setOver : showToolTip;
   return /*#__PURE__*/React.createElement(Box, _extends({
     ref: ref
   }, rest), /*#__PURE__*/React.createElement(Box, {
     ref: overRef,
     onMouseOver: function onMouseOver() {
-      return showToolTip(true);
+      return normalizedMouseOverfn(true);
     },
     onMouseOut: function onMouseOut() {
-      return showToolTip(false, true);
+      return normalizedMouseOverfn(false, true);
     },
     onFocus: function onFocus() {},
     onBlur: function onBlur() {}
@@ -90,14 +93,14 @@ var Tooltip = /*#__PURE__*/forwardRef(function (_ref, ref) {
     elevation: "none",
     plain: true,
     style: {
-      boxShadow: tooptip.boxShadow,
+      boxShadow: null,
       maxWidth: tooptip.maxWidth
     }
   }, /*#__PURE__*/React.createElement(ArrowWrap, {
-    position: position,
-    background: tooptip.background || 'dark-1'
-  }, showArrow && /*#__PURE__*/React.createElement(Arrow, {
     position: position
+  }, /*#__PURE__*/React.createElement(Arrow, {
+    position: position,
+    showArrow: showArrow
   }), /*#__PURE__*/React.createElement(Box, {
     pad: tooptip.pad,
     background: tooptip.background || 'dark-1',

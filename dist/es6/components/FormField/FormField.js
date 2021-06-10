@@ -36,12 +36,14 @@ var FormFieldBox = styled(Box).withConfig({
 var FormFieldContentBox = styled(Box).withConfig({
   displayName: "FormField__FormFieldContentBox",
   componentId: "sc-13hlgkg-1"
-})(["", " ", ""], function (props) {
+})(["", " ", " ", ""], function (props) {
+  return !props.error && props.theme.formField.field && props.theme.formField.field["default"];
+}, function (props) {
   return props.focus && focusStyle({
     justBorder: true
   });
 }, function (props) {
-  return props.focus && props.plainOnFocus && "border-color: white;";
+  return props.focus && props.plainOnFocus && props.theme.formField.field && props.theme.formField.field.focus;
 });
 
 var Message = function Message(_ref) {
@@ -240,10 +242,9 @@ var FormField = /*#__PURE__*/forwardRef(function (_ref2, ref) {
   }
 
   contents = /*#__PURE__*/React.createElement(Box, _extends({}, contentProps, {
-    width: width
-  }), /*#__PURE__*/React.createElement(Box, {
+    width: width,
     direction: "row"
-  }, prefix && /*#__PURE__*/React.createElement(Box, _extends({}, formFieldTheme.prefix, {
+  }), prefix && /*#__PURE__*/React.createElement(Box, _extends({}, formFieldTheme.prefix, {
     style: {
       wordBreak: 'normal'
     }
@@ -251,7 +252,7 @@ var FormField = /*#__PURE__*/forwardRef(function (_ref2, ref) {
     style: {
       wordBreak: 'normal'
     }
-  }), postfix)));
+  }), postfix));
   var borderColor;
 
   if (disabled && formFieldTheme.disabled.border && formFieldTheme.disabled.border.color) {
@@ -295,7 +296,9 @@ var FormField = /*#__PURE__*/forwardRef(function (_ref2, ref) {
     contents = /*#__PURE__*/React.createElement(FormFieldContentBox, _extends({
       overflow: "hidden"
     }, showBorder && innerProps, {
-      plainOnFocus: plainOnFocus
+      plainOnFocus: plainOnFocus,
+      theme: theme,
+      error: error
     }), contents);
     var mergedMargin = margin || formFieldTheme.margin;
     abut = themeBorder.position === 'outer' && (themeBorder.side === 'all' || themeBorder.side === 'horizontal' || !themeBorder.side) && !(mergedMargin && (typeof mergedMargin === 'string' && mergedMargin !== 'none' || mergedMargin.bottom && mergedMargin.bottom !== 'none' || mergedMargin.horizontal && mergedMargin.horizontal !== 'none'));
@@ -369,10 +372,10 @@ var FormField = /*#__PURE__*/forwardRef(function (_ref2, ref) {
     style: _extends({}, layoutType)
   }, label && component !== CheckBox || labelWidth ? /*#__PURE__*/React.createElement(Box, _extends({}, labelStyle, {
     width: labelWidth
-  }), label && component !== CheckBox && /*#__PURE__*/React.createElement(Text, _extends({
+  }), label && component !== CheckBox && /*#__PURE__*/React.createElement(Text, {
     as: "label",
     htmlFor: htmlFor
-  }, formFieldTheme.label), label), required && /*#__PURE__*/React.createElement(Text, {
+  }, label), required && /*#__PURE__*/React.createElement(Text, {
     color: "status-critical"
   }, "*"), typeof tooltip === 'object' && tooltip != null && /*#__PURE__*/React.createElement(Tooltip, _extends({}, tooltip, formFieldTheme.tooltip.extend), /*#__PURE__*/React.createElement(ToolTipIcon, formFieldTheme.tooltip.iconProps))) : null, /*#__PURE__*/React.createElement(Box, null, contents, normalizedError && /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Message, _extends({
     message: normalizedError

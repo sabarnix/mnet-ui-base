@@ -87,6 +87,10 @@ var CheckBox = /*#__PURE__*/forwardRef(function (_ref, ref) {
     borderColor = normalizeColor(theme.checkBox.color || 'control', theme);
   }
 
+  var checkIcon = CheckedIcon && CheckedIcon.notSvg ? /*#__PURE__*/React.createElement(CheckedIcon, theme.checkBox.icon) : /*#__PURE__*/React.createElement(CheckedIcon, {
+    theme: theme,
+    as: StyledCheckBoxIcon
+  });
   var visual = toggle ? /*#__PURE__*/React.createElement(StyledCheckBoxToggle, themeableProps, /*#__PURE__*/React.createElement(StyledCheckBoxKnob, themeableProps)) : /*#__PURE__*/React.createElement(StyledCheckBoxBox, _extends({
     as: Box,
     align: "center",
@@ -98,10 +102,7 @@ var CheckBox = /*#__PURE__*/forwardRef(function (_ref, ref) {
       color: borderColor
     },
     round: theme.checkBox.check.radius
-  }, themeableProps), !indeterminate && checked && (CheckedIcon ? /*#__PURE__*/React.createElement(CheckedIcon, {
-    theme: theme,
-    size: "large"
-  }) : /*#__PURE__*/React.createElement(StyledCheckBoxIcon, _extends({
+  }, themeableProps), !indeterminate && checked && (CheckedIcon ? checkIcon : /*#__PURE__*/React.createElement(StyledCheckBoxIcon, _extends({
     theme: theme,
     viewBox: "0 0 24 24",
     preserveAspectRatio: "xMidYMid meet"

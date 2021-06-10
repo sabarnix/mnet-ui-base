@@ -29,12 +29,15 @@ const MultiSelect = ({
   isExcluded: isExcludedProp,
   onIncExcChange,
   renderEmptySelected,
+  gridArea,
   validate,
   size,
   isOpenState,
   isEnableOutSideClick,
-  shouldRenderInDrop,
+  shouldRenderInDrop = true,
   placeholder,
+  multiSearchDelimiter,
+  showSelectAllOnSearch,
   ...rest
 }) => {
   const [internalValue, updateInternalValue] = useState(valueProp);
@@ -43,12 +46,18 @@ const MultiSelect = ({
   );
   const [isOpen, updateIsOpen] = useState(isOpenState || false);
   const [search, updateSearch] = useState('');
+  const [multiSearch, updateMultiSearch] = useState([]);
 
   const isExcluded = withUpdateCancelButtons
     ? internalIsExcluded
     : isExcludedProp;
 
   const value = withUpdateCancelButtons ? internalValue : valueProp;
+
+  const {
+    showCount = false,
+    rowCount = 5,
+  } = rest;
 
   useEffect(() => {
     if (!isOpen && withUpdateCancelButtons) {
@@ -94,14 +103,36 @@ const MultiSelect = ({
   const getValue = (index, array, param) => applyKey(array[index], param);
 
   const onSearchChange = searchInput => {
-    const escapedText = searchInput.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+    const escapedText = searchInput.replace(/[-\\^$*+?.()[\]{}]/g, '\\$&');
+    if (multiSearchDelimiter) {
+      if (searchInput === '') {
+        updateMultiSearch([]);
+      } else {
+        const escapedTextSplit = escapedText
+          .split(multiSearchDelimiter)
+          .map(item => item.trim());
+          updateMultiSearch(escapedTextSplit);
+      }
+    }
     updateSearch(escapedText);
   };
 
+  const getMultiSearchOptions = (isMatching=false) => {
+    return options.filter(item => {
+      const multiSearchItems =  multiSearch.some(searchEl => {
+        const exp = new RegExp(`^${searchEl}$`, 'i');
+        return exp.test(item.label);
+      })
+      return isMatching ? multiSearchItems : !multiSearchItems;
+    });
+  }
+
   const getOptions = useCallback(() => {
-    if (!search) {
-      return options;
+    if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
+      if (multiSearch.length === 0) return options;
+      return getMultiSearchOptions(true);
     }
+    if (!search) return options;
     const exp = new RegExp(search, 'i');
     return options.filter((item, index) =>
       exp.test(getValue(index, options, labelKey)),
@@ -109,9 +140,14 @@ const MultiSelect = ({
   }, [options, search]);
 
   const getOptionsNotMatchingSearch = useCallback(() => {
+    if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
+      if (!multiSearch.length) return [];
+      return getMultiSearchOptions();
+    }
     if (!search) {
       return [];
     }
+    if (!search) return [];
     const exp = new RegExp(search, 'i');
     return options.filter(
       (item, index) => !exp.test(getValue(index, options, labelKey)),
@@ -156,6 +192,10 @@ const MultiSelect = ({
           onValueChange={onValueChange}
           custom={custom}
           validate={validate}
+          showSelectAllOnSearch={showSelectAllOnSearch || false}
+          multiSearchDelimiter={multiSearchDelimiter}
+          shouldRenderInDrop={shouldRenderInDrop}
+          showCount={showCount}
           {...props}
         />
       );
@@ -163,20 +203,29 @@ const MultiSelect = ({
     return null;
   };
 
+  const getkeyField = key => typeof key === 'object' ? getkeyField(key.key) : key;
+
+  const shouldRenderLabel = () => !((!valueKey || !labelKey) || (getkeyField(valueKey) === getkeyField(labelKey)));
+
   const renderLabel = () => {
     return (
       <ValueLabelWithIcon
+        showCount={showCount}
+        rowCount={rowCount}
         withInclusionExclusion={withInclusionExclusion}
         isExcluded={isExcluded}
         size={size}
         placeholder={placeholder}
-        value={value}
+        value={shouldRenderLabel() && !custom ? (options || []).filter(obj => 
+          value.includes(applyKey(obj, valueKey)))
+            .map(optionObj => applyKey(optionObj, labelKey)): value
+        }
       />
     );
   };
 
   return (
-    <Box width={width}>
+    <Box width={width} gridArea={gridArea}>
       <Select
         multiple
         value={value}

@@ -44,13 +44,17 @@ var MultiSelect = function MultiSelect(_ref) {
       isExcludedProp = _ref.isExcluded,
       onIncExcChange = _ref.onIncExcChange,
       renderEmptySelected = _ref.renderEmptySelected,
+      gridArea = _ref.gridArea,
       validate = _ref.validate,
       size = _ref.size,
       isOpenState = _ref.isOpenState,
       isEnableOutSideClick = _ref.isEnableOutSideClick,
-      shouldRenderInDrop = _ref.shouldRenderInDrop,
+      _ref$shouldRenderInDr = _ref.shouldRenderInDrop,
+      shouldRenderInDrop = _ref$shouldRenderInDr === void 0 ? true : _ref$shouldRenderInDr,
       placeholder = _ref.placeholder,
-      rest = _objectWithoutPropertiesLoose(_ref, ["width", "height", "options", "value", "labelKey", "valueKey", "onValueChange", "layout", "onSearch", "searchPlaceholder", "emptySearchMessage", "withSelectAll", "withOptionChips", "withUpdateCancelButtons", "searchable", "custom", "withInclusionExclusion", "isExcluded", "onIncExcChange", "renderEmptySelected", "validate", "size", "isOpenState", "isEnableOutSideClick", "shouldRenderInDrop", "placeholder"]);
+      multiSearchDelimiter = _ref.multiSearchDelimiter,
+      showSelectAllOnSearch = _ref.showSelectAllOnSearch,
+      rest = _objectWithoutPropertiesLoose(_ref, ["width", "height", "options", "value", "labelKey", "valueKey", "onValueChange", "layout", "onSearch", "searchPlaceholder", "emptySearchMessage", "withSelectAll", "withOptionChips", "withUpdateCancelButtons", "searchable", "custom", "withInclusionExclusion", "isExcluded", "onIncExcChange", "renderEmptySelected", "gridArea", "validate", "size", "isOpenState", "isEnableOutSideClick", "shouldRenderInDrop", "placeholder", "multiSearchDelimiter", "showSelectAllOnSearch"]);
 
   var _useState = (0, _react.useState)(valueProp),
       internalValue = _useState[0],
@@ -68,8 +72,16 @@ var MultiSelect = function MultiSelect(_ref) {
       search = _useState4[0],
       updateSearch = _useState4[1];
 
+  var _useState5 = (0, _react.useState)([]),
+      multiSearch = _useState5[0],
+      updateMultiSearch = _useState5[1];
+
   var isExcluded = withUpdateCancelButtons ? internalIsExcluded : isExcludedProp;
   var value = withUpdateCancelButtons ? internalValue : valueProp;
+  var _rest$showCount = rest.showCount,
+      showCount = _rest$showCount === void 0 ? false : _rest$showCount,
+      _rest$rowCount = rest.rowCount,
+      rowCount = _rest$rowCount === void 0 ? 5 : _rest$rowCount;
   (0, _react.useEffect)(function () {
     if (!isOpen && withUpdateCancelButtons) {
       updateInternalValue(valueProp);
@@ -118,25 +130,59 @@ var MultiSelect = function MultiSelect(_ref) {
   };
 
   var onSearchChange = function onSearchChange(searchInput) {
-    var escapedText = searchInput.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+    var escapedText = searchInput.replace(/[-\\^$*+?.()[\]{}]/g, '\\$&');
+
+    if (multiSearchDelimiter) {
+      if (searchInput === '') {
+        updateMultiSearch([]);
+      } else {
+        var escapedTextSplit = escapedText.split(multiSearchDelimiter).map(function (item) {
+          return item.trim();
+        });
+        updateMultiSearch(escapedTextSplit);
+      }
+    }
+
     updateSearch(escapedText);
   };
 
-  var getOptions = (0, _react.useCallback)(function () {
-    if (!search) {
-      return options;
+  var getMultiSearchOptions = function getMultiSearchOptions(isMatching) {
+    if (isMatching === void 0) {
+      isMatching = false;
     }
 
+    return options.filter(function (item) {
+      var multiSearchItems = multiSearch.some(function (searchEl) {
+        var exp = new RegExp("^" + searchEl + "$", 'i');
+        return exp.test(item.label);
+      });
+      return isMatching ? multiSearchItems : !multiSearchItems;
+    });
+  };
+
+  var getOptions = (0, _react.useCallback)(function () {
+    if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
+      if (multiSearch.length === 0) return options;
+      return getMultiSearchOptions(true);
+    }
+
+    if (!search) return options;
     var exp = new RegExp(search, 'i');
     return options.filter(function (item, index) {
       return exp.test(getValue(index, options, labelKey));
     });
   }, [options, search]);
   var getOptionsNotMatchingSearch = (0, _react.useCallback)(function () {
+    if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
+      if (!multiSearch.length) return [];
+      return getMultiSearchOptions();
+    }
+
     if (!search) {
       return [];
     }
 
+    if (!search) return [];
     var exp = new RegExp(search, 'i');
     return options.filter(function (item, index) {
       return !exp.test(getValue(index, options, labelKey));
@@ -177,25 +223,44 @@ var MultiSelect = function MultiSelect(_ref) {
         renderEmptySelected: renderEmptySelected,
         onValueChange: onValueChange,
         custom: custom,
-        validate: validate
+        validate: validate,
+        showSelectAllOnSearch: showSelectAllOnSearch || false,
+        multiSearchDelimiter: multiSearchDelimiter,
+        shouldRenderInDrop: shouldRenderInDrop,
+        showCount: showCount
       }, props));
     }
 
     return null;
   };
 
+  var getkeyField = function getkeyField(key) {
+    return typeof key === 'object' ? getkeyField(key.key) : key;
+  };
+
+  var shouldRenderLabel = function shouldRenderLabel() {
+    return !(!valueKey || !labelKey || getkeyField(valueKey) === getkeyField(labelKey));
+  };
+
   var renderLabel = function renderLabel() {
     return /*#__PURE__*/_react["default"].createElement(_ValueLabelWithIcon.ValueLabelWithIcon, {
+      showCount: showCount,
+      rowCount: rowCount,
       withInclusionExclusion: withInclusionExclusion,
       isExcluded: isExcluded,
       size: size,
       placeholder: placeholder,
-      value: value
+      value: shouldRenderLabel() && !custom ? (options || []).filter(function (obj) {
+        return value.includes((0, _utils.applyKey)(obj, valueKey));
+      }).map(function (optionObj) {
+        return (0, _utils.applyKey)(optionObj, labelKey);
+      }) : value
     });
   };
 
   return /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-    width: width
+    width: width,
+    gridArea: gridArea
   }, /*#__PURE__*/_react["default"].createElement(_Select.Select, _extends({
     multiple: true,
     value: value,

@@ -7,7 +7,7 @@ import { Box } from '../Box';
 import { Button } from '../Button';
 import { Text } from '../Text';
 import { Searchbox } from './Searchbox';
-import { OptionsBox, OptionWrapper, OptionText } from './StyledMultiSelect';
+import { OptionsBox, OptionWrapper, OptionText, OptionLabel } from './StyledMultiSelect';
 
 var SelectedList = function SelectedList(_ref) {
   var selectedItems = _ref.selectedItems,
@@ -91,7 +91,7 @@ var SelectedList = function SelectedList(_ref) {
     return /*#__PURE__*/React.createElement(OptionText, _extends({
       key: id + "-" + item,
       twoColumnLayout: layout === 'double-column'
-    }, theme.multiselect.chips.option), /*#__PURE__*/React.createElement(Text, _extends({
+    }, theme.multiselect.chips.option), /*#__PURE__*/React.createElement(OptionLabel, _extends({
       isExcluded: isExcluded
     }, theme.multiselect.chips.label), /*#__PURE__*/React.createElement(Text, null, item)), /*#__PURE__*/React.createElement(Close, _extends({
       style: {

@@ -13,6 +13,10 @@ const disabledStyle = `
   box-shadow: none
 `;
 
+const disabledButton = `
+  box-shadow: none
+`;
+
 const CheckBoxWrapper = styled(Box)`
   ${props => props.theme.multiselect.checkbox.extend};
 `;
@@ -35,11 +39,19 @@ const OptionsBox = styled(Box)`
   }
 `;
 
+const OptionLabel = styled(Text)`
+  ${props => props.theme.multiselect.chips &&
+    props.theme.multiselect.chips.label &&
+    props.theme.multiselect.chips.label.extend};
+`;
+
+
 const SelectOption = styled(Button)`
   display: block;
   width: 100%;
   background: ${props =>
     props.active ? props.theme.select.activeColor : 'transparent'};
+  ${props => props.disabled && disabledButton}
 `;
 
 const OptionBox = styled(Box)`
@@ -48,6 +60,8 @@ const OptionBox = styled(Box)`
 
 const CheckBox = styled(Box)`
   ${props => props.theme.multiselect.checkbox.check};
+  ${props => props.background && `background: ${props.background};`}
+  
 `;
 
 const OptionWrapper = styled(Box)`
@@ -77,7 +91,7 @@ const LabelText = styled(Text)`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: ${props => props.rowCount};
   -webkit-box-orient: vertical;
 `;
 
@@ -88,6 +102,7 @@ export {
   OptionBox,
   CheckBox,
   OptionWrapper,
+  OptionLabel,
   OptionText,
   SelectedOption,
   TextAreaWrapper,

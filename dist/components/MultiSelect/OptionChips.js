@@ -29,7 +29,7 @@ var OptionChips = function OptionChips(_ref) {
   var options = _ref.options,
       value = _ref.value,
       isSelected = _ref.isSelected,
-      optionLabel = _ref.optionLabel,
+      getLabel = _ref.optionLabel,
       onRemove = _ref.onRemove,
       clearAll = _ref.clearAll,
       width = _ref.width,
@@ -37,7 +37,8 @@ var OptionChips = function OptionChips(_ref) {
       inclusionExclusion = _ref.inclusionExclusion,
       isExcluded = _ref.isExcluded,
       renderEmptySelected = _ref.renderEmptySelected,
-      layout = _ref.layout;
+      layout = _ref.layout,
+      showCount = _ref.showCount;
 
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
@@ -73,7 +74,7 @@ var OptionChips = function OptionChips(_ref) {
     weight: "600"
   }, value.length)))), !inclusionExclusion && layout === 'double-column' && /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.multiselect.rightPanel.incExcHeader.box, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     direction: "row"
-  }, /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.multiselect.rightPanel.incExcHeader.text, "Selected"), /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.multiselect.rightPanel.incExcHeader.count, /*#__PURE__*/_react["default"].createElement(_Text.Text, {
+  }, /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.multiselect.rightPanel.incExcHeader.text, "Selected"), !showCount && /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.multiselect.rightPanel.incExcHeader.count, /*#__PURE__*/_react["default"].createElement(_Text.Text, {
     weight: "600"
   }, value.length)))), /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionWrapper, _extends({
     twoColumnLayout: layout === 'double-column',
@@ -87,11 +88,11 @@ var OptionChips = function OptionChips(_ref) {
     return /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionText, _extends({
       key: item,
       twoColumnLayout: layout === 'double-column'
-    }, theme.multiselect.chips.option), /*#__PURE__*/_react["default"].createElement(_Text.Text, _extends({
+    }, theme.multiselect.chips.option), /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionLabel, _extends({
       isExcluded: isExcluded
-    }, theme.multiselect.chips.label), optionLabel(item)), /*#__PURE__*/_react["default"].createElement(_Close.Close, _extends({
+    }, theme.multiselect.chips.label), getLabel(item)), /*#__PURE__*/_react["default"].createElement(_Close.Close, _extends({
       role: "button",
-      "aria-label": "Remove selected chip " + optionLabel(item),
+      "aria-label": "Remove selected chip " + getLabel(item),
       style: {
         cursor: 'pointer'
       },

@@ -7,13 +7,13 @@ import { defaultProps } from '../../default-props';
 import { Box } from '../Box';
 import { Button } from '../Button';
 import { Text } from '../Text';
-import { OptionWrapper, OptionText } from './StyledMultiSelect';
+import { OptionWrapper, OptionText, OptionLabel } from './StyledMultiSelect';
 
 var OptionChips = function OptionChips(_ref) {
   var options = _ref.options,
       value = _ref.value,
       isSelected = _ref.isSelected,
-      optionLabel = _ref.optionLabel,
+      getLabel = _ref.optionLabel,
       onRemove = _ref.onRemove,
       clearAll = _ref.clearAll,
       width = _ref.width,
@@ -21,7 +21,8 @@ var OptionChips = function OptionChips(_ref) {
       inclusionExclusion = _ref.inclusionExclusion,
       isExcluded = _ref.isExcluded,
       renderEmptySelected = _ref.renderEmptySelected,
-      layout = _ref.layout;
+      layout = _ref.layout,
+      showCount = _ref.showCount;
   var theme = useContext(ThemeContext) || defaultProps.theme;
 
   var renderClearButton = function renderClearButton() {
@@ -56,7 +57,7 @@ var OptionChips = function OptionChips(_ref) {
     weight: "600"
   }, value.length)))), !inclusionExclusion && layout === 'double-column' && /*#__PURE__*/React.createElement(Box, theme.multiselect.rightPanel.incExcHeader.box, /*#__PURE__*/React.createElement(Box, {
     direction: "row"
-  }, /*#__PURE__*/React.createElement(Text, theme.multiselect.rightPanel.incExcHeader.text, "Selected"), /*#__PURE__*/React.createElement(Box, theme.multiselect.rightPanel.incExcHeader.count, /*#__PURE__*/React.createElement(Text, {
+  }, /*#__PURE__*/React.createElement(Text, theme.multiselect.rightPanel.incExcHeader.text, "Selected"), !showCount && /*#__PURE__*/React.createElement(Box, theme.multiselect.rightPanel.incExcHeader.count, /*#__PURE__*/React.createElement(Text, {
     weight: "600"
   }, value.length)))), /*#__PURE__*/React.createElement(OptionWrapper, _extends({
     twoColumnLayout: layout === 'double-column',
@@ -70,11 +71,11 @@ var OptionChips = function OptionChips(_ref) {
     return /*#__PURE__*/React.createElement(OptionText, _extends({
       key: item,
       twoColumnLayout: layout === 'double-column'
-    }, theme.multiselect.chips.option), /*#__PURE__*/React.createElement(Text, _extends({
+    }, theme.multiselect.chips.option), /*#__PURE__*/React.createElement(OptionLabel, _extends({
       isExcluded: isExcluded
-    }, theme.multiselect.chips.label), optionLabel(item)), /*#__PURE__*/React.createElement(Close, _extends({
+    }, theme.multiselect.chips.label), getLabel(item)), /*#__PURE__*/React.createElement(Close, _extends({
       role: "button",
-      "aria-label": "Remove selected chip " + optionLabel(item),
+      "aria-label": "Remove selected chip " + getLabel(item),
       style: {
         cursor: 'pointer'
       },

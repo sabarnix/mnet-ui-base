@@ -9,6 +9,8 @@ var _styledComponents = require("styled-components");
 
 var _Search = require("grommet-icons/icons/Search");
 
+var _defaultProps = require("../../default-props");
+
 var _Text = require("../Text");
 
 var _TextInput = require("../TextInput");
@@ -32,8 +34,10 @@ var Searchbox = function Searchbox(_ref) {
       selectIcon = _ref.selectIcon,
       onCancel = _ref.onCancel,
       _ref$reverse = _ref.reverse,
-      reverse = _ref$reverse === void 0 ? true : _ref$reverse;
-  var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || defaultProps.theme;
+      reverse = _ref$reverse === void 0 ? true : _ref$reverse,
+      shouldRenderInDrop = _ref.shouldRenderInDrop;
+
+  var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
   var handleChange = function handleChange(textValue) {
     if (textValue.replace(/\s/g, '').length || !textValue.length) return onValueChange(textValue);
@@ -44,11 +48,15 @@ var Searchbox = function Searchbox(_ref) {
 
   var icons = /*#__PURE__*/_react["default"].createElement(_Search.Search, theme.multiselect.searchbox.icon);
 
-  var collapseBtn = selectIcon && /*#__PURE__*/_react["default"].createElement(_Button.Button, {
+  var collapseBtn = !shouldRenderInDrop && selectIcon && /*#__PURE__*/_react["default"].createElement(_Button.Button, {
     role: "button",
     margin: "none",
     onClick: onCancel,
-    plain: true
+    plain: true,
+    style: {
+      position: 'absolute',
+      right: '15px'
+    }
   }, /*#__PURE__*/_react["default"].createElement(CollapsibleIcon, {
     color: "dark-1",
     size: selectIcon.size
@@ -62,7 +70,6 @@ var Searchbox = function Searchbox(_ref) {
     plain: true,
     fill: true,
     icon: icons,
-    collapseBtn: collapseBtn,
     reverse: reverse,
     width: width,
     value: value,
@@ -71,7 +78,7 @@ var Searchbox = function Searchbox(_ref) {
       return handleChange(event.target.value);
     },
     placeholder: /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.multiselect.searchbox.placeholder, value ? '' : placeholder)
-  }));
+  }), collapseBtn);
 };
 
 exports.Searchbox = Searchbox;

@@ -100,7 +100,10 @@ function Notification() {
   if (notifications.some(function (_ref3) {
     var autoClose = _ref3.config.autoClose;
     return autoClose;
-  })) autoRemoveNotification(theme.notification.toast.timeout || 2000);
+  })) {
+    autoRemoveNotification(theme.notification.toast.timeout || 2000);
+  }
+
   return /*#__PURE__*/_react["default"].createElement(_Layer.Layer, {
     position: theme.notification.toast.position,
     modal: false,

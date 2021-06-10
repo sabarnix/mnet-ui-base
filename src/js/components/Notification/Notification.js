@@ -60,8 +60,9 @@ export function Notification() {
     return null;
   }
 
-  if (notifications.some(({ config: { autoClose }}) => autoClose))
+  if (notifications.some(({ config: { autoClose }}) => autoClose)) {
     autoRemoveNotification(theme.notification.toast.timeout || 2000);
+  }
 
   return (
     <Layer

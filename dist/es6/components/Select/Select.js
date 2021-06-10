@@ -206,24 +206,9 @@ var Select = /*#__PURE__*/forwardRef(function (_ref, ref) {
     return undefined;
   }, [labelKey, messages, optionIndexesInValue, options, selectValue]);
   var iconColor = normalizeColor(theme.select.icons.color || 'control', theme);
-  return /*#__PURE__*/React.createElement(Keyboard, {
-    onDown: onRequestOpen,
-    onUp: onRequestOpen
-  }, /*#__PURE__*/React.createElement(React.Fragment, null, shouldRenderInDrop && /*#__PURE__*/React.createElement(StyledSelectDropButton, {
-    ref: ref,
-    id: id,
-    disabled: disabled === true || undefined,
-    dropAlign: dropAlign,
-    dropTarget: dropTarget,
-    open: open,
-    alignSelf: alignSelf,
-    focusIndicator: focusIndicator,
-    gridArea: gridArea,
-    margin: margin,
-    onOpen: onRequestOpen,
-    onClose: onRequestClose,
-    onClick: onClick,
-    dropContent: /*#__PURE__*/React.createElement(SelectContainer, {
+
+  var getDropDownContent = function getDropDownContent() {
+    return /*#__PURE__*/React.createElement(SelectContainer, {
       disabled: disabled,
       disabledKey: disabledKey,
       dropHeight: dropHeight,
@@ -247,43 +232,13 @@ var Select = /*#__PURE__*/forwardRef(function (_ref, ref) {
       renderOptionTop: renderOptionTop,
       renderOptionBottom: renderOptionBottom,
       renderCustomContent: renderCustomContent
-    }, children),
-    plain: plain,
-    dropProps: dropProps,
-    theme: theme,
-    isEnableOutSideClick: isEnableOutSideClick
-  }, /*#__PURE__*/React.createElement(Box, {
-    align: "center",
-    direction: "row",
-    justify: "between"
-  }, /*#__PURE__*/React.createElement(Box, {
-    direction: "row",
-    flex: true,
-    basis: "auto"
-  }, selectValue || /*#__PURE__*/React.createElement(SelectTextInput, _extends({
-    a11yTitle: a11yTitle && "" + a11yTitle + (value && typeof value === 'string' ? ", " + value : ''),
-    id: id ? id + "__input" : undefined,
-    name: name,
-    ref: inputRef
-  }, rest, {
-    tabIndex: "-1",
-    type: "text",
-    placeholder: placeholder,
-    plain: true,
-    readOnly: true,
-    value: inputValue,
-    size: size,
-    theme: theme,
-    onClick: disabled === true ? undefined : onRequestOpen
-  }))), SelectIcon && /*#__PURE__*/React.createElement(StyledIconContainer, {
-    margin: theme.select.icons.margin,
-    pad: theme.select.icons.pad,
-    background: theme.select.icons.background,
-    flex: false
-  }, /*#__PURE__*/isValidElement(SelectIcon) ? SelectIcon : /*#__PURE__*/React.createElement(SelectIcon, {
-    color: iconColor,
-    size: theme.select.icons.size
-  })))), !shouldRenderInDrop && /*#__PURE__*/React.createElement(React.Fragment, null, !open && /*#__PURE__*/React.createElement(StyledSelectDropButton, {
+    }, children);
+  };
+
+  return /*#__PURE__*/React.createElement(Keyboard, {
+    onDown: onRequestOpen,
+    onUp: onRequestOpen
+  }, /*#__PURE__*/React.createElement(React.Fragment, null, (shouldRenderInDrop || !shouldRenderInDrop && !open) && /*#__PURE__*/React.createElement(StyledSelectDropButton, {
     ref: ref,
     id: id,
     disabled: disabled === true || undefined,
@@ -297,6 +252,7 @@ var Select = /*#__PURE__*/forwardRef(function (_ref, ref) {
     onOpen: onRequestOpen,
     onClose: onRequestClose,
     onClick: onClick,
+    dropContent: shouldRenderInDrop ? getDropDownContent() : null,
     plain: plain,
     dropProps: dropProps,
     theme: theme,
@@ -332,31 +288,7 @@ var Select = /*#__PURE__*/forwardRef(function (_ref, ref) {
   }, /*#__PURE__*/isValidElement(SelectIcon) ? SelectIcon : /*#__PURE__*/React.createElement(SelectIcon, {
     color: iconColor,
     size: theme.select.icons.size
-  })))), open && /*#__PURE__*/React.createElement(SelectContainer, {
-    disabled: disabled,
-    disabledKey: disabledKey,
-    dropHeight: dropHeight,
-    emptySearchMessage: emptySearchMessage,
-    id: id,
-    labelKey: labelKey,
-    multiple: multiple,
-    name: name,
-    onChange: onSelectChange,
-    onKeyDown: onKeyDown,
-    onMore: onMore,
-    onSearch: onSearch,
-    options: options,
-    optionIndexesInValue: optionIndexesInValue,
-    replace: replace,
-    searchPlaceholder: searchPlaceholder,
-    selected: selected,
-    value: value,
-    valueKey: valueKey,
-    customSearch: customSearch,
-    renderOptionTop: renderOptionTop,
-    renderOptionBottom: renderOptionBottom,
-    renderCustomContent: renderCustomContent
-  }, children))));
+  })))), !shouldRenderInDrop && open && getDropDownContent()));
 });
 Select.defaultProps = _extends({}, defaultProps);
 Select.displayName = 'Select';

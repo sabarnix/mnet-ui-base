@@ -49,7 +49,9 @@ var RadioButton = /*#__PURE__*/forwardRef(function (_ref, ref) {
     },
     onMouseLeave: function onMouseLeave() {
       return setHover(false);
-    }
+    },
+    checked: checked,
+    disabled: disabled
   }), /*#__PURE__*/React.createElement(StyledRadioButton, {
     as: Box,
     margin: label ? {

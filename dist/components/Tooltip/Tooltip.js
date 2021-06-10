@@ -35,7 +35,9 @@ var Tooltip = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
       title = _ref.title,
       _ref$showArrow = _ref.showArrow,
       showArrow = _ref$showArrow === void 0 ? true : _ref$showArrow,
-      rest = _objectWithoutPropertiesLoose(_ref, ["children", "message", "body", "position", "title", "showArrow"]);
+      _ref$closeOnTooltipHo = _ref.closeOnTooltipHover,
+      closeOnTooltipHover = _ref$closeOnTooltipHo === void 0 ? true : _ref$closeOnTooltipHo,
+      rest = _objectWithoutPropertiesLoose(_ref, ["children", "message", "body", "position", "title", "showArrow", "closeOnTooltipHover"]);
 
   var _useState = (0, _react.useState)(),
       over = _useState[0],
@@ -83,15 +85,16 @@ var Tooltip = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
     }
   };
 
+  var normalizedMouseOverfn = closeOnTooltipHover ? setOver : showToolTip;
   return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({
     ref: ref
   }, rest), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     ref: overRef,
     onMouseOver: function onMouseOver() {
-      return showToolTip(true);
+      return normalizedMouseOverfn(true);
     },
     onMouseOut: function onMouseOut() {
-      return showToolTip(false, true);
+      return normalizedMouseOverfn(false, true);
     },
     onFocus: function onFocus() {},
     onBlur: function onBlur() {}
@@ -108,14 +111,14 @@ var Tooltip = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
     elevation: "none",
     plain: true,
     style: {
-      boxShadow: tooptip.boxShadow,
+      boxShadow: null,
       maxWidth: tooptip.maxWidth
     }
   }, /*#__PURE__*/_react["default"].createElement(_StyledTooltip.ArrowWrap, {
-    position: position,
-    background: tooptip.background || 'dark-1'
-  }, showArrow && /*#__PURE__*/_react["default"].createElement(_StyledTooltip.Arrow, {
     position: position
+  }, /*#__PURE__*/_react["default"].createElement(_StyledTooltip.Arrow, {
+    position: position,
+    showArrow: showArrow
   }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     pad: tooptip.pad,
     background: tooptip.background || 'dark-1',
