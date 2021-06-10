@@ -140,7 +140,6 @@ const ColumnSelect = ({
       isExcluded={isExcluded}
       renderEmptySelected={renderEmptySelected}
       layout={layout}
-      showSelectAll={showSelectAll}
       showCount={showCount}
     />
   );

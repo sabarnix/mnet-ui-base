@@ -22,7 +22,6 @@ const OptionChips = ({
   renderEmptySelected,
   layout,
   showCount,
-  showSelectAll,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
