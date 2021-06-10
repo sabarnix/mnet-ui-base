@@ -186,7 +186,7 @@ const ColumnSelect = ({
           width={layout === 'single-column' ? '100%' : '50%'}
           // pad={{ vertical: 'small' }}
         >
-          <OptionsBox role="menubar" tabIndex="-1" fill>
+          <OptionsBox role="menubar" tabIndex="-1">
             {options.length > 0 ? (
               <InfiniteScroll
                 items={options}

@@ -161,8 +161,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
 
   }, /*#__PURE__*/React.createElement(OptionsBox, {
     role: "menubar",
-    tabIndex: "-1",
-    fill: true
+    tabIndex: "-1"
   }, options.length > 0 ? /*#__PURE__*/React.createElement(InfiniteScroll, {
     items: options,
     step: theme.select.step,

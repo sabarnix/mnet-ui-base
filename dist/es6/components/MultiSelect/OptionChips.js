@@ -68,8 +68,7 @@ var OptionChips = function OptionChips(_ref) {
     width: width,
     height: height
   }, theme.multiselect.chips.wrapper, {
-    wrap: true,
-    border: showSelectAll ? 'top' : 'none'
+    wrap: true
   }), /*#__PURE__*/React.createElement(Box, {
     width: "100%"
   }, getSelectedOption().map(function (item) {

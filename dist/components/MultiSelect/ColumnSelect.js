@@ -186,8 +186,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
 
   }, /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionsBox, {
     role: "menubar",
-    tabIndex: "-1",
-    fill: true
+    tabIndex: "-1"
   }, options.length > 0 ? /*#__PURE__*/_react["default"].createElement(_InfiniteScroll.InfiniteScroll, {
     items: options,
     step: theme.select.step,

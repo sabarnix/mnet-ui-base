@@ -88,7 +88,6 @@ const OptionChips = ({
             height={height}
             {...theme.multiselect.chips.wrapper}
             wrap
-            border={showSelectAll ? 'top': 'none'}
           >
             <Box width="100%">
               {getSelectedOption().map(item => (
