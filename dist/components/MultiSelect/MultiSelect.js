@@ -146,15 +146,24 @@ var MultiSelect = function MultiSelect(_ref) {
     updateSearch(escapedText);
   };
 
+  var getMultiSearchOptions = function getMultiSearchOptions(isMatching) {
+    if (isMatching === void 0) {
+      isMatching = false;
+    }
+
+    return options.filter(function (item) {
+      var multiSearchItems = multiSearch.some(function (searchEl) {
+        var exp = new RegExp("^" + searchEl + "$", 'i');
+        return exp.test(item.label);
+      });
+      return isMatching ? multiSearchItems : !multiSearchItems;
+    });
+  };
+
   var getOptions = (0, _react.useCallback)(function () {
     if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
       if (multiSearch.length === 0) return options;
-      return options.filter(function (item) {
-        return multiSearch.some(function (searchEl) {
-          var exp = new RegExp("^" + searchEl + "$", 'i');
-          return exp.test(item.label);
-        });
-      });
+      return getMultiSearchOptions(true);
     }
 
     if (!search) return options;
@@ -166,12 +175,11 @@ var MultiSelect = function MultiSelect(_ref) {
   var getOptionsNotMatchingSearch = (0, _react.useCallback)(function () {
     if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
       if (!multiSearch.length) return [];
-      return options.filter(function (item) {
-        return !multiSearch.some(function (searchEl) {
-          var exp = new RegExp("^" + searchEl + "$", 'i');
-          return exp.test(item.label);
-        });
-      });
+      return getMultiSearchOptions();
+    }
+
+    if (!search) {
+      return [];
     }
 
     if (!search) return [];

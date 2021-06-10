@@ -37,7 +37,7 @@ const MultiSelect = ({
   shouldRenderInDrop = true,
   placeholder,
   multiSearchDelimiter,
-  showSelectAllOnSearch,  
+  showSelectAllOnSearch,
   ...rest
 }) => {
   const [internalValue, updateInternalValue] = useState(valueProp);
@@ -117,15 +117,20 @@ const MultiSelect = ({
     updateSearch(escapedText);
   };
 
+  const getMultiSearchOptions = (isMatching=false) => {
+    return options.filter(item => {
+      const multiSearchItems =  multiSearch.some(searchEl => {
+        const exp = new RegExp(`^${searchEl}$`, 'i');
+        return exp.test(item.label);
+      })
+      return isMatching ? multiSearchItems : !multiSearchItems;
+    });
+  }
+
   const getOptions = useCallback(() => {
     if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
       if (multiSearch.length === 0) return options;
-      return options.filter(item =>
-        multiSearch.some(searchEl => {
-          const exp = new RegExp(`^${searchEl}$`, 'i');
-          return exp.test(item.label);
-        }),
-      );
+      return getMultiSearchOptions(true);
     }
     if (!search) return options;
     const exp = new RegExp(search, 'i');
@@ -137,13 +142,10 @@ const MultiSelect = ({
   const getOptionsNotMatchingSearch = useCallback(() => {
     if (multiSearchDelimiter && search.includes(multiSearchDelimiter)) {
       if (!multiSearch.length) return [];
-      return options.filter(
-        item =>
-          !multiSearch.some(searchEl => {
-            const exp = new RegExp(`^${searchEl}$`, 'i');
-            return exp.test(item.label);
-          }),
-      );
+      return getMultiSearchOptions();
+    }
+    if (!search) {
+      return [];
     }
     if (!search) return [];
     const exp = new RegExp(search, 'i');
