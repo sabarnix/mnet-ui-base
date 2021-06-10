@@ -142,7 +142,6 @@ var ColumnSelect = function ColumnSelect(_ref) {
       isExcluded: isExcluded,
       renderEmptySelected: renderEmptySelected,
       layout: layout,
-      showSelectAll: showSelectAll,
       showCount: showCount
     });
   };
