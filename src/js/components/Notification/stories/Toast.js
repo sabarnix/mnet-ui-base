@@ -24,10 +24,6 @@ const Toast = () => {
     addToast({ msg: 'I am just a warning', type: 'warning' });
   };
 
-  const addToastAutoClose = () => {
-    addToast({ msg: 'I am default toast', autoClose: false });
-  };
-
   return (
     <div style={{ width: '100vw', height: '100vh', overflow: 'auto' }}>
       <Box fill align="center" justify="center">
@@ -69,16 +65,6 @@ const Toast = () => {
             </Text>
           }
           onClick={addToastWarning}
-          plain
-        />
-        <Button
-          icon={<Add color="brand" />}
-          label={
-            <Text>
-              <strong>Prevent autoClose</strong>
-            </Text>
-          }
-          onClick={addToastAutoClose}
           plain
         />
       </Box>

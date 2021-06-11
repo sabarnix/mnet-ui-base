@@ -10,23 +10,13 @@ import { Drop } from '../Drop';
 import { ArrowWrap, Arrow } from './StyledTooltip';
 
 const Tooltip = forwardRef(
-  (
-    {
-      children,
-      message,
-      position = 'right',
-      showArrow = true,
-      closeOnTooltipHover = true,
-      ...rest
-    },
-    ref,
-  ) => {
+  ({ children, message, position = 'right', ...rest }, ref) => {
     const [over, setOver] = useState();
     const overRef = useRef();
     const theme = useContext(ThemeContext) || defaultProps.theme;
     const { tooptip } = theme;
 
-    let alignDrop = { ...tooptip.dropProps };
+    let alignDrop = { left: 'right' };
     if (position === 'up') {
       alignDrop = { bottom: 'top' };
     }
@@ -36,26 +26,12 @@ const Tooltip = forwardRef(
     if (position === 'left') {
       alignDrop = { right: 'left' };
     }
-    let timeOut = null;
-    const showToolTip = (show, timer) => {
-      if (timeOut) {
-        clearTimeout(timeOut);
-      }
-      if (timer) {
-        timeOut = setTimeout(() => {
-          setOver(show);
-        }, 50);
-      } else {
-        setOver(show);
-      }
-    };
-    const normalizedMouseOverfn = closeOnTooltipHover ? setOver : showToolTip;
     return (
       <Box ref={ref} {...rest}>
         <Box
           ref={overRef}
-          onMouseOver={() => normalizedMouseOverfn(true)}
-          onMouseOut={() => normalizedMouseOverfn(false, true)}
+          onMouseOver={() => setOver(true)}
+          onMouseOut={() => setOver(false)}
           onFocus={() => {}}
           onBlur={() => {}}
         >
@@ -65,18 +41,16 @@ const Tooltip = forwardRef(
         {overRef.current && over && (
           <Drop
             direction="row"
-            onMouseOver={() => showToolTip(true)}
-            onMouseOut={() => showToolTip(false, true)}
             align={alignDrop}
             target={overRef.current}
             elevation="none"
             plain
-            style={{ boxShadow: null, maxWidth: tooptip.maxWidth }}
+            style={{ boxShadow: 'none', maxWidth: tooptip.maxWidth }}
           >
             <ArrowWrap position={position}>
-              <Arrow position={position} showArrow={showArrow} />
+              <Arrow position={position} />
               <Box
-                pad={tooptip.pad}
+                pad="medium"
                 background={tooptip.background || 'dark-1'}
                 round={tooptip.round}
               >

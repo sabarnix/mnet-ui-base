@@ -5,7 +5,7 @@ import { Box } from '../Box';
 import { Select } from '../Select';
 
 import { ColumnSelect } from './ColumnSelect';
-import { ValueLabelWithIcon } from './ValueLabelWithIcon';
+import { ValueLabelWithNumber } from './ValueLabelWithNumber';
 import { applyKey } from './utils';
 
 const MultiSelect = ({
@@ -31,30 +31,21 @@ const MultiSelect = ({
   renderEmptySelected,
   gridArea,
   validate,
-  size,
-  isOpenState,
-  isEnableOutSideClick,
-  shouldRenderInDrop = true,
-  placeholder,
   ...rest
 }) => {
+
   const [internalValue, updateInternalValue] = useState(valueProp);
-  const [internalIsExcluded, updateInternalIsExcluded] = useState(
-    isExcludedProp,
-  );
-  const [isOpen, updateIsOpen] = useState(isOpenState || false);
+  const [
+    internalIsExcluded,
+    updateInternalIsExcluded,
+  ] = useState(isExcludedProp);
+  const [isOpen, updateIsOpen] = useState(false);
   const [search, updateSearch] = useState('');
 
-  const isExcluded = withUpdateCancelButtons
-    ? internalIsExcluded
-    : isExcludedProp;
+  const isExcluded = withUpdateCancelButtons ? 
+  internalIsExcluded : isExcludedProp;
 
-  const value = withUpdateCancelButtons ? internalValue : valueProp;
-
-  const {
-    showCount = false,
-    rowCount = 5,
-  } = rest;
+  const value = withUpdateCancelButtons ? internalValue: valueProp;
 
   useEffect(() => {
     if (!isOpen && withUpdateCancelButtons) {
@@ -76,14 +67,13 @@ const MultiSelect = ({
       updateInternalIsExcluded(isExcludedProp);
     }
     updateIsOpen(true);
-  };
+  }
 
   const onIncludeExclude = newValue => {
-    const updater = withUpdateCancelButtons
-      ? updateInternalIsExcluded
-      : onIncExcChange;
+    const updater = withUpdateCancelButtons ? 
+    updateInternalIsExcluded : onIncExcChange;
     updater(newValue);
-  };
+  }
 
   const onCancelClick = () => {
     onClose();
@@ -95,7 +85,7 @@ const MultiSelect = ({
       onIncExcChange(isExcluded);
     }
     updateIsOpen(false);
-  };
+  }
 
   const getValue = (index, array, param) => applyKey(array[index], param);
 
@@ -112,28 +102,27 @@ const MultiSelect = ({
     return options.filter((item, index) =>
       exp.test(getValue(index, options, labelKey)),
     );
-  }, [options, search]);
+  }, [options, search])
 
   const getOptionsNotMatchingSearch = useCallback(() => {
     if (!search) {
       return [];
     }
     const exp = new RegExp(search, 'i');
-    return options.filter(
-      (item, index) => !exp.test(getValue(index, options, labelKey)),
+    return options.filter((item, index) =>
+      !exp.test(getValue(index, options, labelKey)),
     );
-  }, [options, search]);
+  }, [options, search])
 
   const onSelectValueChange = ({ value: newValue }) => {
     const valuesNotMatchingSearch = getOptionsNotMatchingSearch()
-      .filter((item, index, opt) =>
-        value.includes(getValue(index, opt, valueKey)),
-      )
-      .map((item, index, opt) => getValue(index, opt, valueKey));
+    .filter((item, index, opt) => 
+    value.includes(getValue(index, opt, valueKey)))
+    .map((item, index, opt)=> getValue(index, opt, valueKey));
 
-    const updater = withUpdateCancelButtons
-      ? updateInternalValue
-      : onValueChange;
+    const updater = withUpdateCancelButtons ? 
+    updateInternalValue : 
+    onValueChange;
     updater([...valuesNotMatchingSearch, ...newValue]);
   };
 
@@ -162,8 +151,6 @@ const MultiSelect = ({
           onValueChange={onValueChange}
           custom={custom}
           validate={validate}
-          shouldRenderInDrop={shouldRenderInDrop}
-          showCount={showCount}
           {...props}
         />
       );
@@ -171,23 +158,18 @@ const MultiSelect = ({
     return null;
   };
 
-  const getkeyField = key => typeof key === 'object' ? getkeyField(key.key) : key;
-
-  const shouldRenderLabel = () => !((!valueKey || !labelKey) || (getkeyField(valueKey) === getkeyField(labelKey)));
-
   const renderLabel = () => {
+    const getLabel = () => {
+      if (withInclusionExclusion && isExcluded) return 'Excluded';
+      if (withInclusionExclusion && isExcluded === false) return 'Included';
+      return 'Selected';
+    };
+
     return (
-      <ValueLabelWithIcon
-        showCount={showCount}
-        rowCount={rowCount}
-        withInclusionExclusion={withInclusionExclusion}
-        isExcluded={isExcluded}
-        size={size}
-        placeholder={placeholder}
-        value={shouldRenderLabel() && !custom ? (options || []).filter(obj => 
-          value.includes(applyKey(obj, valueKey)))
-            .map(optionObj => applyKey(optionObj, labelKey)): value
-        }
+      <ValueLabelWithNumber
+        value={getLabel()}
+        number={value.length}
+        color="brand"
       />
     );
   };
@@ -214,9 +196,6 @@ const MultiSelect = ({
         onSearch={onSearch}
         searchPlaceholder={searchPlaceholder}
         emptySearchMessage={emptySearchMessage}
-        isEnableOutSideClick={isEnableOutSideClick}
-        shouldRenderInDrop={shouldRenderInDrop}
-        size={size}
         {...rest}
       />
     </Box>
