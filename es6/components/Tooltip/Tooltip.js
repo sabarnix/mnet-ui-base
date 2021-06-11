@@ -14,11 +14,7 @@ var Tooltip = /*#__PURE__*/forwardRef(function (_ref, ref) {
       message = _ref.message,
       _ref$position = _ref.position,
       position = _ref$position === void 0 ? 'right' : _ref$position,
-      _ref$showArrow = _ref.showArrow,
-      showArrow = _ref$showArrow === void 0 ? true : _ref$showArrow,
-      _ref$closeOnTooltipHo = _ref.closeOnTooltipHover,
-      closeOnTooltipHover = _ref$closeOnTooltipHo === void 0 ? true : _ref$closeOnTooltipHo,
-      rest = _objectWithoutPropertiesLoose(_ref, ["children", "message", "position", "showArrow", "closeOnTooltipHover"]);
+      rest = _objectWithoutPropertiesLoose(_ref, ["children", "message", "position"]);
 
   var _useState = useState(),
       over = _useState[0],
@@ -27,8 +23,9 @@ var Tooltip = /*#__PURE__*/forwardRef(function (_ref, ref) {
   var overRef = useRef();
   var theme = useContext(ThemeContext) || defaultProps.theme;
   var tooptip = theme.tooptip;
-
-  var alignDrop = _extends({}, tooptip.dropProps);
+  var alignDrop = {
+    left: 'right'
+  };
 
   if (position === 'up') {
     alignDrop = {
@@ -48,58 +45,34 @@ var Tooltip = /*#__PURE__*/forwardRef(function (_ref, ref) {
     };
   }
 
-  var timeOut = null;
-
-  var showToolTip = function showToolTip(show, timer) {
-    if (timeOut) {
-      clearTimeout(timeOut);
-    }
-
-    if (timer) {
-      timeOut = setTimeout(function () {
-        setOver(show);
-      }, 50);
-    } else {
-      setOver(show);
-    }
-  };
-
-  var normalizedMouseOverfn = closeOnTooltipHover ? setOver : showToolTip;
   return /*#__PURE__*/React.createElement(Box, _extends({
     ref: ref
   }, rest), /*#__PURE__*/React.createElement(Box, {
     ref: overRef,
     onMouseOver: function onMouseOver() {
-      return normalizedMouseOverfn(true);
+      return setOver(true);
     },
     onMouseOut: function onMouseOut() {
-      return normalizedMouseOverfn(false, true);
+      return setOver(false);
     },
     onFocus: function onFocus() {},
     onBlur: function onBlur() {}
   }, children), overRef.current && over && /*#__PURE__*/React.createElement(Drop, {
     direction: "row",
-    onMouseOver: function onMouseOver() {
-      return showToolTip(true);
-    },
-    onMouseOut: function onMouseOut() {
-      return showToolTip(false, true);
-    },
     align: alignDrop,
     target: overRef.current,
     elevation: "none",
     plain: true,
     style: {
-      boxShadow: null,
+      boxShadow: 'none',
       maxWidth: tooptip.maxWidth
     }
   }, /*#__PURE__*/React.createElement(ArrowWrap, {
     position: position
   }, /*#__PURE__*/React.createElement(Arrow, {
-    position: position,
-    showArrow: showArrow
+    position: position
   }), /*#__PURE__*/React.createElement(Box, {
-    pad: tooptip.pad,
+    pad: "medium",
     background: tooptip.background || 'dark-1',
     round: tooptip.round
   }, /*#__PURE__*/React.createElement(Text, {

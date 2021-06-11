@@ -67,9 +67,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
       onValueChange = _ref.onValueChange,
       custom = _ref.custom,
       validate = _ref.validate,
-      onChange = _ref.onChange,
-      shouldRenderInDrop = _ref.shouldRenderInDrop,
-      showCount = _ref.showCount;
+      onChange = _ref.onChange;
 
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
@@ -118,8 +116,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
       inclusionExclusion: inclusionExclusion,
       isExcluded: isExcluded,
       renderEmptySelected: renderEmptySelected,
-      layout: layout,
-      showCount: showCount
+      layout: layout
     });
   };
 
@@ -137,29 +134,24 @@ var ColumnSelect = function ColumnSelect(_ref) {
       isExcluded: isExcluded,
       setIncExcVal: setIncExcVal,
       inclusionExclusion: inclusionExclusion,
-      validate: validate,
-      onCancel: onCancel
+      validate: validate
     });
   }
 
-  return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({
-    width: width
-  }, theme.multiselect.container), renderSearch && /*#__PURE__*/_react["default"].createElement(_Searchbox.Searchbox, {
-    reverse: false,
-    width: width,
+  return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, renderSearch && /*#__PURE__*/_react["default"].createElement(_Searchbox.Searchbox, {
     placeholder: searchPlaceholder,
     value: searchValue,
     onValueChange: onSearchChange,
-    layout: layout,
-    shouldRenderInDrop: shouldRenderInDrop,
-    selectIcon: theme.select.icons,
-    onCancel: onCancel
+    layout: layout
   }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     direction: "row",
     height: height || 'small'
   }, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-    width: layout === 'single-column' ? '100%' : '50%' // pad={{ vertical: 'small' }}
-
+    width: width,
+    border: [{
+      side: 'bottom',
+      color: theme.multiselect.rightPanel.border
+    }]
   }, /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.OptionsBox, {
     role: "menubar",
     tabIndex: "-1"
@@ -206,7 +198,7 @@ var ColumnSelect = function ColumnSelect(_ref) {
       role: "menuitem",
       a11yTitle: "option id - " + option.id,
       hoverIndicator: theme.select.activeColor,
-      disabled: optionDisabled || optionSelected || undefined,
+      disabled: optionDisabled || undefined,
       active: optionActive,
       selected: optionSelected,
       option: option,
@@ -232,9 +224,12 @@ var ColumnSelect = function ColumnSelect(_ref) {
     disabled: true,
     option: "No values available"
   }, /*#__PURE__*/_react["default"].createElement(_Box.Box, selectOptionsStyle, /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.select.container.text, emptySearchMessage || 'No values available'))))), layout === 'double-column' && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-    width: "50%",
+    width: width,
     border: [{
       side: 'left',
+      color: theme.multiselect.rightPanel.border
+    }, {
+      side: 'bottom',
       color: theme.multiselect.rightPanel.border
     }]
   }, renderOptionChips())), showOptionChips && layout === 'single-column' && renderOptionChips(), showControlButtons && /*#__PURE__*/_react["default"].createElement(_ControlButton.ControlButton, {

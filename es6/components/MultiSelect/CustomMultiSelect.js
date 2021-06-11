@@ -2,15 +2,12 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 import React, { useContext, useCallback } from 'react';
 import { ThemeContext } from 'styled-components';
-import { Add } from 'grommet-icons/icons/Add';
-import { FormSubtract } from 'grommet-icons/icons/FormSubtract';
 import { TextArea } from '../TextArea';
 import { Box } from '../Box';
 import { Button } from '../Button';
 import { Text } from '../Text';
 import { FormField } from '../FormField';
 import CustomSelectedList from './CustomSelectedList';
-import { TextAreaWrapper } from './StyledMultiSelect';
 
 var CustomMultiSelect = function CustomMultiSelect(_ref) {
   var value = _ref.value,
@@ -25,8 +22,7 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
       isExcluded = _ref.isExcluded,
       setIncExcVal = _ref.setIncExcVal,
       inclusionExclusion = _ref.inclusionExclusion,
-      validate = _ref.validate,
-      onCancel = _ref.onCancel;
+      validate = _ref.validate;
   var theme = useContext(ThemeContext) || defaultProps.theme;
 
   var _React$useState = React.useState(''),
@@ -41,9 +37,9 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
       errorMsg = _React$useState3[0],
       setErrorMsg = _React$useState3[1];
 
-  var setTextAreaValueFn = function setTextAreaValueFn(val) {
+  var setTextAreaValueFn = function setTextAreaValueFn(value) {
     setIsValid(true);
-    setTextAreaValue(val);
+    setTextAreaValue(value);
   };
 
   var setItems = function setItems(isIncExc) {
@@ -83,68 +79,47 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     onValueChange([]);
   };
 
-  return /*#__PURE__*/React.createElement(Box, _extends({
-    height: height,
+  return /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.wrapper, {
+    height: height
+  }), /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.textAreaWrap, {
     width: width
-  }, theme.multiselect.custom.wrapper), /*#__PURE__*/React.createElement(Box, {
-    width: "50%",
-    border: {
-      side: 'right',
-      color: 'light-3'
+  }), /*#__PURE__*/React.createElement(Text, theme.multiselect.custom.label, custom && custom.label || 'Label'), /*#__PURE__*/React.createElement(Box, _extends({}, theme.multiselect.custom.textAreaContainer, {
+    width: width,
+    style: {
+      height: '100%'
     }
-  }, /*#__PURE__*/React.createElement(TextAreaWrapper, theme.multiselect.custom.textAreaWrap, /*#__PURE__*/React.createElement(FormField, {
+  }), /*#__PURE__*/React.createElement(FormField, {
     error: !isValid ? errorMsg : null
   }, /*#__PURE__*/React.createElement(Box, {
     width: "full",
-    height: "full"
+    style: {
+      minHeight: theme.multiselect.custom.textAreaContainer.minHeight,
+      overflow: 'auto'
+    }
   }, /*#__PURE__*/React.createElement(TextArea, {
-    placeholder: custom && custom.label || 'Label',
     value: textAreaValue,
     onChange: function onChange(event) {
       return setTextAreaValueFn(event.target.value);
     },
     resize: false,
-    focusIndicator: false,
-    fill: true,
-    plain: true
-  })))), /*#__PURE__*/React.createElement(Box, theme.multiselect.custom.actions.wrapper, (isExcluded === false || isExcluded === null) && /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.includeBtn, {
+    fill: true
+  })))), /*#__PURE__*/React.createElement(Box, theme.multiselect.custom.actions.wrapper, (isExcluded === false || isExcluded === null) && /*#__PURE__*/React.createElement(Button, {
+    primary: true,
     onClick: function onClick() {
       return setItems(false);
     }
-  }), /*#__PURE__*/React.createElement(Box, {
-    align: "center",
-    justify: "center",
-    direction: "row"
-  }, Boolean(theme.multiselect.includeBtn.showIcon) && /*#__PURE__*/React.createElement(Add, _extends({}, theme.multiselect.checkbox.checkmark, {
-    color: theme.multiselect.includeBtn.color,
-    size: "small"
-  })), /*#__PURE__*/React.createElement(Text, {
-    weight: 600,
-    margin: {
-      left: 'small'
-    }
-  }, "INCLUDE"))), isExcluded === null && /*#__PURE__*/React.createElement(Box, {
-    background: "light-3",
-    width: "1px",
-    height: "100%"
-  }), (isExcluded || isExcluded === null) && /*#__PURE__*/React.createElement(Button, _extends({}, theme.multiselect.excludeBtn, {
+  }, /*#__PURE__*/React.createElement(Text, {
+    weight: 600
+  }, "INCLUDE")), (isExcluded || isExcluded === null) && /*#__PURE__*/React.createElement(Button, {
+    secondary: true,
+    color: "brand",
     onClick: function onClick() {
       return setItems(true);
     }
-  }), /*#__PURE__*/React.createElement(Box, {
-    align: "center",
-    justify: "center",
-    direction: "row"
-  }, Boolean(theme.multiselect.excludeBtn.showIcon) && /*#__PURE__*/React.createElement(FormSubtract, _extends({}, theme.multiselect.checkbox.checkmark, {
-    color: theme.multiselect.excludeBtn.color,
-    size: "small"
-  })), /*#__PURE__*/React.createElement(Text, {
-    weight: 600,
-    margin: {
-      left: 'small'
-    }
-  }, "EXCLUDE"))))), /*#__PURE__*/React.createElement(Box, {
-    width: "50%"
+  }, /*#__PURE__*/React.createElement(Text, {
+    weight: 600
+  }, "EXCLUDE")))), /*#__PURE__*/React.createElement(Box, {
+    width: width
   }, /*#__PURE__*/React.createElement(CustomSelectedList, {
     layout: layout,
     selectedItems: value,
@@ -156,8 +131,7 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     renderEmptySelected: renderEmptySelected,
     width: width,
     height: height,
-    inclusionExclusion: inclusionExclusion,
-    onCancel: onCancel
+    inclusionExclusion: inclusionExclusion
   })));
 };
 

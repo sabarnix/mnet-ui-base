@@ -12,19 +12,34 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var options = [{
   id: 1,
-  label: '300x250'
+  label: 'Test 1'
 }, {
   id: 2,
-  label: '250x250'
+  label: 'Test 2'
 }, {
   id: 3,
-  label: '100x100'
+  label: 'Test 3'
 }, {
   id: 4,
-  label: '728x90'
+  label: 'Test 4'
 }, {
   id: 5,
-  label: '300x100'
+  label: 'Test 5'
+}, {
+  id: 6,
+  label: 'Test 6'
+}, {
+  id: 7,
+  label: 'Test 7'
+}, {
+  id: 8,
+  label: 'Test 8'
+}, {
+  id: 9,
+  label: 'Test 9'
+}, {
+  id: 10,
+  label: 'Test 10'
 }];
 
 var Example = function Example() {
@@ -42,14 +57,14 @@ var Example = function Example() {
     value: value,
     labelKey: "label",
     valueKey: {
-      key: 'label',
+      key: 'id',
       reduce: true
     },
     onValueChange: function onValueChange(nextValue) {
       return setValue(nextValue);
     },
     layout: "double-column",
-    width: "large",
+    width: "medium",
     height: "medium",
     searchPlaceholder: "Search",
     searchable: true,

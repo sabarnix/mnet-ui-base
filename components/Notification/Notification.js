@@ -24,16 +24,12 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 var emitter = new _eventEmitter["default"]();
 var timeoutId;
 
 var addNotification = function addNotification(type, config) {
   var id = (0, _uuid.v1)();
-  emitter.emit('addNotification', id, type, _extends({
-    autoClose: true
-  }, config));
+  emitter.emit('addNotification', id, type, config);
   return id;
 };
 
@@ -67,11 +63,7 @@ function Notification() {
 
   var deleteLast = function deleteLast() {
     if (notifications.length) {
-      var index = notifications.findIndex(function (_ref2) {
-        var autoClose = _ref2.config.autoClose;
-        return autoClose;
-      });
-      if (index >= 0) deleteNotification(notifications[index].id);
+      deleteNotification(notifications[0].id);
     }
   };
 
@@ -97,13 +89,7 @@ function Notification() {
     return null;
   }
 
-  if (notifications.some(function (_ref3) {
-    var autoClose = _ref3.config.autoClose;
-    return autoClose;
-  })) {
-    autoRemoveNotification(theme.notification.toast.timeout || 2000);
-  }
-
+  if (notifications.length) autoRemoveNotification(theme.notification.toast.timeout || 2000);
   return /*#__PURE__*/_react["default"].createElement(_Layer.Layer, {
     position: theme.notification.toast.position,
     modal: false,
@@ -118,11 +104,11 @@ function Notification() {
       maxWidth: theme.notification.toast.width
     },
     plain: true
-  }, notifications.map(function (_ref4) {
-    var id = _ref4.id,
-        _ref4$config = _ref4.config,
-        msg = _ref4$config.msg,
-        type = _ref4$config.type;
+  }, notifications.map(function (_ref2) {
+    var id = _ref2.id,
+        _ref2$config = _ref2.config,
+        msg = _ref2$config.msg,
+        type = _ref2$config.type;
     return /*#__PURE__*/_react["default"].createElement(_Toast.Toast, {
       id: id,
       msg: msg,

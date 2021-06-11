@@ -39,10 +39,6 @@ var _Info = require("grommet-icons/icons/Info");
 
 var _FormClose = require("grommet-icons/icons/FormClose");
 
-var _Select = require("grommet-icons/icons/Select");
-
-var _Split = require("grommet-icons/icons/Split");
-
 var _base = require("grommet-icons/themes/base");
 
 var _object = require("../utils/object");
@@ -677,15 +673,7 @@ var generate = function generate(baseSpacing, scale) {
         radius: baseSpacing + "px",
         size: baseSpacing * 2 + "px" // extend: undefined,
 
-      },
-      label: {
-        color: 'dark-1',
-        size: 'medium',
-        weight: 400
       }
-    },
-    CheckBoxGroup: {
-      label: {}
     },
     clock: {
       analog: {
@@ -894,17 +882,8 @@ var generate = function generate(baseSpacing, scale) {
       },
       extend: {
         button: {
-          flex: 1 // border: 'none',
-
-        }
-      },
-      tooltip: {
-        icon: _Info.Info,
-        iconProps: {
-          margin: {
-            horizontal: 'small'
-          },
-          size: 'large'
+          flex: 1,
+          border: 'none'
         }
       } // round: undefined,
 
@@ -1072,12 +1051,6 @@ var generate = function generate(baseSpacing, scale) {
       }
     },
     multiselect: {
-      container: {
-        border: {
-          color: 'light-3'
-        },
-        round: 'small'
-      },
       option: {
         width: 'full',
         direction: 'row',
@@ -1085,12 +1058,6 @@ var generate = function generate(baseSpacing, scale) {
         pad: {
           horizontal: 'medium'
         }
-      },
-      includeBtn: {
-        color: 'status-ok'
-      },
-      excludeBtn: {
-        color: 'status-error'
       },
       checkbox: {
         box: {
@@ -1103,7 +1070,6 @@ var generate = function generate(baseSpacing, scale) {
           size: baseSpacing * 1.2 + "px",
           color: 'white'
         },
-        type: 'add',
         check: {
           height: baseSpacing * 1.2 + "px",
           width: baseSpacing * 1.2 + "px",
@@ -1140,14 +1106,11 @@ var generate = function generate(baseSpacing, scale) {
       },
       chips: {
         wrapper: {
-          pad: {
-            vertical: 'medium',
-            left: 'medium',
-            right: 'small'
-          },
+          pad: 'medium',
           direction: 'row',
           extend: function extend(props) {
             return {
+              padding: props.twoColumnLayout ? 0 : baseSpacing / 1.618 + "px",
               'border-bottom': props.twoColumnLayout ? 'none' : '1px solid #D9DBE5'
             };
           }
@@ -1156,7 +1119,7 @@ var generate = function generate(baseSpacing, scale) {
           background: 'light-3',
           round: 'small',
           pad: {
-            vertical: 'medium',
+            vertical: 'small',
             horizontal: 'medium'
           },
           margin: 'small',
@@ -1167,16 +1130,37 @@ var generate = function generate(baseSpacing, scale) {
               width: props.twoColumnLayout ? '100%' : 'auto',
               margin: props.twoColumnLayout ? 0 : baseSpacing / (1.618 * 2) + "px",
               background: props.twoColumnLayout ? 'white' : lightColors[2],
+              padding: props.twoColumnLayout ? baseSpacing / 1.618 + "px" : baseSpacing / (1.618 * 2) + "px " + baseSpacing / 1.618 + "px",
+              'border-radius': props.twoColumnLayout ? 0 : baseSpacing / (1.618 * 2) + "px",
+              'border-bottom': props.twoColumnLayout ? '1px solid #D9DBE5' : 'none',
               'justify-content': props.twoColumnLayout ? 'space-between' : 'flex-start'
             };
           }
         },
         label: {
-          color: 'dark-1',
+          color: 'dark-3',
           size: 'medium',
-          weight: 400,
+          weight: 600,
           margin: {
             right: 'small'
+          },
+          extend: function extend(props) {
+            var getTextColor = function getTextColor() {
+              switch (props.isExcluded) {
+                case false:
+                  return '#38C18B';
+
+                case true:
+                  return '#FC564F';
+
+                default:
+                  return darkColors[2];
+              }
+            };
+
+            return {
+              color: getTextColor()
+            };
           }
         },
         icon: {
@@ -1184,16 +1168,8 @@ var generate = function generate(baseSpacing, scale) {
           color: 'dark-3'
         },
         clear: {
-          margin: 'medium',
-          border: {
-            side: 'top',
-            color: 'light-3'
-          },
-          color: 'dark-1',
-          size: 'medium',
-          alignSelf: 'end',
-          weight: '600',
-          height: '30px'
+          color: 'accent-2',
+          size: 'small'
         }
       },
       controls: {
@@ -1210,33 +1186,29 @@ var generate = function generate(baseSpacing, scale) {
         }
       },
       searchbox: {
-        textWrapper: {
-          flex: 'grow'
-        },
-        iconWrapper: {
-          gap: 'medium',
-          width: 'xxsmall',
-          direction: 'row',
-          justify: 'center'
-        },
         container: {
-          height: '40px',
+          height: {
+            min: 'xxsmall',
+            max: 'xxsmall'
+          },
           direction: 'row',
           align: 'center',
-          background: 'transparent',
-          // pad: { horizontal: 'medium', vertical: 'medium' },
-          pad: 'none',
-          border: {
-            side: 'bottom',
-            color: 'light-3'
+          background: 'light-2',
+          pad: {
+            right: 'medium',
+            vertical: 'small'
           },
-          style: {
-            minHeight: '40px'
-          },
-          position: 'relative'
+          extend: function extend(props) {
+            return {
+              background: props.layout === 'double-column' ? 'white' : lightColors[1],
+              'flex-direction': props.layout === 'double-column' ? 'row-reverse' : 'row',
+              'padding-left': props.layout === 'double-column' ? baseSpacing / 1.618 + "px" : 0,
+              'border-bottom': props.layout === 'double-column' ? '1px solid #D9DBE5' : 'none'
+            };
+          }
         },
         placeholder: {
-          color: 'dark-4',
+          color: 'dark-5',
           size: 'medium'
         },
         icon: {
@@ -1245,89 +1217,52 @@ var generate = function generate(baseSpacing, scale) {
         }
       },
       rightPanel: {
-        border: 'light-3',
+        border: '#D9DBE5',
         incExcHeader: {
           box: {
             direction: 'row',
             justify: 'between',
-            align: 'center',
-            pad: 'large',
-            background: 'white',
+            pad: 'medium',
+            background: 'background-back',
             border: {
               side: 'bottom',
-              color: 'light-3'
+              color: '#D9DBE5'
             }
           },
           text: {
-            color: 'dark-1',
+            color: 'accent-2',
             size: 'medium',
-            weight: '400'
-          },
-          count: {
-            margin: {
-              left: 'small'
-            },
-            background: statusColors.info,
-            round: 'medium',
-            pad: {
-              horizontal: 'medium'
-            },
-            justify: 'center'
+            weight: 600
           }
         }
       },
       label: undefined,
       custom: {
         wrapper: {
-          direction: 'row',
-          border: {
-            color: 'light-3'
-          },
-          round: 'small'
+          direction: 'row'
         },
         textAreaWrap: {
           border: {
-            side: 'right',
-            color: 'transparent'
+            side: 'right'
           },
-          pad: '0',
-          height: '100%',
-          extend: {
-            '*': {// border: 'none',
-              // height: '100%',
-            }
+          pad: 'large'
+        },
+        label: {
+          weight: 600
+        },
+        textAreaContainer: {
+          minHeight: '140px',
+          margin: {
+            vertical: 'medium'
           }
         },
         actions: {
           wrapper: {
             direction: 'row',
-            gap: '0',
-            margin: '0',
-            justify: 'evenly',
-            align: 'center',
-            border: {
-              side: 'top',
-              color: 'light-3'
+            margin: {
+              vertical: 'small'
             },
-            height: {
-              min: '30px'
-            }
-          }
-        }
-      },
-      icons: {
-        include: {
-          icon: _Select.Select,
-          extend: {
-            color: 'status-ok',
-            size: 'small'
-          }
-        },
-        exclude: {
-          icon: _Split.Split,
-          extend: {
-            color: 'status-error',
-            size: 'small'
+            gap: 'medium'
           }
         }
       }
@@ -1403,8 +1338,8 @@ var generate = function generate(baseSpacing, scale) {
         margin: {
           horizontal: 'small'
         },
-        down: _FormDown.FormDown,
-        up: _FormUp.FormUp
+        down: _FormDown.FormDown // up: undefined
+
       },
       options: {
         container: {
@@ -1550,14 +1485,8 @@ var generate = function generate(baseSpacing, scale) {
     textArea: {// extend: undefined,
       // disabled: { opacity: undefined },
     },
-    textInput: {
-      error: {
-        icon: _Info.Info,
-        text: {}
-      },
-      focus: "\n        border-color: transparent;\n        border-bottom:2px solid #3367D6;\n        background: #F2F5FC;\n        border-bottom-right-radius: 0px;\n        border-bottom-left-radius: 0px;\n      " // extend: undefined,
+    textInput: {// extend: undefined,
       // disabled: { opacity: undefined },
-
     },
     video: {
       captions: {
@@ -1580,8 +1509,8 @@ var generate = function generate(baseSpacing, scale) {
       }
     },
     tooptip: {
-      background: 'light-1',
-      color: 'dark-1',
+      background: 'dark-1',
+      color: 'white',
       tipSize: '5px',
       round: 'small',
       maxWidth: '20%'

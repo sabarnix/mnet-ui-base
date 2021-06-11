@@ -1,21 +1,17 @@
 "use strict";
 
 exports.__esModule = true;
-exports.Searchbox = void 0;
+exports.ValueLabelWithNumber = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = require("styled-components");
 
-var _Search = require("grommet-icons/icons/Search");
-
 var _defaultProps = require("../../default-props");
 
+var _Box = require("../Box");
+
 var _Text = require("../Text");
-
-var _TextInput = require("../TextInput");
-
-var _StyledMultiSelect = require("./StyledMultiSelect");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
@@ -23,32 +19,36 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-var Searchbox = function Searchbox(_ref) {
-  var placeholder = _ref.placeholder,
-      value = _ref.value,
-      onValueChange = _ref.onValueChange,
-      layout = _ref.layout;
+var ValueLabelWithNumber = function ValueLabelWithNumber(_ref) {
+  var value = _ref.value,
+      number = _ref.number,
+      color = _ref.color;
 
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
-  var handleChange = function handleChange(textValue) {
-    if (textValue.replace(/\s/g, '').length || !textValue.length) return onValueChange(textValue);
-    return null;
-  };
-
-  return /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.SearchWrapper, _extends({
-    layout: layout
-  }, theme.multiselect.searchbox.container), /*#__PURE__*/_react["default"].createElement(_TextInput.TextInput, {
-    role: "search",
-    "aria-label": "multiselect searchbox",
-    plain: true,
-    value: value,
-    valueLabel: /*#__PURE__*/_react["default"].createElement(_Text.Text, null, "value"),
-    onChange: function onChange(event) {
-      return handleChange(event.target.value);
+  return /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    direction: "row",
+    margin: {
+      horizontal: 'medium'
     },
-    placeholder: /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.multiselect.searchbox.placeholder, value ? '' : placeholder)
-  }), /*#__PURE__*/_react["default"].createElement(_Search.Search, theme.multiselect.searchbox.icon));
+    align: "center"
+  }, /*#__PURE__*/_react["default"].createElement(_Text.Text, _extends({
+    "aria-label": "Selected Label Value",
+    size: "medium",
+    weight: 600
+  }, theme.multiselect.label), number ? value : 'Select'), number > 0 && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    pad: "5px",
+    background: color,
+    round: "xsmall",
+    margin: {
+      horizontal: 'medium'
+    }
+  }, /*#__PURE__*/_react["default"].createElement(_Text.Text, {
+    "aria-label": "Selected Label Count",
+    size: "10px",
+    color: "white",
+    weight: 600
+  }, number)));
 };
 
-exports.Searchbox = Searchbox;
+exports.ValueLabelWithNumber = ValueLabelWithNumber;

@@ -35,12 +35,6 @@ var ModalPopUp = function ModalPopUp() {
       setIsLoading = _useState2[1];
 
   var _useState3 = (0, _react.useState)({
-    position: "center"
-  }),
-      position = _useState3[0],
-      setPosition = _useState3[1];
-
-  var _useState4 = (0, _react.useState)({
     title: '',
     message: '',
     body: undefined,
@@ -49,20 +43,14 @@ var ModalPopUp = function ModalPopUp() {
     closeOnOutSideClick: false,
     closeOnEscape: false
   }),
-      popUpConfig = _useState4[0],
-      setPopUpConfig = _useState4[1];
+      popUpConfig = _useState3[0],
+      setPopUpConfig = _useState3[1];
 
   var onClose = function onClose() {
     return setModalOpen(false);
   };
 
   emitter.on(_constants.OPEN_MODAL, function (config) {
-    if (config.position) {
-      setPosition(config.position); // eslint-disable-next-line no-param-reassign
-
-      delete config.position;
-    }
-
     setPopUpConfig(_extends({}, popUpConfig, config));
     setModalOpen(true);
   });
@@ -75,10 +63,11 @@ var ModalPopUp = function ModalPopUp() {
   return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null, modalOpen && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     width: "100vw",
     height: "100vh"
-  }, /*#__PURE__*/_react["default"].createElement(_Layer.Layer, _extends({}, position, {
+  }, /*#__PURE__*/_react["default"].createElement(_Layer.Layer, {
+    position: "center",
     onClickOutside: popUpConfig.closeOnOutSideClick ? onClose : null,
     onEsc: popUpConfig.closeOnEscape ? onClose : null
-  }), /*#__PURE__*/_react["default"].createElement(_PopUpContainer.PopUpContainer, _extends({
+  }, /*#__PURE__*/_react["default"].createElement(_PopUpContainer.PopUpContainer, _extends({
     isLoading: isLoading,
     onClose: onClose
   }, popUpConfig)))));

@@ -32,13 +32,6 @@ var Toast = function Toast() {
     });
   };
 
-  var addToastAutoClose = function addToastAutoClose() {
-    addToast({
-      msg: 'I am default toast',
-      autoClose: false
-    });
-  };
-
   return /*#__PURE__*/React.createElement("div", {
     style: {
       width: '100vw',
@@ -76,13 +69,6 @@ var Toast = function Toast() {
     }),
     label: /*#__PURE__*/React.createElement(Text, null, /*#__PURE__*/React.createElement("strong", null, "Add Warning")),
     onClick: addToastWarning,
-    plain: true
-  }), /*#__PURE__*/React.createElement(Button, {
-    icon: /*#__PURE__*/React.createElement(Add, {
-      color: "brand"
-    }),
-    label: /*#__PURE__*/React.createElement(Text, null, /*#__PURE__*/React.createElement("strong", null, "Prevent autoClose")),
-    onClick: addToastAutoClose,
     plain: true
   })));
 };

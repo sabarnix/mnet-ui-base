@@ -11,7 +11,7 @@ var _Select = require("../Select");
 
 var _ColumnSelect = require("./ColumnSelect");
 
-var _ValueLabelWithIcon = require("./ValueLabelWithIcon");
+var _ValueLabelWithNumber = require("./ValueLabelWithNumber");
 
 var _utils = require("./utils");
 
@@ -46,13 +46,7 @@ var MultiSelect = function MultiSelect(_ref) {
       renderEmptySelected = _ref.renderEmptySelected,
       gridArea = _ref.gridArea,
       validate = _ref.validate,
-      size = _ref.size,
-      isOpenState = _ref.isOpenState,
-      isEnableOutSideClick = _ref.isEnableOutSideClick,
-      _ref$shouldRenderInDr = _ref.shouldRenderInDrop,
-      shouldRenderInDrop = _ref$shouldRenderInDr === void 0 ? true : _ref$shouldRenderInDr,
-      placeholder = _ref.placeholder,
-      rest = _objectWithoutPropertiesLoose(_ref, ["width", "height", "options", "value", "labelKey", "valueKey", "onValueChange", "layout", "onSearch", "searchPlaceholder", "emptySearchMessage", "withSelectAll", "withOptionChips", "withUpdateCancelButtons", "searchable", "custom", "withInclusionExclusion", "isExcluded", "onIncExcChange", "renderEmptySelected", "gridArea", "validate", "size", "isOpenState", "isEnableOutSideClick", "shouldRenderInDrop", "placeholder"]);
+      rest = _objectWithoutPropertiesLoose(_ref, ["width", "height", "options", "value", "labelKey", "valueKey", "onValueChange", "layout", "onSearch", "searchPlaceholder", "emptySearchMessage", "withSelectAll", "withOptionChips", "withUpdateCancelButtons", "searchable", "custom", "withInclusionExclusion", "isExcluded", "onIncExcChange", "renderEmptySelected", "gridArea", "validate"]);
 
   var _useState = (0, _react.useState)(valueProp),
       internalValue = _useState[0],
@@ -62,7 +56,7 @@ var MultiSelect = function MultiSelect(_ref) {
       internalIsExcluded = _useState2[0],
       updateInternalIsExcluded = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(isOpenState || false),
+  var _useState3 = (0, _react.useState)(false),
       isOpen = _useState3[0],
       updateIsOpen = _useState3[1];
 
@@ -72,10 +66,6 @@ var MultiSelect = function MultiSelect(_ref) {
 
   var isExcluded = withUpdateCancelButtons ? internalIsExcluded : isExcludedProp;
   var value = withUpdateCancelButtons ? internalValue : valueProp;
-  var _rest$showCount = rest.showCount,
-      showCount = _rest$showCount === void 0 ? false : _rest$showCount,
-      _rest$rowCount = rest.rowCount,
-      rowCount = _rest$rowCount === void 0 ? 5 : _rest$rowCount;
   (0, _react.useEffect)(function () {
     if (!isOpen && withUpdateCancelButtons) {
       updateInternalValue(valueProp);
@@ -183,36 +173,24 @@ var MultiSelect = function MultiSelect(_ref) {
         renderEmptySelected: renderEmptySelected,
         onValueChange: onValueChange,
         custom: custom,
-        validate: validate,
-        shouldRenderInDrop: shouldRenderInDrop,
-        showCount: showCount
+        validate: validate
       }, props));
     }
 
     return null;
   };
 
-  var getkeyField = function getkeyField(key) {
-    return typeof key === 'object' ? getkeyField(key.key) : key;
-  };
-
-  var shouldRenderLabel = function shouldRenderLabel() {
-    return !(!valueKey || !labelKey || getkeyField(valueKey) === getkeyField(labelKey));
-  };
-
   var renderLabel = function renderLabel() {
-    return /*#__PURE__*/_react["default"].createElement(_ValueLabelWithIcon.ValueLabelWithIcon, {
-      showCount: showCount,
-      rowCount: rowCount,
-      withInclusionExclusion: withInclusionExclusion,
-      isExcluded: isExcluded,
-      size: size,
-      placeholder: placeholder,
-      value: shouldRenderLabel() && !custom ? (options || []).filter(function (obj) {
-        return value.includes((0, _utils.applyKey)(obj, valueKey));
-      }).map(function (optionObj) {
-        return (0, _utils.applyKey)(optionObj, labelKey);
-      }) : value
+    var getLabel = function getLabel() {
+      if (withInclusionExclusion && isExcluded) return 'Excluded';
+      if (withInclusionExclusion && isExcluded === false) return 'Included';
+      return 'Selected';
+    };
+
+    return /*#__PURE__*/_react["default"].createElement(_ValueLabelWithNumber.ValueLabelWithNumber, {
+      value: getLabel(),
+      number: value.length,
+      color: "brand"
     });
   };
 
@@ -236,10 +214,7 @@ var MultiSelect = function MultiSelect(_ref) {
     valueKey: valueKey,
     onSearch: onSearch,
     searchPlaceholder: searchPlaceholder,
-    emptySearchMessage: emptySearchMessage,
-    isEnableOutSideClick: isEnableOutSideClick,
-    shouldRenderInDrop: shouldRenderInDrop,
-    size: size
+    emptySearchMessage: emptySearchMessage
   }, rest)));
 };
 

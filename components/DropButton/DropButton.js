@@ -37,8 +37,7 @@ var DropButton = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
       onClick = _ref.onClick,
       onClose = _ref.onClose,
       onOpen = _ref.onOpen,
-      isEnableOutSideClick = _ref.isEnableOutSideClick,
-      rest = _objectWithoutPropertiesLoose(_ref, ["a11yTitle", "disabled", "dropAlign", "dropProps", "dropContent", "dropTarget", "id", "open", "onClick", "onClose", "onOpen", "isEnableOutSideClick"]);
+      rest = _objectWithoutPropertiesLoose(_ref, ["a11yTitle", "disabled", "dropAlign", "dropProps", "dropContent", "dropTarget", "id", "open", "onClick", "onClose", "onOpen"]);
 
   var buttonRef = (0, _utils.useForwardedRef)(ref);
 
@@ -89,7 +88,7 @@ var DropButton = /*#__PURE__*/(0, _react.forwardRef)(function (_ref, ref) {
     restrictFocus: true,
     align: dropAlign,
     target: dropTarget || buttonRef.current,
-    onClickOutside: isEnableOutSideClick ? onDropClose : null,
+    onClickOutside: onDropClose,
     onEsc: onDropClose
   }, dropProps), dropContent));
 });

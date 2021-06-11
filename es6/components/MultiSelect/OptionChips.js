@@ -1,19 +1,19 @@
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 import React, { useContext } from 'react';
-import { ThemeContext } from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import { Close } from 'grommet-icons/icons/Close';
 import { defaultProps } from '../../default-props';
 import { Box } from '../Box';
 import { Button } from '../Button';
 import { Text } from '../Text';
-import { OptionWrapper, OptionText, OptionLabel } from './StyledMultiSelect';
+import { OptionsBox, OptionWrapper, OptionText, OptionLabel } from './StyledMultiSelect';
 
 var OptionChips = function OptionChips(_ref) {
   var options = _ref.options,
       value = _ref.value,
       isSelected = _ref.isSelected,
-      getLabel = _ref.optionLabel,
+      optionLabel = _ref.optionLabel,
       onRemove = _ref.onRemove,
       clearAll = _ref.clearAll,
       width = _ref.width,
@@ -21,8 +21,7 @@ var OptionChips = function OptionChips(_ref) {
       inclusionExclusion = _ref.inclusionExclusion,
       isExcluded = _ref.isExcluded,
       renderEmptySelected = _ref.renderEmptySelected,
-      layout = _ref.layout,
-      showCount = _ref.showCount;
+      layout = _ref.layout;
   var theme = useContext(ThemeContext) || defaultProps.theme;
 
   var renderClearButton = function renderClearButton() {
@@ -35,8 +34,10 @@ var OptionChips = function OptionChips(_ref) {
       },
       plain: true
     }, /*#__PURE__*/React.createElement(Box, {
-      border: theme.multiselect.chips.clear.border,
-      height: theme.multiselect.chips.clear.height
+      border: {
+        side: 'bottom',
+        color: theme.multiselect.chips.clear.color
+      }
     }, /*#__PURE__*/React.createElement(Text, theme.multiselect.chips.clear, "CLEAR ALL")));
   };
 
@@ -47,35 +48,30 @@ var OptionChips = function OptionChips(_ref) {
     }, []);
   };
 
-  return /*#__PURE__*/React.createElement(Box, {
-    height: height
-  }, Array.isArray(value) && value.length > 0 && /*#__PURE__*/React.createElement(Box, null, inclusionExclusion && isExcluded !== null && /*#__PURE__*/React.createElement(Box, theme.multiselect.rightPanel.incExcHeader.box, /*#__PURE__*/React.createElement(Box, {
-    direction: "row"
-  }, /*#__PURE__*/React.createElement(Text, _extends({
+  var IncExcHeader = styled(Box).withConfig({
+    displayName: "OptionChips__IncExcHeader",
+    componentId: "sc-1w3ospt-0"
+  })(["position:sticky;top:0;"]);
+  return /*#__PURE__*/React.createElement(OptionsBox, null, Array.isArray(value) && value.length > 0 && /*#__PURE__*/React.createElement(Box, {
+    height: {
+      max: layout === 'single-column' ? height : 'auto'
+    }
+  }, inclusionExclusion && isExcluded !== null && /*#__PURE__*/React.createElement(IncExcHeader, theme.multiselect.rightPanel.incExcHeader.box, /*#__PURE__*/React.createElement(Text, _extends({
     "aria-label": "Chip List header"
-  }, theme.multiselect.rightPanel.incExcHeader.text), isExcluded ? 'Excluded' : 'Included'), /*#__PURE__*/React.createElement(Box, theme.multiselect.rightPanel.incExcHeader.count, /*#__PURE__*/React.createElement(Text, {
-    weight: "600"
-  }, value.length)))), !inclusionExclusion && layout === 'double-column' && /*#__PURE__*/React.createElement(Box, theme.multiselect.rightPanel.incExcHeader.box, /*#__PURE__*/React.createElement(Box, {
-    direction: "row"
-  }, /*#__PURE__*/React.createElement(Text, theme.multiselect.rightPanel.incExcHeader.text, "Selected"), !showCount && /*#__PURE__*/React.createElement(Box, theme.multiselect.rightPanel.incExcHeader.count, /*#__PURE__*/React.createElement(Text, {
-    weight: "600"
-  }, value.length)))), /*#__PURE__*/React.createElement(OptionWrapper, _extends({
+  }, theme.multiselect.rightPanel.incExcHeader.text), isExcluded ? 'Excluded' : 'Included', " List"), renderClearButton()), /*#__PURE__*/React.createElement(OptionWrapper, _extends({
     twoColumnLayout: layout === 'double-column',
-    width: width,
-    height: height
+    width: width
   }, theme.multiselect.chips.wrapper, {
     wrap: true
-  }), /*#__PURE__*/React.createElement(Box, {
-    width: "100%"
-  }, getSelectedOption().map(function (item) {
+  }), getSelectedOption().map(function (item) {
     return /*#__PURE__*/React.createElement(OptionText, _extends({
       key: item,
       twoColumnLayout: layout === 'double-column'
     }, theme.multiselect.chips.option), /*#__PURE__*/React.createElement(OptionLabel, _extends({
       isExcluded: isExcluded
-    }, theme.multiselect.chips.label), getLabel(item)), /*#__PURE__*/React.createElement(Close, _extends({
+    }, theme.multiselect.chips.label), optionLabel(item)), /*#__PURE__*/React.createElement(Close, _extends({
       role: "button",
-      "aria-label": "Remove selected chip " + getLabel(item),
+      "aria-label": "Remove selected chip " + optionLabel(item),
       style: {
         cursor: 'pointer'
       },
@@ -83,11 +79,7 @@ var OptionChips = function OptionChips(_ref) {
         return onRemove(event, item);
       }
     }, theme.multiselect.chips.icon)));
-  }))), (!inclusionExclusion || inclusionExclusion && isExcluded !== null) && renderClearButton()), (!Array.isArray(value) || !value.length) && /*#__PURE__*/React.createElement(Box, {
-    justify: "center",
-    align: "center",
-    height: height
-  }, renderEmptySelected));
+  }), !inclusionExclusion && renderClearButton())), (!Array.isArray(value) || !value.length) && renderEmptySelected);
 };
 
 export { OptionChips };

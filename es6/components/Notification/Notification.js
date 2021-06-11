@@ -1,5 +1,3 @@
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 import React, { useState, useContext } from 'react';
 import EventEmitter from 'event-emitter';
 import { v1 as uuid } from 'uuid';
@@ -11,9 +9,7 @@ var emitter = new EventEmitter();
 var timeoutId;
 export var addNotification = function addNotification(type, config) {
   var id = uuid();
-  emitter.emit('addNotification', id, type, _extends({
-    autoClose: true
-  }, config));
+  emitter.emit('addNotification', id, type, config);
   return id;
 };
 export var addToast = function addToast(config) {
@@ -38,11 +34,7 @@ export function Notification() {
 
   var deleteLast = function deleteLast() {
     if (notifications.length) {
-      var index = notifications.findIndex(function (_ref2) {
-        var autoClose = _ref2.config.autoClose;
-        return autoClose;
-      });
-      if (index >= 0) deleteNotification(notifications[index].id);
+      deleteNotification(notifications[0].id);
     }
   };
 
@@ -68,13 +60,7 @@ export function Notification() {
     return null;
   }
 
-  if (notifications.some(function (_ref3) {
-    var autoClose = _ref3.config.autoClose;
-    return autoClose;
-  })) {
-    autoRemoveNotification(theme.notification.toast.timeout || 2000);
-  }
-
+  if (notifications.length) autoRemoveNotification(theme.notification.toast.timeout || 2000);
   return /*#__PURE__*/React.createElement(Layer, {
     position: theme.notification.toast.position,
     modal: false,
@@ -89,11 +75,11 @@ export function Notification() {
       maxWidth: theme.notification.toast.width
     },
     plain: true
-  }, notifications.map(function (_ref4) {
-    var id = _ref4.id,
-        _ref4$config = _ref4.config,
-        msg = _ref4$config.msg,
-        type = _ref4$config.type;
+  }, notifications.map(function (_ref2) {
+    var id = _ref2.id,
+        _ref2$config = _ref2.config,
+        msg = _ref2$config.msg,
+        type = _ref2$config.type;
     return /*#__PURE__*/React.createElement(Toast, {
       id: id,
       msg: msg,

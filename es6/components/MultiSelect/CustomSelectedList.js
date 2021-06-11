@@ -18,8 +18,8 @@ var SelectedList = function SelectedList(_ref) {
       onRemove = _ref.onRemove,
       clearAll = _ref.clearAll,
       renderEmptySelected = _ref.renderEmptySelected,
-      height = _ref.height,
-      onCancel = _ref.onCancel;
+      width = _ref.width,
+      height = _ref.height;
   var theme = useContext(ThemeContext) || defaultProps.theme;
 
   var _React$useState = React.useState(''),
@@ -33,16 +33,16 @@ var SelectedList = function SelectedList(_ref) {
 
   var renderClearButton = function renderClearButton() {
     return /*#__PURE__*/React.createElement(Button, {
-      role: "button",
-      a11yTitle: "Clear all selected options",
       focusIndicator: false,
       onClick: function onClick() {
         return clearAll();
       },
       plain: true
     }, /*#__PURE__*/React.createElement(Box, {
-      border: theme.multiselect.chips.clear.border,
-      height: theme.multiselect.chips.clear.height
+      border: {
+        side: 'bottom',
+        color: theme.multiselect.chips.clear.color
+      }
     }, /*#__PURE__*/React.createElement(Text, theme.multiselect.chips.clear, "CLEAR ALL")));
   };
 
@@ -50,30 +50,11 @@ var SelectedList = function SelectedList(_ref) {
     displayName: "CustomSelectedList__Sticky",
     componentId: "rqavmq-0"
   })(["position:sticky;top:0;z-index:1;"]);
-  var CollapsibleIcon = theme.select.icons && theme.select.icons.up;
   return /*#__PURE__*/React.createElement(OptionsBox, {
     style: {
       height: '100%'
     }
-  }, selectedItems && selectedItems.length > 0 && /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Sticky, theme.multiselect.rightPanel.incExcHeader.box, /*#__PURE__*/React.createElement(Box, {
-    direction: "row"
-  }, /*#__PURE__*/React.createElement(Text, theme.multiselect.rightPanel.incExcHeader.text, isExcluded ? 'Excluded' : 'Included'), /*#__PURE__*/React.createElement(Box, theme.multiselect.rightPanel.incExcHeader.count, /*#__PURE__*/React.createElement(Text, {
-    weight: "600"
-  }, selectedItems.length))), /*#__PURE__*/React.createElement(Box, {
-    flex: "grow"
-  }), CollapsibleIcon && /*#__PURE__*/React.createElement(Button, {
-    role: "button",
-    onClick: onCancel,
-    plain: true,
-    style: {
-      position: 'absolute',
-      right: '15px'
-    }
-  }, /*#__PURE__*/React.createElement(CollapsibleIcon, {
-    color: "dark-1",
-    size: theme.select.icons.size
-  }))), renderSearch && /*#__PURE__*/React.createElement(Searchbox, {
-    reverse: false,
+  }, selectedItems && selectedItems.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Sticky, theme.multiselect.rightPanel.incExcHeader.box, /*#__PURE__*/React.createElement(Text, theme.multiselect.rightPanel.incExcHeader.text, isExcluded ? 'Excluded List' : 'Included List'), renderClearButton()), renderSearch && /*#__PURE__*/React.createElement(Searchbox, {
     layout: layout,
     placeholder: searchPlaceholder,
     value: search,
@@ -82,48 +63,36 @@ var SelectedList = function SelectedList(_ref) {
     }
   }), /*#__PURE__*/React.createElement(OptionWrapper, _extends({
     twoColumnLayout: layout === 'double-column',
-    height: height
+    width: width
   }, theme.multiselect.chips.wrapper, {
     wrap: true
-  }), /*#__PURE__*/React.createElement(Box, {
-    width: "100%"
-  }, filteredItems.length ? filteredItems.map(function (item, id) {
+  }), filteredItems.length ? filteredItems.map(function (item, id) {
+    var _extends2;
+
     return /*#__PURE__*/React.createElement(OptionText, _extends({
       key: id + "-" + item,
       twoColumnLayout: layout === 'double-column'
     }, theme.multiselect.chips.option), /*#__PURE__*/React.createElement(OptionLabel, _extends({
       isExcluded: isExcluded
-    }, theme.multiselect.chips.label), /*#__PURE__*/React.createElement(Text, null, item)), /*#__PURE__*/React.createElement(Close, _extends({
+    }, theme.multiselect.chips.label), /*#__PURE__*/React.createElement(Text, null, item)), /*#__PURE__*/React.createElement(Close, _extends((_extends2 = {
       style: {
         cursor: 'pointer'
       },
       onClick: function onClick() {
         return onRemove(item);
       }
-    }, theme.multiselect.chips.icon)));
+    }, _extends2["style"] = {
+      cursor: 'pointer'
+    }, _extends2), theme.multiselect.chips.icon)));
   }) : /*#__PURE__*/React.createElement(Box, {
     align: "center",
     margin: "medium",
     fill: true
-  }, /*#__PURE__*/React.createElement(Text, null, "No Result Found")))), renderClearButton()), !selectedItems.length && /*#__PURE__*/React.createElement(Box, {
-    align: "end",
-    pad: "large",
-    flex: "grow"
-  }, CollapsibleIcon && /*#__PURE__*/React.createElement(Button, {
-    role: "button",
-    style: {
-      position: 'absolute'
-    },
-    onClick: onCancel,
-    plain: true
-  }, /*#__PURE__*/React.createElement(CollapsibleIcon, {
-    color: "dark-1",
-    size: theme.select.icons.size
-  })), /*#__PURE__*/React.createElement(Box, {
+  }, /*#__PURE__*/React.createElement(Text, null, "No Result Found")))), !selectedItems.length && /*#__PURE__*/React.createElement(Box, {
     align: "center",
     justify: "center",
     fill: true
-  }, renderEmptySelected)));
+  }, renderEmptySelected));
 };
 
 export default /*#__PURE__*/React.memo(SelectedList);

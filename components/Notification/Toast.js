@@ -13,8 +13,6 @@ var _Text = require("../Text");
 
 var _Button = require("../Button");
 
-var _StyledNotification = require("./StyledNotification");
-
 var _defaultProps = require("../../default-props");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -32,9 +30,7 @@ function Toast(_ref) {
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || _defaultProps.defaultProps.theme;
 
   var Icon = theme.notification.toast.icon[type] || theme.notification.toast.icon["default"];
-  var _theme$notification$t = theme.notification.toast.icon,
-      IconSize = _theme$notification$t.size,
-      iconWrapper = _theme$notification$t.container;
+  var IconSize = theme.notification.toast.icon.size;
   var IconColor = theme.notification.toast.text[type] && theme.notification.toast.text[type].color || theme.notification.toast.text["default"].color;
   var CloseIcon = theme.notification.toast.closeIcon;
 
@@ -44,21 +40,19 @@ function Toast(_ref) {
 
   return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({
     key: id
-  }, theme.notification.toast["default"], theme.notification.toast[type]), /*#__PURE__*/_react["default"].createElement(_StyledNotification.IconWrapper, _extends({
+  }, theme.notification.toast["default"], theme.notification.toast[type]), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     align: "center",
     direction: "row",
     gap: "xsmall"
-  }, iconWrapper), Icon && /*#__PURE__*/_react["default"].createElement(Icon, {
+  }, Icon && /*#__PURE__*/_react["default"].createElement(Icon, {
     size: IconSize,
     color: IconColor
   }), /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.notification.toast.text[type] || theme.notification.toast.text["default"], msg)), /*#__PURE__*/_react["default"].createElement(_Button.Button, {
-    icon: /*#__PURE__*/_react["default"].createElement(CloseIcon, {
-      color: IconColor
-    }),
+    icon: /*#__PURE__*/_react["default"].createElement(CloseIcon, null),
     onClick: handleClose,
+    plain: true,
     style: {
-      display: 'flex',
-      padding: 0
+      display: 'flex'
     }
   }));
 }

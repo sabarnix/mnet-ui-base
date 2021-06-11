@@ -7,10 +7,6 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = require("styled-components");
 
-var _Add = require("grommet-icons/icons/Add");
-
-var _FormSubtract = require("grommet-icons/icons/FormSubtract");
-
 var _TextArea = require("../TextArea");
 
 var _Box = require("../Box");
@@ -22,8 +18,6 @@ var _Text = require("../Text");
 var _FormField = require("../FormField");
 
 var _CustomSelectedList = _interopRequireDefault(require("./CustomSelectedList"));
-
-var _StyledMultiSelect = require("./StyledMultiSelect");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -46,8 +40,7 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
       isExcluded = _ref.isExcluded,
       setIncExcVal = _ref.setIncExcVal,
       inclusionExclusion = _ref.inclusionExclusion,
-      validate = _ref.validate,
-      onCancel = _ref.onCancel;
+      validate = _ref.validate;
   var theme = (0, _react.useContext)(_styledComponents.ThemeContext) || defaultProps.theme;
 
   var _React$useState = _react["default"].useState(''),
@@ -62,9 +55,9 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
       errorMsg = _React$useState3[0],
       setErrorMsg = _React$useState3[1];
 
-  var setTextAreaValueFn = function setTextAreaValueFn(val) {
+  var setTextAreaValueFn = function setTextAreaValueFn(value) {
     setIsValid(true);
-    setTextAreaValue(val);
+    setTextAreaValue(value);
   };
 
   var setItems = function setItems(isIncExc) {
@@ -104,68 +97,47 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     onValueChange([]);
   };
 
-  return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({
-    height: height,
+  return /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.wrapper, {
+    height: height
+  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.textAreaWrap, {
     width: width
-  }, theme.multiselect.custom.wrapper), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-    width: "50%",
-    border: {
-      side: 'right',
-      color: 'light-3'
+  }), /*#__PURE__*/_react["default"].createElement(_Text.Text, theme.multiselect.custom.label, custom && custom.label || 'Label'), /*#__PURE__*/_react["default"].createElement(_Box.Box, _extends({}, theme.multiselect.custom.textAreaContainer, {
+    width: width,
+    style: {
+      height: '100%'
     }
-  }, /*#__PURE__*/_react["default"].createElement(_StyledMultiSelect.TextAreaWrapper, theme.multiselect.custom.textAreaWrap, /*#__PURE__*/_react["default"].createElement(_FormField.FormField, {
+  }), /*#__PURE__*/_react["default"].createElement(_FormField.FormField, {
     error: !isValid ? errorMsg : null
   }, /*#__PURE__*/_react["default"].createElement(_Box.Box, {
     width: "full",
-    height: "full"
+    style: {
+      minHeight: theme.multiselect.custom.textAreaContainer.minHeight,
+      overflow: 'auto'
+    }
   }, /*#__PURE__*/_react["default"].createElement(_TextArea.TextArea, {
-    placeholder: custom && custom.label || 'Label',
     value: textAreaValue,
     onChange: function onChange(event) {
       return setTextAreaValueFn(event.target.value);
     },
     resize: false,
-    focusIndicator: false,
-    fill: true,
-    plain: true
-  })))), /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.multiselect.custom.actions.wrapper, (isExcluded === false || isExcluded === null) && /*#__PURE__*/_react["default"].createElement(_Button.Button, _extends({}, theme.multiselect.includeBtn, {
+    fill: true
+  })))), /*#__PURE__*/_react["default"].createElement(_Box.Box, theme.multiselect.custom.actions.wrapper, (isExcluded === false || isExcluded === null) && /*#__PURE__*/_react["default"].createElement(_Button.Button, {
+    primary: true,
     onClick: function onClick() {
       return setItems(false);
     }
-  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-    align: "center",
-    justify: "center",
-    direction: "row"
-  }, Boolean(theme.multiselect.includeBtn.showIcon) && /*#__PURE__*/_react["default"].createElement(_Add.Add, _extends({}, theme.multiselect.checkbox.checkmark, {
-    color: theme.multiselect.includeBtn.color,
-    size: "small"
-  })), /*#__PURE__*/_react["default"].createElement(_Text.Text, {
-    weight: 600,
-    margin: {
-      left: 'small'
-    }
-  }, "INCLUDE"))), isExcluded === null && /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-    background: "light-3",
-    width: "1px",
-    height: "100%"
-  }), (isExcluded || isExcluded === null) && /*#__PURE__*/_react["default"].createElement(_Button.Button, _extends({}, theme.multiselect.excludeBtn, {
+  }, /*#__PURE__*/_react["default"].createElement(_Text.Text, {
+    weight: 600
+  }, "INCLUDE")), (isExcluded || isExcluded === null) && /*#__PURE__*/_react["default"].createElement(_Button.Button, {
+    secondary: true,
+    color: "brand",
     onClick: function onClick() {
       return setItems(true);
     }
-  }), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-    align: "center",
-    justify: "center",
-    direction: "row"
-  }, Boolean(theme.multiselect.excludeBtn.showIcon) && /*#__PURE__*/_react["default"].createElement(_FormSubtract.FormSubtract, _extends({}, theme.multiselect.checkbox.checkmark, {
-    color: theme.multiselect.excludeBtn.color,
-    size: "small"
-  })), /*#__PURE__*/_react["default"].createElement(_Text.Text, {
-    weight: 600,
-    margin: {
-      left: 'small'
-    }
-  }, "EXCLUDE"))))), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
-    width: "50%"
+  }, /*#__PURE__*/_react["default"].createElement(_Text.Text, {
+    weight: 600
+  }, "EXCLUDE")))), /*#__PURE__*/_react["default"].createElement(_Box.Box, {
+    width: width
   }, /*#__PURE__*/_react["default"].createElement(_CustomSelectedList["default"], {
     layout: layout,
     selectedItems: value,
@@ -177,8 +149,7 @@ var CustomMultiSelect = function CustomMultiSelect(_ref) {
     renderEmptySelected: renderEmptySelected,
     width: width,
     height: height,
-    inclusionExclusion: inclusionExclusion,
-    onCancel: onCancel
+    inclusionExclusion: inclusionExclusion
   })));
 };
 

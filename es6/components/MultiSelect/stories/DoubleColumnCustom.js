@@ -3,11 +3,11 @@ import { storiesOf } from '@storybook/react';
 import { Box, MultiSelect, Text } from 'mnet-ui-base';
 
 var Example = function Example() {
-  var _useState = useState(['google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com']),
+  var _useState = useState(['google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com', 'google.com', 'media.net', 'testing.com']),
       value = _useState[0],
       setValue = _useState[1];
 
-  var _useState2 = useState(false),
+  var _useState2 = useState(null),
       isExcluded = _useState2[0],
       setIncExc = _useState2[1];
 
@@ -42,8 +42,8 @@ var Example = function Example() {
       return setValue(nextValue);
     },
     layout: "double-column",
-    width: "large",
-    height: "medium",
+    width: "medium",
+    height: "large",
     searchPlaceholder: "Search",
     searchable: true,
     custom: {
@@ -55,10 +55,7 @@ var Example = function Example() {
       return setIncExc(nextIncExc);
     },
     renderEmptySelected: /*#__PURE__*/React.createElement(Text, null, "No domains selected"),
-    validate: validateDomains,
-    isEnableOutSideClick: false,
-    shouldRenderInDrop: false,
-    isOpenState: true
+    validate: validateDomains
   }));
 };
 
