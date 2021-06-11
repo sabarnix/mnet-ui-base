@@ -17,8 +17,6 @@ import { Volume } from 'grommet-icons/icons/Volume';
 import { VolumeLow } from 'grommet-icons/icons/VolumeLow';
 import { Info } from 'grommet-icons/icons/Info';
 import { FormClose } from 'grommet-icons/icons/FormClose';
-import { Select as Success }  from 'grommet-icons/icons/Select'
-import { Split as Block }  from 'grommet-icons/icons/Split'
 import { base as iconBase } from 'grommet-icons/themes/base';
 
 import { deepFreeze, deepMerge } from '../utils/object';
@@ -610,14 +608,6 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         size: `${baseSpacing * 2}px`,
         // extend: undefined,
       },
-      label: {
-        color: 'dark-1',
-        size: 'medium',
-        weight: 400,
-      },
-    },
-    CheckBoxGroup: {
-      label: {},
     },
     clock: {
       analog: {
@@ -783,14 +773,7 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       extend: {
         button: {
           flex: 1,
-          // border: 'none',
-        },
-      },
-      tooltip: {
-        icon: Info,
-        iconProps: {
-          margin: { horizontal: 'small' },
-          size: 'large',
+          border: 'none',
         },
       },
 
@@ -963,23 +946,11 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       },
     },
     multiselect: {
-      container: {
-        border: {
-          color: 'light-3',
-        },
-        round: 'small',
-      },
       option: {
         width: 'full',
         direction: 'row',
         justify: 'between',
         pad: { horizontal: 'medium' },
-      },
-      includeBtn: {
-        color: 'status-ok',
-      },
-      excludeBtn: {
-        color: 'status-error',
       },
       checkbox: {
         box: {
@@ -992,7 +963,6 @@ export const generate = (baseSpacing = 24, scale = 6) => {
           size: `${baseSpacing * 1.2}px`,
           color: 'white',
         },
-        type: 'add',
         check: {
           height: `${baseSpacing * 1.2}px`,
           width: `${baseSpacing * 1.2}px`,
@@ -1023,9 +993,10 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       },
       chips: {
         wrapper: {
-          pad: { vertical: 'medium', left: 'medium', right: 'small' },
+          pad: 'medium',
           direction: 'row',
           extend: props => ({
+            padding: props.twoColumnLayout ? 0 : `${baseSpacing / 1.618}px`,
             'border-bottom': props.twoColumnLayout
               ? 'none'
               : '1px solid #D9DBE5',
@@ -1035,7 +1006,7 @@ export const generate = (baseSpacing = 24, scale = 6) => {
           background: 'light-3',
           round: 'small',
           pad: {
-            vertical: 'medium',
+            vertical: 'small',
             horizontal: 'medium',
           },
           margin: 'small',
@@ -1047,17 +1018,41 @@ export const generate = (baseSpacing = 24, scale = 6) => {
               ? 0
               : `${baseSpacing / (1.618 * 2)}px`,
             background: props.twoColumnLayout ? 'white' : lightColors[2],
+            padding: props.twoColumnLayout
+              ? `${baseSpacing / 1.618}px`
+              : `${baseSpacing / (1.618 * 2)}px ${baseSpacing / 1.618}px`,
+            'border-radius': props.twoColumnLayout
+              ? 0
+              : `${baseSpacing / (1.618 * 2)}px`,
+            'border-bottom': props.twoColumnLayout
+              ? '1px solid #D9DBE5'
+              : 'none',
             'justify-content': props.twoColumnLayout
               ? 'space-between'
               : 'flex-start',
           }),
         },
         label: {
-          color: 'dark-1',
+          color: 'dark-3',
           size: 'medium',
-          weight: 400,
+          weight: 600,
           margin: {
             right: 'small',
+          },
+          extend: props => {
+            const getTextColor = () => {
+              switch (props.isExcluded) {
+                case false:
+                  return '#38C18B';
+                case true:
+                  return '#FC564F';
+                default:
+                  return darkColors[2];
+              }
+            };
+            return {
+              color: getTextColor(),
+            };
           },
         },
         icon: {
@@ -1065,16 +1060,8 @@ export const generate = (baseSpacing = 24, scale = 6) => {
           color: 'dark-3',
         },
         clear: {
-          margin: 'medium',
-          border: {
-            side: 'top',
-            color: 'light-3',
-          },
-          color: 'dark-1',
-          size: 'medium',
-          alignSelf: 'end',
-          weight: '600',
-          height: '30px',
+          color: 'accent-2',
+          size: 'small',
         },
       },
       controls: {
@@ -1091,33 +1078,28 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         },
       },
       searchbox: {
-        textWrapper: {
-          flex: 'grow',
-        },
-        iconWrapper: {
-          gap: 'medium',
-          width: 'xxsmall',
-          direction: 'row',
-          justify: 'center',
-        },
         container: {
-          height: '40px',
+          height: {
+            min: 'xxsmall',
+            max: 'xxsmall',
+          },
           direction: 'row',
           align: 'center',
-          background: 'transparent',
-          // pad: { horizontal: 'medium', vertical: 'medium' },
-          pad: 'none',
-          border: {
-            side: 'bottom',
-            color: 'light-3',
-          },
-          style: {
-            minHeight: '40px',
-          },
-          position: 'relative',
+          background: 'light-2',
+          pad: { right: 'medium', vertical: 'small' },
+          extend: props => ({
+            background:
+              props.layout === 'double-column' ? 'white' : lightColors[1],
+            'flex-direction':
+              props.layout === 'double-column' ? 'row-reverse' : 'row',
+            'padding-left':
+              props.layout === 'double-column' ? `${baseSpacing / 1.618}px` : 0,
+            'border-bottom':
+              props.layout === 'double-column' ? '1px solid #D9DBE5' : 'none',
+          }),
         },
         placeholder: {
-          color: 'dark-4',
+          color: 'dark-5',
           size: 'medium',
         },
         icon: {
@@ -1126,30 +1108,22 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         },
       },
       rightPanel: {
-        border: 'light-3',
+        border: '#D9DBE5',
         incExcHeader: {
           box: {
             direction: 'row',
             justify: 'between',
-            align: 'center',
-            pad: 'large',
-            background: 'white',
+            pad: 'medium',
+            background: 'background-back',
             border: {
               side: 'bottom',
-              color: 'light-3',
+              color: '#D9DBE5',
             },
           },
           text: {
-            color: 'dark-1',
+            color: 'accent-2',
             size: 'medium',
-            weight: '400',
-          },
-          count: {
-            margin: { left: 'small' },
-            background: statusColors.info,
-            round: 'medium',
-            pad: { horizontal: 'medium' },
-            justify: 'center',
+            weight: 600,
           },
         },
       },
@@ -1157,55 +1131,23 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       custom: {
         wrapper: {
           direction: 'row',
-          border: {
-            color: 'light-3',
-          },
-          round: 'small',
         },
         textAreaWrap: {
-          border: {
-            side: 'right',
-            color: 'transparent',
-          },
-          pad: '0',
-          height: '100%',
-          extend: {
-            '*': {
-              // border: 'none',
-              // height: '100%',
-            },
-          },
+          border: { side: 'right' },
+          pad: 'large',
+        },
+        label: {
+          weight: 600,
+        },
+        textAreaContainer: {
+          minHeight: '140px',
+          margin: { vertical: 'medium' },
         },
         actions: {
           wrapper: {
             direction: 'row',
-            gap: '0',
-            margin: '0',
-            justify: 'evenly',
-            align: 'center',
-            border: {
-              side: 'top',
-              color: 'light-3',
-            },
-            height: {
-              min: '30px',
-            },
-          },
-        },
-      },
-      icons: {
-        include: {
-          icon: Success,
-          extend: {
-            color: 'status-ok',
-            size: 'small',
-          },
-        },
-        exclude: {
-          icon: Block,
-          extend: {
-            color: 'status-error',
-            size: 'small',
+            margin: { vertical: 'small' },
+            gap: 'medium',
           },
         },
       },
@@ -1284,7 +1226,7 @@ export const generate = (baseSpacing = 24, scale = 6) => {
         color: 'white',
         margin: { horizontal: 'small' },
         down: FormDown,
-        up: FormUp,
+        // up: undefined
       },
       options: {
         container: {
@@ -1425,17 +1367,6 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       // disabled: { opacity: undefined },
     },
     textInput: {
-      error: {
-        icon: Info,
-        text: {},
-      },
-      focus: `
-        border-color: transparent;
-        border-bottom:2px solid #3367D6;
-        background: #F2F5FC;
-        border-bottom-right-radius: 0px;
-        border-bottom-left-radius: 0px;
-      `,
       // extend: undefined,
       // disabled: { opacity: undefined },
     },
@@ -1460,8 +1391,8 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       },
     },
     tooptip: {
-      background: 'light-1',
-      color: 'dark-1',
+      background: 'dark-1',
+      color: 'white',
       tipSize: '5px',
       round: 'small',
       maxWidth: '20%',

@@ -49,8 +49,6 @@ const ColumnSelect = ({
   custom,
   validate,
   onChange,
-  shouldRenderInDrop,
-  showCount,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
@@ -110,7 +108,6 @@ const ColumnSelect = ({
       isExcluded={isExcluded}
       renderEmptySelected={renderEmptySelected}
       layout={layout}
-      showCount={showCount}
     />
   );
 
@@ -130,30 +127,26 @@ const ColumnSelect = ({
         setIncExcVal={setIncExcVal}
         inclusionExclusion={inclusionExclusion}
         validate={validate}
-        onCancel={onCancel}
       />
     );
   }
 
   return (
-    <Box width={width} {...theme.multiselect.container}>
+    <>
       {renderSearch && (
         <Searchbox
-          reverse={false}
-          width={width}
           placeholder={searchPlaceholder}
           value={searchValue}
           onValueChange={onSearchChange}
           layout={layout}
-          shouldRenderInDrop={shouldRenderInDrop}
-          selectIcon={theme.select.icons}
-          onCancel={onCancel}
         />
       )}
       <Box direction="row" height={height || 'small'}>
         <Box
-          width={layout === 'single-column' ? '100%' : '50%'}
-          // pad={{ vertical: 'small' }}
+          width={width}
+          border={[
+            { side: 'bottom', color: theme.multiselect.rightPanel.border },
+          ]}
         >
           <OptionsBox role="menubar" tabIndex="-1">
             {options.length > 0 ? (
@@ -216,7 +209,7 @@ const ColumnSelect = ({
                         role="menuitem"
                         a11yTitle={`option id - ${option.id}`}
                         hoverIndicator={theme.select.activeColor}
-                        disabled={optionDisabled || optionSelected || undefined}
+                        disabled={optionDisabled || undefined}
                         active={optionActive}
                         selected={optionSelected}
                         option={option}
@@ -267,9 +260,10 @@ const ColumnSelect = ({
         </Box>
         {layout === 'double-column' && (
           <Box
-            width="50%"
+            width={width}
             border={[
               { side: 'left', color: theme.multiselect.rightPanel.border },
+              { side: 'bottom', color: theme.multiselect.rightPanel.border },
             ]}
           >
             {renderOptionChips()}
@@ -277,8 +271,10 @@ const ColumnSelect = ({
         )}
       </Box>
       {showOptionChips && layout === 'single-column' && renderOptionChips()}
-      {showControlButtons && <ControlButton onOk={onOk} onCancel={onCancel} />}
-    </Box>
+      {showControlButtons && (
+        <ControlButton onOk={onOk} onCancel={onCancel} />
+      )}
+    </>
   );
 };
 

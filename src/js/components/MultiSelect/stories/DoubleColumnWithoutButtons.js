@@ -26,10 +26,10 @@ const Example = () => {
         options={options}
         value={value}
         labelKey="label"
-        valueKey={{ key: 'label', reduce: true }}
+        valueKey={{ key: 'id', reduce: true }}
         onValueChange={nextValue => setValue(nextValue)}
         layout="double-column"
-        width="large"
+        width="medium"
         height="medium"
         searchPlaceholder="Search"
         searchable
