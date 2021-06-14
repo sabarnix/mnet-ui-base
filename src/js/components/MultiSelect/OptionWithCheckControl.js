@@ -18,6 +18,8 @@ const OptionWithCheckControl = ({
   inclusionExclusion,
   isExcluded,
   onSelect,
+  removeSelected,
+  reverse,
   // active,
   index,
 }) => {
@@ -112,11 +114,9 @@ const OptionWithCheckControl = ({
       </CheckBoxWrapper>
     );
   };
-
-  return (
-    <SelectedOption {...selectOptionsStyle} selected={selected}>
-      <Box {...theme.multiselect.option}>
-        <Box>
+  
+  const optionLabel = [
+    <Box>
           <Text
             role="option"
             aria-label="multiselect option value"
@@ -124,8 +124,9 @@ const OptionWithCheckControl = ({
           >
             {label}
           </Text>
-        </Box>
-        {!inclusionExclusion && <Box>{renderCheckbox(incCheck, null)}</Box>}
+    </Box>,
+        <>
+        {!inclusionExclusion && <Box>{renderCheckbox(selected ? incCheck : excCheck, null)}</Box>}
         {inclusionExclusion && (isExcluded === null || isExcluded !== null) && (
           <Box direction="row">
             {
@@ -136,7 +137,17 @@ const OptionWithCheckControl = ({
               renderCheckbox(excCheck, true)}
           </Box>
         )}
-      </Box>
+        </>,
+  ];
+  if (reverse) {
+    optionLabel.reverse();
+  }
+
+  return (
+    <SelectedOption {...selectOptionsStyle} selected={selected} removeSelected={removeSelected}>
+      <Box {...theme.multiselect.option}>
+        {optionLabel}
+      </Box> 
     </SelectedOption>
   );
 };

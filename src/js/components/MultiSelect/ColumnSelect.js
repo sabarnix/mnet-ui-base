@@ -51,6 +51,8 @@ const ColumnSelect = ({
   onChange,
   shouldRenderInDrop,
   showCount,
+  removeSelected = true,
+  reverse = false,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
 
@@ -205,6 +207,7 @@ const ColumnSelect = ({
                             index={SELECT_ALL_INDEX}
                             onSelect={setOption}
                             active={activeIndex === -1}
+                            reverse={reverse}
                           />
                         </SelectOption>
                       )}
@@ -216,7 +219,7 @@ const ColumnSelect = ({
                         role="menuitem"
                         a11yTitle={`option id - ${option.id}`}
                         hoverIndicator={theme.select.activeColor}
-                        disabled={optionDisabled || optionSelected || undefined}
+                        disabled={optionDisabled ||  (removeSelected && optionSelected) || undefined}
                         active={optionActive}
                         selected={optionSelected}
                         option={option}
@@ -234,6 +237,8 @@ const ColumnSelect = ({
                         }
                       >
                         <OptionWithCheckControl
+                          removeSelected={removeSelected}
+                          reverse={reverse}
                           selected={optionSelected}
                           label={optionLabel(index)}
                           inclusionExclusion={inclusionExclusion}

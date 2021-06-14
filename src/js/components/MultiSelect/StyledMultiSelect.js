@@ -18,7 +18,7 @@ const CheckBoxWrapper = styled(Box)`
 `;
 
 const SelectedOption = styled(Box)`
-  ${props => props.selected && disabledStyle}
+  ${props => props.selected && props.removeSelected && disabledStyle}
 `;
 
 const OptionsBox = styled(Box)`
@@ -54,9 +54,8 @@ const OptionBox = styled(Box)`
 `;
 
 const CheckBox = styled(Box)`
-  ${props => props.theme.multiselect.checkbox.check};
   ${props => props.background && `background: ${props.background};`}
-  
+  ${props => props.theme.multiselect.checkbox.check};
 `;
 
 const OptionWrapper = styled(Box)`

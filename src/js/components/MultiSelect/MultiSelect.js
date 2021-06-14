@@ -36,6 +36,8 @@ const MultiSelect = ({
   isEnableOutSideClick,
   shouldRenderInDrop = true,
   placeholder,
+  removeSelected = true,
+  reverse = false,
   ...rest
 }) => {
   const [internalValue, updateInternalValue] = useState(valueProp);
@@ -164,6 +166,8 @@ const MultiSelect = ({
           validate={validate}
           shouldRenderInDrop={shouldRenderInDrop}
           showCount={showCount}
+          removeSelected={removeSelected}
+          reverse={reverse}
           {...props}
         />
       );
@@ -217,6 +221,7 @@ const MultiSelect = ({
         isEnableOutSideClick={isEnableOutSideClick}
         shouldRenderInDrop={shouldRenderInDrop}
         size={size}
+        placeholder={placeholder}
         {...rest}
       />
     </Box>
