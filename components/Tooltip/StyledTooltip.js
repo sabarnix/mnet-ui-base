@@ -1,11 +1,13 @@
 "use strict";
 
 exports.__esModule = true;
-exports.ArrowWrap = exports.Arrow = void 0;
+exports.StyledTooltipText = exports.ArrowWrap = exports.Arrow = void 0;
 
 var _styledComponents = _interopRequireWildcard(require("styled-components"));
 
 var _Box = require("../Box");
+
+var _Text = require("../Text");
 
 var _utils = require("../../utils");
 
@@ -69,3 +71,10 @@ var ArrowWrap = (0, _styledComponents["default"])(_Box.Box).withConfig({
   return Alignment(props);
 });
 exports.ArrowWrap = ArrowWrap;
+var StyledTooltipText = (0, _styledComponents["default"])(_Text.Text).withConfig({
+  displayName: "StyledTooltip__StyledTooltipText",
+  componentId: "sc-7ieemc-2"
+})(["", ";"], function (props) {
+  return props.theme.tooptip.text && props.theme.tooptip.text.extend;
+});
+exports.StyledTooltipText = StyledTooltipText;

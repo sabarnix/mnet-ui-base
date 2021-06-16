@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Box } from '../Box';
+import { Text } from '../Text';
 import { backgroundStyle, normalizeColor } from '../../utils';
 
 var ArrowStyle = function ArrowStyle(props) {
@@ -55,4 +56,10 @@ export var ArrowWrap = styled(Box).withConfig({
   componentId: "sc-7ieemc-1"
 })(["align-items:center;", ""], function (props) {
   return Alignment(props);
+});
+export var StyledTooltipText = styled(Text).withConfig({
+  displayName: "StyledTooltip__StyledTooltipText",
+  componentId: "sc-7ieemc-2"
+})(["", ";"], function (props) {
+  return props.theme.tooptip.text && props.theme.tooptip.text.extend;
 });

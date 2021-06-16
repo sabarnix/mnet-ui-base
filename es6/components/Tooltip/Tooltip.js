@@ -6,9 +6,8 @@ import React, { forwardRef, useContext, useState, useRef } from 'react';
 import { ThemeContext } from 'styled-components';
 import { defaultProps } from '../../default-props';
 import { Box } from '../Box';
-import { Text } from '../Text';
 import { Drop } from '../Drop';
-import { ArrowWrap, Arrow } from './StyledTooltip';
+import { ArrowWrap, Arrow, StyledTooltipText } from './StyledTooltip';
 var Tooltip = /*#__PURE__*/forwardRef(function (_ref, ref) {
   var children = _ref.children,
       message = _ref.message,
@@ -75,9 +74,9 @@ var Tooltip = /*#__PURE__*/forwardRef(function (_ref, ref) {
     pad: "medium",
     background: tooptip.background || 'dark-1',
     round: tooptip.round
-  }, /*#__PURE__*/React.createElement(Text, {
+  }, /*#__PURE__*/React.createElement(StyledTooltipText, _extends({
     color: tooptip.color
-  }, message)))));
+  }, tooptip.text), message)))));
 });
 Tooltip.displayName = 'Tooltip';
 export { Tooltip };
