@@ -1396,6 +1396,7 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       tipSize: '5px',
       round: 'small',
       maxWidth: '20%',
+      text: undefined,
     },
     pagination: {
       background: 'white',
