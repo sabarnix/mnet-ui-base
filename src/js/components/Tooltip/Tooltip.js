@@ -70,7 +70,7 @@ const Tooltip = forwardRef(
             target={overRef.current}
             elevation="none"
             plain
-            style={{ boxShadow: null, maxWidth: tooptip.maxWidth }}
+            style={{ boxShadow: tooptip.boxShadow, maxWidth: tooptip.maxWidth }}
           >
             <ArrowWrap position={position}>
               <Arrow position={position} showArrow={showArrow} />
