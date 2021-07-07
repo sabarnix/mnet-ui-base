@@ -74,7 +74,7 @@ const Tooltip = forwardRef(
           >
             <ArrowWrap
               position={position}
-              background={tooptip.background || 'dark-1'}
+              background={!showArrow && (tooptip.background || 'dark-1')}
             >
               <Arrow position={position} showArrow={showArrow} />
               <Box
