@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Box } from '../Box';
+import { Text } from '../Text';
 import { backgroundStyle, normalizeColor } from '../../utils';
 
 const ArrowStyle = props => {
@@ -78,4 +79,8 @@ const Alignment = props => {
 export const ArrowWrap = styled(Box)`
   align-items: center;
   ${props => Alignment(props)}
+`;
+
+export const StyledTooltipText = styled(Text)`
+  ${props => props.theme.tooptip.text && props.theme.tooptip.text.extend};
 `;
