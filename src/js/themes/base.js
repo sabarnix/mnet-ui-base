@@ -1465,6 +1465,9 @@ export const generate = (baseSpacing = 24, scale = 6) => {
       round: 'small',
       maxWidth: '20%',
       text: undefined,
+      dropProps: {
+        left: 'right',
+      },
     },
     pagination: {
       background: 'white',
