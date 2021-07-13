@@ -1,0 +1,47 @@
+name: Test CI
+
+on:
+  push:
+    branches:
+      - adunit-rewamp-refactor
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@adunit-rewamp-refactor
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10'
+      - name: Install Yarn
+        run: npm install -g yarn
+      - name: Install packages
+        run: yarn install
+      - name: Build
+        run: yarn build
+#       - name: Test
+#         with:
+#           cmd: yarn test
+      - name: Release
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/.temp/mnet-ui-base"        
+          git clone "https://$GITHUB_ACTOR:$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git" "$GITHUB_WORKSPACE/.temp/mnet-ui-base"
+          cd "$GITHUB_WORKSPACE/.temp/mnet-ui-base"
+          git checkout adunit-rewamp-refactor-test
+          git pull origin adunit-rewamp-refactor
+          mv .git ../
+          rm -rf *
+          mv ../.git ./
+          cp -ar "$GITHUB_WORKSPACE/dist/." "$GITHUB_WORKSPACE/.temp/mnet-ui-base"
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"        
+          git add .
+          git commit -m "New Release"
+          git remote set-url --push origin "https://$GITHUB_ACTOR:$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          git push
+
+        env:
+          CI: true
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          USERNAME: ${{ secrets.GITHUB_ACTOR }}
