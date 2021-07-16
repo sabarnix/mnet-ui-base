@@ -36,7 +36,6 @@ jobs:
           cp -ar "$GITHUB_WORKSPACE/dist/." "$GITHUB_WORKSPACE/.temp/mnet-ui-base"
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          cat ~/.gitconfig.
           git add .
           git commit -m "New Release"
           git remote set-url --push origin "https://$GITHUB_ACTOR:$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"
