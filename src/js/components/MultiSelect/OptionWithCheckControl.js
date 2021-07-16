@@ -24,6 +24,7 @@ const OptionWithCheckControl = ({
   index,
 }) => {
   const theme = useContext(ThemeContext) || defaultProps.theme;
+  let singleColumnCheckIcon = null;
 
   const selectOptionsStyle = {
     ...theme.select.options.box,
@@ -115,6 +116,14 @@ const OptionWithCheckControl = ({
     );
   };
   
+  if(!inclusionExclusion) {
+    if (reverse) {
+      singleColumnCheckIcon = selected ? incCheck : excCheck;
+    } else {
+      singleColumnCheckIcon = !selected ? incCheck : excCheck;
+    }
+  }
+  
   const optionLabel = [
     <Box>
           <Text
@@ -127,7 +136,7 @@ const OptionWithCheckControl = ({
     </Box>,
         <>
         {!inclusionExclusion && 
-          <Box>{renderCheckbox(selected && reverse? incCheck : excCheck, null)}</Box>
+          <Box>{renderCheckbox(singleColumnCheckIcon, null)}</Box>
         }
         {inclusionExclusion && (isExcluded === null || isExcluded !== null) && (
           <Box direction="row">
