@@ -23,8 +23,9 @@ const OptionWithCheckControl = ({
   // active,
   index,
 }) => {
-  const theme = useContext(ThemeContext) || defaultProps.theme;
+  
   let singleColumnCheckIcon = null;
+  const theme = useContext(ThemeContext) || defaultProps.theme;
 
   const selectOptionsStyle = {
     ...theme.select.options.box,
