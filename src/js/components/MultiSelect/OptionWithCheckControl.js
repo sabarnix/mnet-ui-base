@@ -144,7 +144,11 @@ const OptionWithCheckControl = ({
   }
 
   return (
-    <SelectedOption {...selectOptionsStyle} selected={selected} removeSelected={removeSelected}>
+    <SelectedOption
+      {...selectOptionsStyle}
+      selected={selected}
+      removeSelected={removeSelected}
+    >
       <Box {...theme.multiselect.option}>
         {optionLabel}
       </Box> 
