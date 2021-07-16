@@ -126,7 +126,7 @@ const OptionWithCheckControl = ({
           </Text>
     </Box>,
         <>
-        {!inclusionExclusion && <Box>{renderCheckbox(selected ? incCheck : excCheck, null)}</Box>}
+        {!inclusionExclusion && <Box>{renderCheckbox(!selected ? incCheck : excCheck, null)}</Box>}
         {inclusionExclusion && (isExcluded === null || isExcluded !== null) && (
           <Box direction="row">
             {
